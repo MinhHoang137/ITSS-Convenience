@@ -11,11 +11,10 @@ public class MealPlanController extends BaseController {
 
     @FXML private Button byDateButton;
     @FXML private Button byWeekButton;
-    @FXML private Button addMealButton;
 
     @Override
     public String getFxmlPath() {
-        return "/itss/convenience/meal_plan.fxml";
+        return "/meal/meal_plan.fxml";
     }
 
     @Override
@@ -29,10 +28,6 @@ public class MealPlanController extends BaseController {
 
     @FXML private void onPlanByWeek(ActionEvent e) {
         // Xử lý lên kế hoạch theo tuần
-    }
-
-    @FXML private void onAddMeal(ActionEvent e) {
-        // Xử lý thêm bữa ăn
     }
 
 }

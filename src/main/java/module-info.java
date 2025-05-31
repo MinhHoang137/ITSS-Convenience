@@ -23,4 +23,6 @@ module itss.convenience {
     opens controller.fridge to javafx.fxml;
 
     exports controller.fridge;
+    opens model.entity to javafx.base, javafx.fxml;
+    exports model.entity;
 }

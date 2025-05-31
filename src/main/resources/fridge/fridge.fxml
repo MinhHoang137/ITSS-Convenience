@@ -34,11 +34,11 @@
          <content>
             <VBox prefHeight="283.0" prefWidth="456.0">
                <children>
-                  <TableView prefHeight="282.0" prefWidth="456.0">
+                  <TableView fx:id="tableView" prefHeight="282.0" prefWidth="456.0">
                     <columns>
-                      <TableColumn prefWidth="167.33332288265228" text="Tên" />
-                      <TableColumn prefWidth="116.66665649414062" text="Số lượng" />
-                        <TableColumn prefWidth="171.33331298828125" text="Đơn vị" />
+                      <TableColumn fx:id="name" prefWidth="167.33332288265228" text="Tên" />
+                      <TableColumn fx:id="quantity" prefWidth="116.66665649414062" text="Số lượng" />
+                        <TableColumn fx:id="unit" prefWidth="171.33331298828125" text="Đơn vị" />
                     </columns>
                   </TableView>
                </children></VBox>

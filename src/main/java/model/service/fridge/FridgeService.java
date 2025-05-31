@@ -14,6 +14,7 @@ import java.util.List;
 public class FridgeService extends BaseService {
 
     public void addIngredient(Ingredient ingredient, int fridgeId) {
+        getConnection();
         try {
             String sql = "INSERT INTO ingredient (ingredientName, quantity, unitType, ingredientId, expirationDate, fridgeId) VALUES (?, ?, ?, ?, ?, ?)";
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -55,6 +56,7 @@ public class FridgeService extends BaseService {
     // return list;
     // }
     public List<Ingredient> getAllIngredients(int fridgeId) {
+        getConnection();
         List<Ingredient> list = new ArrayList<>();
         try {
             String sql = """
@@ -85,6 +87,7 @@ public class FridgeService extends BaseService {
     }
 
     public List<Ingredient> getExpiringIngredients(int fridgeId, int daysBeforeExpire) {
+        getConnection();
         List<Ingredient> list = new ArrayList<>();
         LocalDate now = LocalDate.now();
         LocalDate upper = now.plusDays(daysBeforeExpire);
@@ -114,6 +117,7 @@ public class FridgeService extends BaseService {
     }
 
     public boolean useIngredient(String name, double usedQuantity, Unit unit, int fridgeId) {
+        getConnection();
         try {
             String sql = "SELECT * FROM ingredient WHERE ingredientName = ? AND unitType = ? AND fridgeId = ?";
             PreparedStatement stmt = connection.prepareStatement(

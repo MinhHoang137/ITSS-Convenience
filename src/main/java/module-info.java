@@ -13,7 +13,14 @@ module itss.convenience {
     requires java.sql;
 
     opens itss.convenience to javafx.fxml;
+
     exports itss.convenience;
+
     opens controller.meal to javafx.fxml;
+
     exports controller.meal;
+
+    opens controller.fridge to javafx.fxml;
+
+    exports controller.fridge;
 }

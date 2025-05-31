@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.group.IntroduceGroupController">
+    <VBox alignment="CENTER" spacing="20" prefWidth="400" prefHeight="300" style="-fx-padding: 30;">
+        <Label text="Bạn chưa có nhóm!" style="-fx-font-size: 16px;"/>
+        <Button text="Tạo nhóm mới" onAction="#handleCreateGroup"/>
+        <Button text="Gia nhập nhóm bằng mã" onAction="#handleJoinGroup"/>
+        <Button text="Đăng xuất" onAction="#handleLogout" style="-fx-background-color: #f55; -fx-text-fill: white;"/>
+    </VBox>
+</AnchorPane>

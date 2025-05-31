@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.group.CreateGroupController">
+    <VBox alignment="CENTER" spacing="10" prefWidth="400" prefHeight="250" style="-fx-padding: 30;">
+        <Label text="Tạo nhóm mới" style="-fx-font-size: 18px;" />
+        <TextField fx:id="txtGroupName" promptText="Tên nhóm"/>
+        <Button text="Tạo nhóm" onAction="#handleCreate"/>
+        <Button text="Quay lại" onAction="#handleBack" style="-fx-background-color: #ccc;"/>
+    </VBox>
+</AnchorPane>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.DashboardController">
+
+    <!-- Vai trò ở góc trên bên phải -->
+    <top>
+        <HBox alignment="TOP_RIGHT">
+            <padding>
+                <Insets top="10" right="20" bottom="0" left="0"/>
+            </padding>
+            <Label fx:id="lblRole" style="-fx-font-size: 14px; -fx-text-fill: gray;" />
+        </HBox>
+    </top>
+
+    <!-- Nội dung chính -->
+    <center>
+        <VBox alignment="CENTER" spacing="15">
+            <padding>
+                <Insets top="30" right="30" bottom="30" left="30"/>
+            </padding>
+
+            <Label fx:id="lblGroupName" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+
+            <Button text="📋 Danh sách mua sắm" onAction="#goToShoppingList" minWidth="200"/>
+            <Button text="🧊 Quản lý tủ lạnh" onAction="#goToFridge" minWidth="200"/>
+            <Button text="🍱 Gợi ý món ăn" onAction="#goToSuggestion" minWidth="200"/>
+            <Button text="📆 Lập kế hoạch bữa ăn" onAction="#goToMealPlan" minWidth="200"/>
+            <Button text="🚪 Đăng xuất" onAction="#handleLogout" minWidth="200"
+                    style="-fx-background-color: #f55; -fx-text-fill: white;"/>
+        </VBox>
+    </center>
+
+</BorderPane>

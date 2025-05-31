@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" type="BorderPane" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.fridge.ExpiringIngredientController">
+   <top>
+      <Label prefHeight="35.0" prefWidth="177.0" text="   Thực phẩm sắp hết hạn" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+   </top>
+   <center>
+      <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+          <TableColumn prefWidth="75.0" text="ID" />
+          <TableColumn prefWidth="154.00000762939453" text="Tên" />
+            <TableColumn prefWidth="97.99998474121094" text="Số lượng" />
+            <TableColumn prefWidth="124.0" text="Đơn vị" />
+            <TableColumn prefWidth="150.00003051757812" text="Ngày hết hạn" />
+        </columns>
+      </TableView>
+   </center>
+</fx:root>

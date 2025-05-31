@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.meal.MealPlanController">
+   <children>
+      <HBox layoutX="12.0" prefHeight="38.0" prefWidth="556.0" spacing="10.0" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="182.0" text="Lên kế hoạch bữa ăn: ">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Button fx:id="byDateButton" cache="true" mnemonicParsing="false" onAction="#onPlanByDate" prefHeight="22.0" prefWidth="72.0" text="Theo ngày">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+            <Button fx:id="byWeekButton" cache="true" layoutX="192.0" layoutY="10.0" mnemonicParsing="false" onAction="#onPlanByWeek" prefHeight="22.0" prefWidth="72.0" text="Theo tuần">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+         </children>
+         <padding>
+            <Insets right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+      <ScrollPane layoutX="12.0" layoutY="68.0" prefHeight="322.0" prefWidth="578.0">
+         <content>
+            <VBox prefHeight="315.0" prefWidth="574.0" />
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 public class ExpiringIngredientController extends BaseController {
 
     @FXML
-    private TableView<Ingredient> tableView;
+    private TableView<Ingredient> expiredTableView;
 
     @FXML
     private TableColumn<Ingredient, Integer> id;
@@ -47,7 +47,7 @@ public class ExpiringIngredientController extends BaseController {
         unit.setCellValueFactory(new PropertyValueFactory<>("unit"));
         expirationDate.setCellValueFactory(new PropertyValueFactory<>("expirationDate"));
 
-        tableView.setItems(loadExpiringIngredients());
+        expiredTableView.setItems(loadExpiringIngredients());
     }
 
     private ObservableList<Ingredient> loadExpiringIngredients() {

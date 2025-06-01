@@ -1,6 +1,7 @@
 package model.service.meal_plan;
 
 import model.entity.Dish;
+import model.entity.Meal;
 import model.entity.Unit;
 
 import java.util.ArrayList;
@@ -14,11 +15,11 @@ public interface IMealPlanGetService {
     public Dish getDish(int id);
 
     /**
-     * Retrieves a Dish by its name, including its ingredients and meal type.
-     * @param name The name of the dish to retrieve.
+     * Retrieves a list of Dishes by its name, including its ingredients and meal type.
+     * @param dishName The name of the dish to retrieve.
      * @return A Dish object containing the dish details, or null if not found.
      */
-    public Dish getDish(String name);
+    public ArrayList<Dish> getDishLike(String dishName);
 
     /**
      * Retrieves all dishes from the database.
@@ -58,4 +59,6 @@ public interface IMealPlanGetService {
      */
     public ArrayList<Dish> getCookableDishesByDayIndex(int fridgeId, int dayIndex);
 
+    public Meal getMeal(int id);
+    public ArrayList<Meal> getAllMeals();
 }

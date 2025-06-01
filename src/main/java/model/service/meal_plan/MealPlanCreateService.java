@@ -97,7 +97,7 @@ public class MealPlanCreateService extends BaseService implements IMealPlanCreat
             System.out.println("Không thể thêm món ăn vào bảng dish.");
             return false;
         }
-        int id = getDish(dish.getName()).getId();
+        int id = getLastInsertedDishId();
         if (id == -1) {
             System.out.println("Không thể lấy ID của món ăn vừa thêm.");
             return false;
@@ -109,10 +109,6 @@ public class MealPlanCreateService extends BaseService implements IMealPlanCreat
             }
         }
         return true;
-    }
-    private Dish getDish(String name) {
-        IMealPlanGetService mealPlanGetService = MealPlanGetService.getInstance();
-        return mealPlanGetService.getDish(name);
     }
 
     public boolean addMealToTable(Meal meal) {

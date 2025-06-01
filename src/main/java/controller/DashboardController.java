@@ -12,8 +12,10 @@ import session.Session;
 
 public class DashboardController {
 
-    @FXML private Label lblGroupName;
-    @FXML private Label lblRole;
+    @FXML
+    private Label lblGroupName;
+    @FXML
+    private Label lblRole;
 
     private final UserGroupService groupService = new UserGroupService();
 
@@ -22,7 +24,7 @@ public class DashboardController {
         User user = Session.getCurrentUser();
         if (user != null) {
             String groupName = groupService.getGroupNameById(user.getGroupId());
-            lblGroupName.setText( groupName);
+            lblGroupName.setText(groupName);
             lblRole.setText(user.getRole().name().toLowerCase());
         } else {
             lblGroupName.setText("Không xác định người dùng.");
@@ -37,7 +39,7 @@ public class DashboardController {
 
     @FXML
     public void goToFridge() {
-        switchScene("/itss/convenience/fridge.fxml");
+        switchScene("/fridge/fridge.fxml");
     }
 
     @FXML

@@ -15,7 +15,8 @@ public class DishSuggestService extends BaseService {
     private final DishDAO dishDAO = new DishDAO();
     private final IngredientDAO ingredientDAO = new IngredientDAO();
 
-    public List<Dish> suggestCookableDishes(int fridgeId) {
+    // ✅ Hàm chuẩn hóa để gọi từ Controller
+    public List<Dish> suggestDishesFromFridge(int fridgeId) {
         List<Dish> possibleDishes = new ArrayList<>();
 
         try (Connection conn = getConnection()) {

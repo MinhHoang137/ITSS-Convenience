@@ -36,9 +36,4 @@ public class IngredientDAO {
         return ingredients;
     }
 
-    // Bạn có thể mở rộng các hàm như:
-    // - getExpiringIngredients(...)
-    // - deleteIngredient(...)
-    // - updateQuantity(...)
-    // - insertIngredient(...)
 }

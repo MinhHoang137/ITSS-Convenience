@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER" prefHeight="500" prefWidth="600" spacing="15.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.dish.DishSuggestController">
+
+    <padding>
+        <Insets bottom="20" left="20" right="20" top="20" />
+    </padding>
+
+    <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="GỢI Ý MÓN ĂN" />
+
+    <HBox spacing="10">
+        <Button fx:id="btnSuggest" text="Gợi ý món ăn" />
+        <Button fx:id="btnShowIngredients" text="Nguyên liệu hiện có" />
+        <ComboBox fx:id="fridgeSelector" prefWidth="160" promptText="Tủ lạnh" style="-fx-font-size: 16px;" visibleRowCount="6" />
+    </HBox>
+
+    <Label text="🥘 Các món có thể nấu:" />
+    <ListView fx:id="lvDishes" prefHeight="180.0" />
+
+    <Label text="🧂 Nguyên liệu trong tủ lạnh:" />
+    <ListView fx:id="lvIngredients" prefHeight="180.0" />
+</VBox>

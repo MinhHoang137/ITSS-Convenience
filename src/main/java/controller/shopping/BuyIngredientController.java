@@ -11,25 +11,37 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.entity.BuyIngredient;
+import model.entity.Ingredient;
+import model.entity.Unit;
 import model.service.BuyIngredientService;
 import model.service.IBuyIngredientService;
+import model.service.fridge.FridgeService;
 import session.Session;
 
 import java.util.List;
 
 public class BuyIngredientController {
 
-    @FXML private TextField txtIngredientName;
-    @FXML private TextField txtQuantity;
-    @FXML private TextField txtUnit;
+    @FXML
+    private TextField txtIngredientName;
+    @FXML
+    private TextField txtQuantity;
+    @FXML
+    private TextField txtUnit;
 
-    @FXML private TableView<BuyIngredient> tableIngredient;
-    @FXML private TableColumn<BuyIngredient, String> colName;
-    @FXML private TableColumn<BuyIngredient, Double> colQty;
-    @FXML private TableColumn<BuyIngredient, String> colUnit;
-    @FXML private Button btnDeleteIngredient;
+    @FXML
+    private TableView<BuyIngredient> tableIngredient;
+    @FXML
+    private TableColumn<BuyIngredient, String> colName;
+    @FXML
+    private TableColumn<BuyIngredient, Double> colQty;
+    @FXML
+    private TableColumn<BuyIngredient, String> colUnit;
+    @FXML
+    private Button btnDeleteIngredient;
 
-    @FXML private VBox sectionAdd;
+    @FXML
+    private VBox sectionAdd;
 
     private final IBuyIngredientService buyIngredientService = new BuyIngredientService();
     private final ObservableList<BuyIngredient> data = FXCollections.observableArrayList();
@@ -87,8 +99,30 @@ public class BuyIngredientController {
 
     @FXML
     public void handleTransferToFridge() {
-        //TO DO TO DO TO DO
+        List<BuyIngredient> selected = tableIngredient.getSelectionModel().getSelectedItems();
+        if (selected == null || selected.isEmpty()) {
+            showAlert("⚠️ Vui lòng chọn ít nhất một nguyên liệu để chuyển.");
+            return;
+        }
 
+        FridgeService fridgeService = new FridgeService();
+        int groupId = Session.getCurrentUser().getGroupId();
+        int fridgeId = fridgeService.getFridgeIdByGroupId(groupId);
+
+        for (BuyIngredient bi : selected) {
+            Ingredient ing = new Ingredient();
+
+            ing.setName(bi.getIngredientName());
+            ing.setQuantity(bi.getQuantity());
+            ing.setUnit(Unit.valueOf(bi.getUnitType()));
+            ing.setExpirationDate(java.time.LocalDate.now().plusDays(30));
+
+            fridgeService.addIngredientToFridge(ing, fridgeId);
+            buyIngredientService.removeIngredientFromList(shoppingListId, bi.getIngredientName()); // Xoá khỏi danh sách
+                                                                                                   // mua
+        }
+
+        loadIngredients(); // Reload lại bảng
         showAlert("✅ Đã chuyển nguyên liệu vào tủ lạnh.");
     }
 
@@ -121,11 +155,13 @@ public class BuyIngredientController {
             return;
         }
 
-        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Xóa nguyên liệu này khỏi danh sách?", ButtonType.YES, ButtonType.NO);
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Xóa nguyên liệu này khỏi danh sách?", ButtonType.YES,
+                ButtonType.NO);
         confirm.showAndWait();
 
         if (confirm.getResult() == ButtonType.YES) {
-            boolean deleted = buyIngredientService.removeIngredientFromList(shoppingListId, selected.getIngredientName());
+            boolean deleted = buyIngredientService.removeIngredientFromList(shoppingListId,
+                    selected.getIngredientName());
             if (deleted) {
                 data.remove(selected);
                 showAlert("✅ Đã xóa nguyên liệu.");

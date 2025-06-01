@@ -15,8 +15,13 @@ module itss.convenience {
     requires mysql.connector.j;
 
     opens itss.convenience to javafx.fxml;
+    opens controller.dish to javafx.fxml;
+    exports controller.dish;
+
 
     exports itss.convenience;
+    exports model.service.dish_suggest;
+
 
     opens controller to javafx.fxml;
     exports controller;

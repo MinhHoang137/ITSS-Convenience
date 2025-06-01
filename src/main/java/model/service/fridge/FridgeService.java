@@ -142,4 +142,44 @@ public class FridgeService extends BaseService {
         }
         return false;
     }
+
+    public void addIngredientToFridge(Ingredient ingredient, int fridgeId) {
+        getConnection();
+        try {
+            String sql = """
+                        INSERT INTO ingredient (ingredientName, quantity, unitType, expirationDate, fridgeId)
+                        VALUES (?, ?, ?, ?, ?)
+                    """;
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setString(1, ingredient.getName());
+            stmt.setDouble(2, ingredient.getQuantity());
+            stmt.setString(3, ingredient.getUnit().toString());
+            stmt.setDate(4, Date.valueOf(ingredient.getExpirationDate()));
+            stmt.setInt(5, fridgeId);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+
+    public int getFridgeIdByGroupId(int groupId) {
+        getConnection();
+        int fridgeId = -1;
+        try {
+            String sql = "SELECT fridgeId FROM fridge WHERE groupId = ?";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            stmt.setInt(1, groupId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                fridgeId = rs.getInt("fridgeId");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return fridgeId;
+    }
 }

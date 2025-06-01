@@ -2,24 +2,24 @@ package controller.meal;
 
 import controller.BaseController;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import model.entity.Dish;
 import model.entity.Meal;
+import model.entity.MealType;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MealCard extends BaseController {
+    private Parent parent;
     @FXML
     private Label dishNameText;
-
     @FXML
     private Label timeToEatText;
-
     @FXML
     private Label dateToEatText;
-
     @FXML
     private Button deleteButton;
 
@@ -32,7 +32,7 @@ public class MealCard extends BaseController {
         // Hiển thị thông tin
         if (meal != null) {
             dishNameText.setText(getMealNameForDisplay());
-            timeToEatText.setText(meal.getMealType().toString());
+            timeToEatText.setText(getTimeText(meal.getMealType()));
             dateToEatText.setText(getDateText(meal.getDateIndex()));
         }
     }
@@ -43,14 +43,26 @@ public class MealCard extends BaseController {
 
     @FXML
     private void OnDelete() {
-
+        MealPlanController mealPlanController = MealPlanController.getCurrent();
+        mealPlanController.removeMeal(this);
     }
 
     private String getDateText(int index) {
         String[] days = {"Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"};
         return (index >= 0 && index < 7) ? days[index] : "Không rõ";
     }
-
+    private String getTimeText(MealType mealType) {
+        switch (mealType.toString().toLowerCase()) {
+            case "breakfast":
+                return "Bữa sáng";
+            case "lunch":
+                return "Bữa trưa";
+            case "dinner":
+                return "Bữa tối";
+            default:
+                return "Không rõ";
+        }
+    }
     private String getMealNameForDisplay() {
         if (meal.getDishList() != null && !meal.getDishList().isEmpty()) {
             String dishNames = meal.getDishList().stream()
@@ -70,5 +82,16 @@ public class MealCard extends BaseController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
+
+    public Meal getMeal() {
+        return meal;
+    }
+
+    public Parent getParent() {
+        return parent;
+    }
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 }

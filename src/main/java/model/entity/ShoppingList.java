@@ -1,27 +1,26 @@
 package model.entity;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 public class ShoppingList {
-    private int id;
+    private int shoppingListId;
     private LocalDate buyDate;
-    private ArrayList<Ingredient> ingredients;
+    private int groupId;
 
-    public  ShoppingList(int id, LocalDate buyDate, ArrayList<Ingredient> ingredients) {
-        this.id = id;
+    public ShoppingList() {}
+
+    public ShoppingList(int shoppingListId, LocalDate buyDate, int groupId) {
+        this.shoppingListId = shoppingListId;
         this.buyDate = buyDate;
-        this.ingredients = ingredients;
-    }
-    public ShoppingList() {
-        this.ingredients = new ArrayList<>();
-    }
-    public int getId() {
-        return id;
+        this.groupId = groupId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getShoppingListId() {
+        return shoppingListId;
+    }
+
+    public void setShoppingListId(int shoppingListId) {
+        this.shoppingListId = shoppingListId;
     }
 
     public LocalDate getBuyDate() {
@@ -31,11 +30,21 @@ public class ShoppingList {
     public void setBuyDate(LocalDate buyDate) {
         this.buyDate = buyDate;
     }
-    public ArrayList<Ingredient> getIngredients() {
-        return ingredients;
+
+    public int getGroupId() {
+        return groupId;
     }
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
+
+    @Override
+    public String toString() {
+        return "ShoppingList{" +
+                "shoppingListId=" + shoppingListId +
+                ", buyDate=" + buyDate +
+                ", groupId=" + groupId +
+                '}';
     }
 }
-    

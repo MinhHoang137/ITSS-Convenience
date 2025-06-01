@@ -3,13 +3,16 @@ package model.entity;
 public class User {
     private int id;
     private String username;
-    private int groupId;
+    private int groupId; // 0 = chưa có nhóm
     private Role role;
 
-    public User(int id, String name, int userGroupId, Role role) {
+    public User() {
+    }
+
+    public User(int id, String username, int groupId, Role role) {
         this.id = id;
-        this.username = name;
-        this.groupId = userGroupId;
+        this.username = username;
+        this.groupId = groupId;
         this.role = role;
     }
 
@@ -45,4 +48,13 @@ public class User {
         this.role = role;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", groupId=" + groupId +
+                ", role=" + role +
+                '}';
+    }
 }

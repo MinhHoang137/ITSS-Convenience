@@ -11,10 +11,14 @@ module itss.convenience {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
     requires java.sql;
+    requires java.desktop;
 
     opens itss.convenience to javafx.fxml;
 
     exports itss.convenience;
+
+    opens controller to javafx.fxml;
+    exports controller;
 
     opens controller.meal to javafx.fxml;
 
@@ -25,4 +29,10 @@ module itss.convenience {
     exports controller.fridge;
     opens model.entity to javafx.base, javafx.fxml;
     exports model.entity;
+    exports controller.group;
+    opens controller.group to javafx.fxml;
+    exports controller.shopping;
+    opens controller.shopping to javafx.fxml;
+    exports controller.auth;
+    opens controller.auth to javafx.fxml;
 }

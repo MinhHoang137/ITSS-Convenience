@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.auth.RegisterController">
+    <VBox alignment="CENTER" spacing="10" prefWidth="400" prefHeight="250" style="-fx-padding: 30;">
+        <Label text="Đăng ký" style="-fx-font-size: 20px;"/>
+        <TextField fx:id="txtUsername" promptText="Tên đăng nhập"/>
+        <Button text="Tạo tài khoản" onAction="#handleRegister"/>
+        <Hyperlink text="Đã có tài khoản? Đăng nhập" onAction="#goToLogin"/>
+    </VBox>
+</AnchorPane>

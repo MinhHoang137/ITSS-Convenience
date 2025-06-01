@@ -38,7 +38,7 @@ public interface IMealPlanCreateService {
      * @param meal Bữa ăn
      * @return true nếu thành công
      */
-    boolean addMealToTable(Meal meal);
+    boolean addMealToTable(Meal meal, int groupId);
 
     /**
      * Thêm quan hệ giữa bữa ăn và các món ăn vào bảng meal_has_dish.
@@ -52,5 +52,5 @@ public interface IMealPlanCreateService {
      * @param meal Bữa ăn
      * @return true nếu thành công
      */
-    boolean addMeal(Meal meal);
+    boolean addMeal(Meal meal, int groupId);
 }

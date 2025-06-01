@@ -1,6 +1,7 @@
 package model.service.meal_plan;
 
 import model.entity.Dish;
+import model.entity.Ingredient;
 import model.entity.Meal;
 import model.entity.Unit;
 
@@ -59,6 +60,7 @@ public interface IMealPlanGetService {
      */
     public ArrayList<Dish> getCookableDishesByDayIndex(int fridgeId, int dayIndex);
 
-    public Meal getMeal(int id);
-    public ArrayList<Meal> getAllMeals();
+    public Meal getMeal(int id, int groupId);
+    public ArrayList<Meal> getAllMeals(int groupId);
+    public ArrayList<Ingredient> getMissingIngredients(int fridgeId, ArrayList<Ingredient> totalIngredients);
 }

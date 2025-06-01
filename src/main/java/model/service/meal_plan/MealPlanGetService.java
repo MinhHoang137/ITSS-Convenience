@@ -240,20 +240,21 @@ public class MealPlanGetService extends BaseService implements IMealPlanGetServi
         return filteredDishes;
     }
 
-    public Meal getMeal(int mealId) {
+    public Meal getMeal(int mealId, int groupId) {
         getConnection();
         Meal meal = null;
 
-        String mealQuery = "SELECT * FROM meal_plan WHERE id = ?";
+        String mealQuery = "SELECT * FROM meal_plan WHERE id = ? AND userGroupId = ?";
         String dishIdQuery = "SELECT dishId FROM meal_has_dish WHERE mealId = ?";
 
         try (
                 PreparedStatement mealStmt = connection.prepareStatement(mealQuery);
                 PreparedStatement dishIdStmt = connection.prepareStatement(dishIdQuery)
         ) {
-            // Lấy thông tin meal
             mealStmt.setInt(1, mealId);
+            mealStmt.setInt(2, groupId);
             ResultSet mealRs = mealStmt.executeQuery();
+
             if (mealRs.next()) {
                 int id = mealRs.getInt("id");
                 int dateIndex = mealRs.getInt("eatDate");
@@ -265,7 +266,6 @@ public class MealPlanGetService extends BaseService implements IMealPlanGetServi
                 meal.setMealType(type);
                 meal.setDishList(new ArrayList<>());
 
-                // Lấy danh sách dishId từ bảng meal_has_dish
                 dishIdStmt.setInt(1, mealId);
                 ResultSet dishRs = dishIdStmt.executeQuery();
                 while (dishRs.next()) {
@@ -278,7 +278,7 @@ public class MealPlanGetService extends BaseService implements IMealPlanGetServi
             }
 
         } catch (SQLException e) {
-            System.out.println("Error in getMealById: " + e.getMessage());
+            System.out.println("Error in getMeal: " + e.getMessage());
         } finally {
             closeConnection();
         }
@@ -286,17 +286,19 @@ public class MealPlanGetService extends BaseService implements IMealPlanGetServi
         return meal;
     }
 
-    public ArrayList<Meal> getAllMeals() {
+
+    public ArrayList<Meal> getAllMeals(int groupId) {
         getConnection();
         ArrayList<Meal> mealList = new ArrayList<>();
-        String query = "SELECT id FROM meal_plan";
+        String query = "SELECT id FROM meal_plan WHERE userGroupId = ?";
 
-        try (PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, groupId);
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
                 int mealId = rs.getInt("id");
-                Meal meal = getMeal(mealId);
+                Meal meal = getMeal(mealId, groupId);
                 if (meal != null) {
                     mealList.add(meal);
                 }
@@ -310,6 +312,30 @@ public class MealPlanGetService extends BaseService implements IMealPlanGetServi
 
         return mealList;
     }
+    public ArrayList<Ingredient> getMissingIngredients(int fridgeId, ArrayList<Ingredient> totalIngredients) {
+        ArrayList<Ingredient> missingList = new ArrayList<>();
+
+        for (Ingredient required : totalIngredients) {
+            double availableQty = getTotalQuantityOfIngredient(required.getName(), required.getUnit(), fridgeId);
+
+            if (availableQty < required.getQuantity()) {
+                double missingQty = required.getQuantity() - availableQty;
+
+                // Tạo bản sao với số lượng thiếu
+                Ingredient missing = new Ingredient(
+                        0,
+                        required.getName(),
+                        missingQty,
+                        required.getUnit()
+                );
+                missingList.add(missing);
+            }
+        }
+
+        return missingList;
+    }
+
+
 
 
     public static void main(String[] args) {

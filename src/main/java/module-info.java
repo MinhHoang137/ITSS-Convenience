@@ -12,6 +12,7 @@ module itss.convenience {
     requires com.almasb.fxgl.all;
     requires java.sql;
     requires java.desktop;
+    requires mysql.connector.j;
 
     opens itss.convenience to javafx.fxml;
 

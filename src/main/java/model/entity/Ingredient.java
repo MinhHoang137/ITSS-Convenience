@@ -64,4 +64,13 @@ public class Ingredient {
                 ", unit=" + unit +
                 '}';
     }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Ingredient that)) return false;
+        String thisName = this.name.toLowerCase().trim();
+        String thatName = that.name.toLowerCase().trim();
+        return thisName.equals(thatName) &&
+                this.unit == that.unit;
+    }
 }

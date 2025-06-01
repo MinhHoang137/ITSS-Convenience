@@ -51,7 +51,7 @@ CREATE TABLE dish_use_ingredient (
 );
 
 CREATE TABLE meal_has_dish (
-  mealId INT,
+  id INT,
   dishId INT,
   PRIMARY KEY (mealId, dishId),
   FOREIGN KEY (mealId) REFERENCES meal_plan(id),
@@ -86,7 +86,42 @@ CREATE TABLE buy_ingredient (
   FOREIGN KEY (shoppingListId) REFERENCES shoppingList(shoppingListId)
 );
 
+-- Bổ sung cột và ràng buộc cho bảng User
+ALTER TABLE User
+ADD COLUMN role VARCHAR(20) DEFAULT 'member';
+
+ALTER TABLE User
+ADD CONSTRAINT unique_username UNIQUE (username);
+
+-- Bổ sung cột userGroupId cho bảng fridge
+ALTER TABLE fridge
+ADD COLUMN userGroupId INT,
+ADD CONSTRAINT fk_fridge_usergroup FOREIGN KEY (userGroupId) REFERENCES UserGroup(groupId);
+
+-- Bổ sung cột time và userGroupId cho bảng meal_plan
+ALTER TABLE meal_plan
+ADD COLUMN time DATETIME,
+ADD COLUMN userGroupId INT,
+ADD CONSTRAINT fk_mealplan_usergroup FOREIGN KEY (userGroupId) REFERENCES UserGroup(groupId);
+
+-- 3. Đổi tên cột groupId trong UserGroup
+ALTER TABLE UserGroup CHANGE groupId id INT AUTO_INCREMENT;
+
+-- 4. Đổi tên cột groupId trong User
+ALTER TABLE User CHANGE groupId groupId INT; -- giữ lại để sửa ràng buộc sau
+-- hoặc nếu muốn đổi luôn sang `group_id` thì:
+-- ALTER TABLE User CHANGE groupId group_id INT;
+
+-- 5. Tạo lại foreign key với tên cột mới của UserGroup
+ALTER TABLE User
+  ADD CONSTRAINT fk_user_group
+  FOREIGN KEY (groupId) REFERENCES UserGroup(id);
+  
+  ALTER TABLE User CHANGE userId id INT AUTO_INCREMENT;
+
+
 INSERT INTO fridge (fridgeId) VALUES (1), (2);
+INSERT INTO UserGroup (groupName) VALUES ('Gia đình A'), ('Nhóm bạn B');
 
 
 

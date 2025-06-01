@@ -26,6 +26,8 @@ public class MealPlanController extends BaseController {
     @FXML private VBox mealPlanContainer;
     @FXML private Button addMealButton;
 
+    private int groupId = 1;
+
     public static MealPlanController getCurrent() {
         return current;
     }
@@ -37,14 +39,14 @@ public class MealPlanController extends BaseController {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ArrayList<Meal> meals = mealPlanDAO.getAllMeals();
+        ArrayList<Meal> meals = mealPlanDAO.getAllMeals(groupId);
         displayMealCards(meals);
     }
 
 
     @FXML private void onAddMeal(ActionEvent e) {
         ViewController.getInstance().openController(new AddMealView(),
-                "Thêm bữa ăn", 800, 600);
+                "Thêm bữa ăn", 1000, 600);
     }
 
     private void displayMealCards(List<Meal> mealList) {
@@ -87,5 +89,9 @@ public class MealPlanController extends BaseController {
     public BaseController loadAndShow(Stage stage, String title, int width, int height) {
         current = (MealPlanController) super.loadAndShow(stage, title, width, height);
         return current;
+    }
+    public void refreshMealPlan() {
+        ArrayList<Meal> meals = mealPlanDAO.getAllMeals(groupId);
+        displayMealCards(meals);
     }
 }

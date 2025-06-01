@@ -111,19 +111,19 @@ public class MealPlanCreateService extends BaseService implements IMealPlanCreat
         return true;
     }
 
-    public boolean addMealToTable(Meal meal) {
+    public boolean addMealToTable(Meal meal, int groupId) {
         getConnection();
         boolean success = false;
 
-        String insertQuery = "INSERT INTO meal_plan (eatTime, eatDate) VALUES (?, ?)";
+        String insertQuery = "INSERT INTO meal_plan (eatTime, eatDate, userGroupId) VALUES (?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
-            stmt.setString(1, meal.getMealType().toString().toLowerCase()); // Đưa về lowercase cho phù hợp với ENUM trong DB
+            stmt.setString(1, meal.getMealType().toString().toLowerCase());
             stmt.setInt(2, meal.getDateIndex());
+            stmt.setInt(3, groupId);
 
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
-                // Lấy id được tự động sinh và gán vào đối tượng meal
                 ResultSet generatedKeys = stmt.getGeneratedKeys();
                 if (generatedKeys.next()) {
                     int generatedId = generatedKeys.getInt(1);
@@ -140,6 +140,7 @@ public class MealPlanCreateService extends BaseService implements IMealPlanCreat
 
         return success;
     }
+
     public boolean addMealDishRelations(Meal meal) {
         getConnection();
         boolean success = false;
@@ -165,8 +166,8 @@ public class MealPlanCreateService extends BaseService implements IMealPlanCreat
         return success;
     }
 
-    public boolean addMeal(Meal meal) {
-        if (!addMealToTable(meal)) {
+    public boolean addMeal(Meal meal, int groupId) {
+        if (!addMealToTable(meal, groupId)) {
             System.out.println("Không thể thêm bữa ăn vào bảng meal_plan.");
             return false;
         }

@@ -13,8 +13,10 @@ import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import model.dao.MealPlanDAO;
 import model.entity.Dish;
+import model.entity.Ingredient;
 import model.entity.Meal;
 import model.entity.MealType;
+import session.Session;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,8 +24,11 @@ import java.util.ResourceBundle;
 
 public class AddMealView extends BaseController {
     private static AddMealView current;
+    private MealPlanController mealPlanController = MealPlanController.getCurrent();
     private Meal meal = new Meal();
     private MealPlanDAO mealPlanDAO = MealPlanDAO.getInstance();
+    private int fridgeId = 1;
+    private int groupId = 1;
 
     @FXML
     private VBox addedContainer;
@@ -60,10 +65,10 @@ public class AddMealView extends BaseController {
         int dateIndex = getEatDate();
         if (name.isEmpty()) {
             if (dateIndex != -1) {
-                dishes = mealPlanDAO.getCookableDishesByDayIndex(1, dateIndex);
+                dishes = mealPlanDAO.getCookableDishesByDayIndex(fridgeId, dateIndex);
             }
             else {
-                dishes = mealPlanDAO.getCookableDishes(1);
+                dishes = mealPlanDAO.getCookableDishes(fridgeId);
             }
         } else {
             dishes = mealPlanDAO.getDishLike(name);
@@ -74,10 +79,24 @@ public class AddMealView extends BaseController {
     @FXML
     private void OnAddMeal(ActionEvent event) {
         try {
-            mealPlanDAO.addMeal(meal);
-            // Hiển thị thông báo thành công
-            NotificationView.Create("Đã thêm bữa ăn thành công!");
-            // Tạo danh sách mua sắm nếu thiếu nguyên liệu
+            if (mealPlanDAO.addMeal(meal, groupId)){
+                NotificationView.Create("Bữa ăn đã được thêm thành công!");
+                mealPlanController = MealPlanController.getCurrent();
+                mealPlanController.refreshMealPlan();
+                // Tạo danh sách mua sắm nếu thiếu nguyên liệu
+                ArrayList<Ingredient> totalIngredients = getTotalIngredient(meal);
+                // Kiểm tra nguyên liệu có đủ không
+                ArrayList<Ingredient> missingIngredients = mealPlanDAO.getMissingIngredients(fridgeId, totalIngredients);
+                if (!missingIngredients.isEmpty()) {
+                    // Nếu thiếu nguyên liệu, tạo danh sách mua sắm
+                    NotificationView.Create("Đã tạo danh sách mua sắm cho nguyên liệu thiếu.");
+                } else {
+                    NotificationView.Create("Không có nguyên liệu nào cần mua thêm.");
+                }
+            } else {
+                NotificationView.Create("Không thể thêm bữa ăn. Vui lòng kiểm tra lại.");
+                return;
+            }
         }
         catch (Exception e) {
             // Hiển thị thông báo lỗi
@@ -103,18 +122,16 @@ public class AddMealView extends BaseController {
         return true;
     }
 
-    public boolean removeDishFromMeal(DishCard dishCard) {
+    public void removeDishFromMeal(DishCard dishCard) {
         Dish dish = dishCard.getDish();
         if (dish == null || dish.getId() <= 0) {
-            return false;
+            return;
         }
         ArrayList<Dish> dishList = meal.getDishList();
         if(dishList.removeIf(existingDish -> existingDish.getId() == dish.getId())){
             dishCard.setSelected(false);
             addedContainer.getChildren().remove(dishCard.getParent());
-            return true;
         }
-        return false;
     }
 
     public VBox getAddedContainer() {
@@ -163,6 +180,38 @@ public class AddMealView extends BaseController {
         current = (AddMealView) super.loadAndShow(stage, title, width, height);
         return current;
     }
+    private ArrayList<Ingredient> getTotalIngredient(Meal meal) {
+        ArrayList<Ingredient> totalIngredients = new ArrayList<>();
+
+        for (Dish dish : meal.getDishList()) {
+            for (Ingredient ingredient : dish.getIngredients()) {
+                boolean found = false;
+
+                for (Ingredient total : totalIngredients) {
+                    if (total.equals(ingredient)) {
+                        // Nếu đã có nguyên liệu giống, cộng thêm số lượng
+                        total.setQuantity(total.getQuantity() + ingredient.getQuantity());
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (!found) {
+                    // Nếu chưa có, thêm mới một bản sao
+                    Ingredient copy = new Ingredient(
+                            ingredient.getId(),
+                            ingredient.getName(),
+                            ingredient.getQuantity(),
+                            ingredient.getUnit(),
+                            ingredient.getExpirationDate()
+                    );
+                    totalIngredients.add(copy);
+                }
+            }
+        }
+
+        return totalIngredients;
+    }
 
     private MealType getEatTime() {
         String selected = eatTImeBox.getValue();
@@ -208,5 +257,10 @@ public class AddMealView extends BaseController {
         }
     }
 
-
+    @FXML
+    private void onSearchAll(ActionEvent actionEvent) {
+        foundContainer.getChildren().clear();
+        ArrayList<Dish> dishes = mealPlanDAO.getAllDishes();
+        putDishesTo(foundContainer, dishes);
+    }
 }

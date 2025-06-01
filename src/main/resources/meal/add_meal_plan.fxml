@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="430.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.meal.AddMealView">
+<AnchorPane prefHeight="430.0" prefWidth="873.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.meal.AddMealView">
    <children>
       <!-- ScrollPane cho món đã thêm -->
       <ScrollPane fitToWidth="true" layoutX="20.0" layoutY="80.0" prefHeight="292.0" prefWidth="454.0" style="-fx-background: #f5f5f5;">
@@ -26,10 +26,10 @@
       </ScrollPane>
 
       <!-- HBox nhập tên món -->
-      <HBox alignment="CENTER_LEFT" layoutX="495.0" layoutY="30.0" prefHeight="31.0" prefWidth="226.0" spacing="10" style="-fx-padding: 0 0 0 5;">
+      <HBox alignment="CENTER_LEFT" layoutX="495.0" layoutY="30.0" prefHeight="31.0" prefWidth="194.0" spacing="10" style="-fx-padding: 0 0 0 5;">
          <children>
             <Label prefHeight="20.0" prefWidth="81.0" style="-fx-font-size: 14px; -fx-font-weight: bold;" text="Tên món:" />
-            <TextField fx:id="dishName" prefWidth="160.0" promptText="Nhập tên món" />
+            <TextField fx:id="dishName" prefHeight="26.0" prefWidth="123.0" promptText="Nhập tên món" />
          </children>
       </HBox>
 
@@ -52,6 +52,7 @@
       <!-- Nút thêm -->
       <Button layoutX="20.0" layoutY="378.0" mnemonicParsing="false" onAction="#OnAddMeal" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 5;" text="Thêm">
       </Button>
-      <Button layoutX="748.0" layoutY="27.0" mnemonicParsing="false" onAction="#OnSearchByName" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 5;" text="Tìm" />
+      <Button layoutX="698.0" layoutY="28.0" mnemonicParsing="false" onAction="#OnSearchByName" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 5;" text="Tìm" />
+      <Button layoutX="762.0" layoutY="28.0" mnemonicParsing="false" onAction="#onSearchAll" style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 5;" text="Tất cả" />
    </children>
 </AnchorPane>

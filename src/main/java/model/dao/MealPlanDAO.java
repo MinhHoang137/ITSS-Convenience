@@ -1,6 +1,7 @@
 package model.dao;
 
 import model.entity.Dish;
+import model.entity.Ingredient;
 import model.entity.Meal;
 import model.service.meal_plan.*;
 
@@ -82,8 +83,8 @@ public class MealPlanDAO {
      * @param meal the Meal object to be added
      * @return true if the meal was added successfully, false otherwise
      */
-    public boolean addMeal(Meal meal) {
-        return mealPlanCreateService.addMeal(meal);
+    public boolean addMeal(Meal meal, int groupId) {
+        return mealPlanCreateService.addMeal(meal, groupId);
     }
     // Delete
     /**
@@ -95,10 +96,13 @@ public class MealPlanDAO {
         return mealDeleteService.deleteMeal(mealId);
     }
 
-    public Meal getMeal(int mealId) {
-        return mealPlanService.getMeal(mealId);
+    public Meal getMeal(int mealId, int groupId) {
+        return mealPlanService.getMeal(mealId, groupId);
     }
-    public ArrayList<Meal> getAllMeals() {
-        return mealPlanService.getAllMeals();
+    public ArrayList<Meal> getAllMeals(int groupId) {
+        return mealPlanService.getAllMeals(groupId);
+    }
+    public ArrayList<Ingredient> getMissingIngredients(int fridgeId, ArrayList<Ingredient> totalIngredients){
+        return mealPlanService.getMissingIngredients(fridgeId, totalIngredients);
     }
 }

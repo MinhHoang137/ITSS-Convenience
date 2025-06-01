@@ -48,7 +48,7 @@ public class MealCard extends BaseController {
     }
 
     private String getDateText(int index) {
-        String[] days = {"Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"};
+        String[] days = {"Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy", "Chủ nhật"};
         return (index >= 0 && index < 7) ? days[index] : "Không rõ";
     }
     private String getTimeText(MealType mealType) {

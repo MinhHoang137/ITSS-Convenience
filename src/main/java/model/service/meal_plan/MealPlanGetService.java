@@ -244,7 +244,7 @@ public class MealPlanGetService extends BaseService implements IMealPlanGetServi
         getConnection();
         Meal meal = null;
 
-        String mealQuery = "SELECT * FROM meal_plan WHERE id = ? AND userGroupId = ?";
+        String mealQuery = "SELECT * FROM meal_plan WHERE id = ? AND groupId = ?";
         String dishIdQuery = "SELECT dishId FROM meal_has_dish WHERE mealId = ?";
 
         try (
@@ -290,7 +290,7 @@ public class MealPlanGetService extends BaseService implements IMealPlanGetServi
     public ArrayList<Meal> getAllMeals(int groupId) {
         getConnection();
         ArrayList<Meal> mealList = new ArrayList<>();
-        String query = "SELECT id FROM meal_plan WHERE userGroupId = ?";
+        String query = "SELECT id FROM meal_plan WHERE groupId = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, groupId);

@@ -16,6 +16,7 @@ import model.entity.Dish;
 import model.entity.Ingredient;
 import model.entity.Meal;
 import model.entity.MealType;
+import model.service.fridge.FridgeService;
 import session.Session;
 
 import java.net.URL;
@@ -25,10 +26,11 @@ import java.util.ResourceBundle;
 public class AddMealView extends BaseController {
     private static AddMealView current;
     private MealPlanController mealPlanController = MealPlanController.getCurrent();
+    private FridgeService fridgeService = new FridgeService();
     private Meal meal = new Meal();
     private MealPlanDAO mealPlanDAO = MealPlanDAO.getInstance();
-    private int fridgeId = 1;
-    private int groupId = 1;
+    private int groupId = Session.getCurrentUser().getGroupId();
+    private int fridgeId = fridgeService.getFridgeIdByGroupId(groupId);
 
     @FXML
     private VBox addedContainer;
@@ -171,7 +173,7 @@ public class AddMealView extends BaseController {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         eatTImeBox.getItems().addAll("Bữa sáng", "Bữa trưa", "Bữa tối");
         eatDateBox.getItems().addAll("Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy");
-        ArrayList<Dish> dishes = mealPlanDAO.getCookableDishes(1);
+        ArrayList<Dish> dishes = mealPlanDAO.getCookableDishes(fridgeId);
         putDishesTo(foundContainer, dishes);
     }
 

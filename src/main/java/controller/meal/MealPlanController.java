@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.dao.MealPlanDAO;
 import model.entity.*;
+import session.Session;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class MealPlanController extends BaseController {
     @FXML private VBox mealPlanContainer;
     @FXML private Button addMealButton;
 
-    private int groupId = 1;
+    private int groupId = Session.getCurrentUser().getGroupId();
 
     public static MealPlanController getCurrent() {
         return current;

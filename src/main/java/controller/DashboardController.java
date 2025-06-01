@@ -1,5 +1,7 @@
 package controller;
 
+import controller.fridge.FridgeController;
+import controller.meal.MealPlanController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.Scene;
@@ -39,7 +41,8 @@ public class DashboardController {
 
     @FXML
     public void goToFridge() {
-        switchScene("/fridge/fridge.fxml");
+        ViewController.getInstance().openController(new FridgeController(),
+                "Tủ lạnh", 1000, 600);
     }
 
     @FXML
@@ -49,7 +52,8 @@ public class DashboardController {
 
     @FXML
     public void goToMealPlan() {
-        switchScene("/itss/convenience/meal_plan.fxml");
+        ViewController.getInstance().openController(new MealPlanController(),
+                "Kế hoạch bữa ăn", 1000, 600);
     }
 
     @FXML

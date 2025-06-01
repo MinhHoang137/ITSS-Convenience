@@ -115,7 +115,7 @@ public class MealPlanCreateService extends BaseService implements IMealPlanCreat
         getConnection();
         boolean success = false;
 
-        String insertQuery = "INSERT INTO meal_plan (eatTime, eatDate, userGroupId) VALUES (?, ?, ?)";
+        String insertQuery = "INSERT INTO meal_plan (eatTime, eatDate, groupId) VALUES (?, ?, ?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, meal.getMealType().toString().toLowerCase());

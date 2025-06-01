@@ -85,26 +85,31 @@ public class MealPlanGetService extends BaseService implements IMealPlanGetServi
      * @param dishName The name of the dish to retrieve.
      * @return A Dish object containing the dish details, or null if not found.
      */
-    public Dish getDish(String dishName) {
+    public ArrayList<Dish> getDishLike(String dishName) {
+        ArrayList<Dish> dishList = new ArrayList<>();
         getConnection();
-        String query = "SELECT dishId FROM dish WHERE dishName = ?";
-        int dishId = -1;
+
+        String query = "SELECT dishId FROM dish WHERE dishName LIKE ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, dishName);
+            stmt.setString(1, "%" + dishName + "%"); // tìm gần đúng
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                dishId = rs.getInt("dishId");
+
+            while (rs.next()) {
+                int dishId = rs.getInt("dishId");
+                Dish dish = getDish(dishId); // dùng lại hàm đã có
+                if (dish != null) {
+                    dishList.add(dish);
+                }
             }
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("Lỗi truy vấn LIKE: " + e.getMessage());
         } finally {
             closeConnection();
         }
-        if (dishId != -1) {
-            return getDish(dishId);
-        }
-        return null;
+
+        return dishList;
     }
+
 
     /**
      * Retrieves all dishes from the database, including their ingredients.
@@ -193,7 +198,7 @@ public class MealPlanGetService extends BaseService implements IMealPlanGetServi
         for (Ingredient ingredient : dish.getIngredients()) {
             double totalQuantity = getTotalQuantityOfIngredient(ingredient.getName(), ingredient.getUnit(), fridgeId);
             if (totalQuantity < ingredient.getQuantity()) {
-                System.out.println("Không đủ nguyên liệu: " + ingredient.getName());
+//                System.out.println("Không đủ nguyên liệu: " + ingredient.getName());
                 return false;
             }
         }
@@ -307,25 +312,15 @@ public class MealPlanGetService extends BaseService implements IMealPlanGetServi
     }
 
 
-
     public static void main(String[] args) {
         MealPlanGetService mealPlanGetService = new MealPlanGetService();
         mealPlanGetService.getConnection(); // Mở kết nối đến CSDL
-        ArrayList<Dish> dishes = mealPlanGetService.getCookableDishes(1);
-        if (dishes.isEmpty()) {
-            System.out.println("Không có món ăn nào có thể nấu.");
-        } else {
-            System.out.println("Các món ăn có thể nấu:");
-            for (Dish dish : dishes) {
-                System.out.println("- " + dish.getName() + ": " + dish.getDescription());
-                System.out.println("  Nguyên liệu:");
-                for (Ingredient ingredient : dish.getIngredients()) {
-                    System.out.println("  - " + ingredient.getName() + ": " + ingredient.getQuantity() + " " + ingredient.getUnit());
-                }
-                System.out.println("  Thời gian ăn: " + dish.getEatTime() + ", Ngày ăn: " + dish.getEatDate());
+        ArrayList<Dish> dishes = mealPlanGetService.getDishLike("Bánh");
+        for (Dish dish : dishes) {
+            System.out.println("Dish ID: " + dish.getId() + ", Name: " + dish.getName());
+            for (Ingredient ingredient : dish.getIngredients()) {
+                System.out.println("  Ingredient: " + ingredient.getName() + ", Quantity: " + ingredient.getQuantity() + " " + ingredient.getUnit());
             }
         }
-
-        mealPlanGetService.closeConnection(); // Đóng kết nối sau khi sử dụng
     }
 }

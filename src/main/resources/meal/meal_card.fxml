@@ -7,19 +7,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="142.0" prefWidth="379.0" style="-fx-border-color: #0077CC; -fx-border-width: 2; -fx-border-radius: 5;" xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.meal.MealCard">
+<AnchorPane prefHeight="147.0" prefWidth="623.0" style="-fx-border-color: #0077CC; -fx-border-width: 2; -fx-border-radius: 5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.meal.MealCard">
    <children>
-      <VBox layoutX="8.0" prefHeight="142.0" prefWidth="280.0">
+      <VBox layoutX="8.0" prefHeight="142.0" prefWidth="517.0">
          <children>
-            <HBox prefHeight="46.0" prefWidth="362.0">
+            <HBox prefHeight="46.0" prefWidth="538.0">
                <children>
                   <Label prefHeight="46.0" prefWidth="101.0" text="Tên món:">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="dishNameText" prefHeight="46.0" prefWidth="122.0">
+                  <Label fx:id="dishNameText" prefHeight="46.0" prefWidth="403.0">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -33,7 +32,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="timeToEatText" prefHeight="46.0" prefWidth="122.0">
+                  <Label fx:id="timeToEatText" prefHeight="46.0" prefWidth="418.0">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -47,7 +46,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="dateToEatText" prefHeight="46.0" prefWidth="122.0">
+                  <Label fx:id="dateToEatText" prefHeight="46.0" prefWidth="418.0">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -56,7 +55,7 @@
             </HBox>
          </children>
       </VBox>
-      <Button fx:id="deleteButton" layoutX="321.0" layoutY="59.0" mnemonicParsing="false" onAction="#OnDelete" text="Xóa">
+      <Button fx:id="deleteButton" layoutX="565.0" layoutY="56.0" mnemonicParsing="false" onAction="#OnDelete" text="Xóa">
          <font>
             <Font size="14.0" />
          </font>

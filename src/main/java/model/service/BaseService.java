@@ -22,7 +22,7 @@ public abstract class BaseService {
             // Bắt buộc nạp driver nếu không dùng build tool như Maven hoặc chạy từ IDE
             Class.forName("com.mysql.cj.jdbc.Driver"); // Hoặc com.mysql.jdbc.Driver với bản cũ
             connection = DriverManager.getConnection(url, username, password);
-            System.out.println("Kết nối đến CSDL thành công!");
+//            System.out.println("Kết nối đến CSDL thành công!");
             return connection;
         } catch (ClassNotFoundException e) {
             System.err.println("Không tìm thấy JDBC Driver. Kiểm tra thư viện mysql-connector-j.");

@@ -38,8 +38,8 @@ public class MealPlanDAO {
      * @param name the name of the dish
      * @return the Dish object if found, null otherwise
      */
-    public Dish getDish(String name) {
-        return mealPlanService.getDish(name);
+    public ArrayList<Dish> getDishLike(String name) {
+        return mealPlanService.getDishLike(name);
     }
 
     /**
@@ -93,5 +93,12 @@ public class MealPlanDAO {
      */
     public boolean deleteMeal(int mealId) {
         return mealDeleteService.deleteMeal(mealId);
+    }
+
+    public Meal getMeal(int mealId) {
+        return mealPlanService.getMeal(mealId);
+    }
+    public ArrayList<Meal> getAllMeals() {
+        return mealPlanService.getAllMeals();
     }
 }

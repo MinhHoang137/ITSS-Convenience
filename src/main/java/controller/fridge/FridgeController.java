@@ -1,6 +1,7 @@
 package controller.fridge;
 
 import controller.BaseController;
+import controller.ViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -63,7 +64,10 @@ public class FridgeController extends BaseController implements Initializable {
 
     @FXML
     private void getexpiredIngre(ActionEvent event) {
-        new ExpiringIngredientController().loadAndShow(new Stage(), "Nguyên liệu sắp hết hạn", 800, 600);
+//        new ExpiringIngredientController().loadAndShow(new Stage(), "Nguyên liệu sắp hết hạn", 800, 600);
+//        switchScene("/fridge/expiring.fxml");
+        ViewController.getInstance().openController(new ExpiringIngredientController(),"Nguyên liệu sắp hết hạn",800,600);
+
     }
 
     @Override

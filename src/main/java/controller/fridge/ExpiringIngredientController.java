@@ -57,6 +57,6 @@ public class ExpiringIngredientController extends BaseController {
 
     @Override
     public String getFxmlPath() {
-        return "/view/fridge/expiring.fxml";
+        return "/fridge/expiring.fxml";
     }
 }

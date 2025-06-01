@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import model.entity.Ingredient;
 import model.entity.Unit;
 import model.service.fridge.FridgeService;
+import session.Session;
 
 import java.net.URL;
 import java.util.List;
@@ -37,10 +38,15 @@ public class FridgeController extends BaseController implements Initializable {
 
     private final FridgeService fridgeService = new FridgeService();
 
-    private final int fridgeId = 1; // Nếu bạn có hệ thống nhiều tủ lạnh, sửa thành giá trị động.
+    private int fridgeId; // Không khởi tạo mặc định nữa
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Lấy groupId từ session
+        int groupId = Session.getCurrentUser().getGroupId();
+        // Lấy fridgeId từ groupId
+        fridgeId = fridgeService.getFridgeIdByGroupId(groupId);
+
         // Gắn cột với thuộc tính tương ứng trong entity Ingredient
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));

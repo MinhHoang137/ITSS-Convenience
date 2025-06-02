@@ -6,6 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -25,6 +27,9 @@ import java.util.ResourceBundle;
 
 public class AddMealView extends BaseController {
     private static AddMealView current;
+    private Dish dish;
+
+
     private MealPlanController mealPlanController = MealPlanController.getCurrent();
     private FridgeService fridgeService = new FridgeService();
     private Meal meal = new Meal();
@@ -42,6 +47,13 @@ public class AddMealView extends BaseController {
     private ComboBox<String> eatTImeBox;
     @FXML
     private ComboBox<String> eatDateBox;
+    @FXML
+    private Label dishNameText;
+    @FXML
+    private Label instructionText;
+    @FXML
+    private ListView<String> ingredientList;
+
 
     private void putDishesTo(Pane container, ArrayList<Dish> dishes) {
         container.getChildren().clear();
@@ -175,6 +187,21 @@ public class AddMealView extends BaseController {
         eatDateBox.getItems().addAll("Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy");
         ArrayList<Dish> dishes = mealPlanDAO.getCookableDishes(fridgeId);
         putDishesTo(foundContainer, dishes);
+    }
+    public void setDish(Dish dish) {
+        this.dish = dish;
+        if (dish != null) {
+            dishNameText.setText(dish.getName());
+            instructionText.setText(dish.getDescription());
+            ingredientList.getItems().clear();
+            for (Ingredient ingredient : dish.getIngredients()) {
+                ingredientList.getItems().add(ingredient.getName() + " - " + ingredient.getQuantity() + " " + ingredient.getUnit());
+            }
+        } else {
+            dishNameText.setText("Chưa chọn món ăn");
+            instructionText.setText("");
+            ingredientList.getItems().clear();
+        }
     }
 
     @Override

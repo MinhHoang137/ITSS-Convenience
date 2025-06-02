@@ -12,6 +12,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="interactButton" layoutX="202.0" layoutY="23.0" mnemonicParsing="false" onAction="#OnClick" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 6;" text="Select" />
+      <Button fx:id="interactButton" layoutX="224.0" layoutY="23.0" mnemonicParsing="false" onAction="#OnClick" style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-background-radius: 6;" text="Select" />
+      <Button layoutX="163.0" layoutY="23.0" mnemonicParsing="false" onAction="#OnDetailClick" style="-fx-background-color: #00FFFF; -fx-text-fill: black; -fx-background-radius: 6;" text="Chi tiết" />
    </children>
 </AnchorPane>

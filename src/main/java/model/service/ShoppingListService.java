@@ -1,5 +1,6 @@
 package model.service;
 
+import model.entity.Ingredient;
 import model.entity.ShoppingList;
 
 import java.sql.*;
@@ -77,27 +78,39 @@ public class ShoppingListService extends BaseService implements IShoppingListSer
     }
 
     @Override
-    public ShoppingList getShoppingListById(int shoppingListId) {
-        String sql = "SELECT * FROM shoppingList WHERE shoppingListId = ?";
+    public boolean addIngredientsToShoppingList(List<Ingredient> ingredients, int shoppingListId) {
+        String sql = "INSERT INTO buy_ingredient (shoppingListId, ingredientName, quantity, unitType) VALUES (?, ?, ?, ?)";
+        boolean success = true;
+
         try {
             connection = getConnection();
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setInt(1, shoppingListId);
-            ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-                ShoppingList s = new ShoppingList();
-                s.setShoppingListId(rs.getInt("shoppingListId"));
-                s.setBuyDate(rs.getDate("buyDate").toLocalDate());
-                s.setGroupId(rs.getInt("groupId"));
-                return s;
+            for (Ingredient ing : ingredients) {
+                ps.setInt(1, shoppingListId);
+                ps.setString(2, ing.getName());
+                ps.setDouble(3, ing.getQuantity());
+                ps.setString(4, ing.getUnit().toString().toLowerCase());
+                ps.addBatch();
             }
+
+            int[] result = ps.executeBatch();
+            for (int r : result) {
+                if (r == PreparedStatement.EXECUTE_FAILED) {
+                    success = false;
+                    break;
+                }
+            }
+
         } catch (SQLException e) {
-            System.err.println("Lỗi khi lấy thông tin danh sách mua sắm: " + e.getMessage());
+            System.err.println("Lỗi khi thêm danh sách nguyên liệu vào shopping list: " + e.getMessage());
+            success = false;
         } finally {
             closeConnection();
         }
-        return null;
+
+        return success;
     }
+
 
 }

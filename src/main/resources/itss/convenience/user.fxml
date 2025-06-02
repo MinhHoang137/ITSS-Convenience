@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.admin.UserListController"
+      spacing="15" alignment="TOP_CENTER" style="-fx-padding: 20;">
+
+    <Label text="👥 Danh sách người dùng"
+           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="tableUser" prefHeight="400" prefWidth="600">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="80"/>
+            <TableColumn fx:id="colUsername" text="Tên người dùng" prefWidth="180"/>
+            <TableColumn fx:id="colRole" text="Vai trò" prefWidth="120"/>
+            <TableColumn fx:id="colGroupId" text="ID nhóm" prefWidth="180"/>
+            <TableColumn fx:id="colGroup" text="Tên nhóm" prefWidth="180"/>
+        </columns>
+    </TableView>
+    <VBox spacing="10" alignment="CENTER" style="-fx-padding: 10;">
+        <HBox spacing="10">
+            <Label text="Vai trò:"/>
+            <ComboBox fx:id="cbRole" prefWidth="120"/>
+            <Label text="Group ID:"/>
+            <TextField fx:id="txtGroupId" prefWidth="100"/>
+            <Button text="🔁 Cập nhật" onAction="#handleUpdateUser"/>
+            <Button text="🗑️ Xóa" onAction="#handleDeleteUser"/>
+        </HBox>
+    </VBox>
+
+</VBox>
+

@@ -22,10 +22,15 @@ public class LoginController {
         User user = userService.login(username);
         if (user != null) {
             Session.setCurrentUser(user);
-            if (user.getGroupId() == 0) {
-                switchScene("/itss/convenience/introduce_group.fxml");
-            } else {
-                switchScene("/itss/convenience/dashboard.fxml");
+            if(Session.getCurrentUser().getRole().name().equalsIgnoreCase("ADMIN")) {
+                switchScene("/itss/convenience/admin_dashboard.fxml");
+            }
+            else {
+                if (user.getGroupId() == 0) {
+                    switchScene("/itss/convenience/introduce_group.fxml");
+                } else {
+                    switchScene("/itss/convenience/dashboard.fxml");
+                }
             }
         } else {
             showAlert("Tài khoản không tồn tại.");

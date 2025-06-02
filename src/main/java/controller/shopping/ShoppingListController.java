@@ -58,26 +58,37 @@ public class ShoppingListController {
 
     @FXML
     public void handleAddShoppingList() {
-        LocalDate date = dateBuyDate.getValue();
-        int groupId = Session.getCurrentUser().getGroupId();
+        try {
+            LocalDate date = dateBuyDate.getValue();
+            int groupId = Session.getCurrentUser().getGroupId();
 
-        if (date == null) {
-            showAlert("Vui lòng chọn ngày mua.");
-            return;
-        }
+            if (date == null) {
+                showAlert("Vui lòng chọn ngày mua.");
+                return;
+            }
 
-        ShoppingList list = new ShoppingList();
-        list.setBuyDate(date);
-        list.setGroupId(groupId);
+            // Check duplicate date
+            if (shoppingListService.isDateDuplicated(date, groupId)) {
+                showAlert("⚠️ Nhóm đã có danh sách mua sắm cho ngày này.");
+                return;
+            }
 
-        boolean success = shoppingListService.createShoppingList(list);
-        if (success) {
-            listData.add(list);
-            dateBuyDate.setValue(null);
-        } else {
-            showAlert("Không thể thêm danh sách. Vui lòng thử lại.");
+            ShoppingList list = new ShoppingList();
+            list.setBuyDate(date);
+            list.setGroupId(groupId);
+
+            boolean success = shoppingListService.createShoppingList(list);
+            if (success) {
+                listData.add(list);
+                clearInputs();
+            } else {
+                showAlert("Thêm không thành công. Kiểm tra dữ liệu.");
+            }
+        } catch (Exception e) {
+            showAlert("Lỗi: " + e.getMessage());
         }
     }
+
 
     @FXML
     public void handleViewSelectedList() {
@@ -133,4 +144,8 @@ public class ShoppingListController {
     private void showAlert(String msg) {
         new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK).showAndWait();
     }
+    private void clearInputs() {
+        dateBuyDate.setValue(null);
+    }
+
 }

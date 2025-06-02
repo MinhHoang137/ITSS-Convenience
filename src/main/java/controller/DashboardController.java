@@ -41,8 +41,7 @@ public class DashboardController {
 
     @FXML
     public void goToFridge() {
-        ViewController.getInstance().openController(new FridgeController(),
-                "Tủ lạnh", 1000, 600);
+        switchScene("/fridge/fridge.fxml");
     }
 
     @FXML

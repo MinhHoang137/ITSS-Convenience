@@ -57,16 +57,47 @@ public class FridgeService extends BaseService {
     // }
     // return list;
     // }
+//    public List<Ingredient> getAllIngredients(int fridgeId) {
+//        getConnection();
+//        List<Ingredient> list = new ArrayList<>();
+//        try {
+//            String sql = """
+//                        SELECT ingredientName, unitType, SUM(quantity) as totalQuantity
+//                        FROM ingredient
+//                        WHERE fridgeId = ?
+//                        GROUP BY ingredientName, unitType
+//                    """;
+//            PreparedStatement stmt = connection.prepareStatement(sql);
+//            stmt.setInt(1, fridgeId);
+//            ResultSet rs = stmt.executeQuery();
+//            while (rs.next()) {
+//                Ingredient ing = new Ingredient(
+//                        -1, // ID không cần thiết trong trường hợp này
+//                        rs.getString("ingredientName"),
+//                        rs.getDouble("totalQuantity"),
+//                        Unit.valueOf(rs.getString("unitType")),
+//                        null // bỏ expirationDate
+//                );
+//                list.add(ing);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally {
+//            closeConnection();
+//        }
+//        return list;
+//    }
     public List<Ingredient> getAllIngredients(int fridgeId) {
         getConnection();
         List<Ingredient> list = new ArrayList<>();
         try {
             String sql = """
-                        SELECT ingredientName, unitType, SUM(quantity) as totalQuantity
-                        FROM ingredient
-                        WHERE fridgeId = ?
-                        GROUP BY ingredientName, unitType
-                    """;
+                    SELECT ingredientName, unitType, SUM(quantity) as totalQuantity
+                    FROM ingredient
+                    WHERE fridgeId = ?
+                    GROUP BY ingredientName, unitType
+                    HAVING SUM(quantity) > 0
+                """;
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, fridgeId);
             ResultSet rs = stmt.executeQuery();
@@ -87,6 +118,7 @@ public class FridgeService extends BaseService {
         }
         return list;
     }
+
     public boolean cookDish(Dish dish, int fridgeId) {
         for (Ingredient ing : dish.getIngredients()) {
             boolean ok = useIngredient(ing.getName(), ing.getQuantity(), ing.getUnit(), fridgeId);

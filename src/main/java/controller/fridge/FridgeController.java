@@ -2,9 +2,8 @@ package controller.fridge;
 
 import controller.BaseController;
 import controller.utils.SceneSwitcher;
-import controller.DashboardController;
-import controller.ViewController;
-import controller.utils.SceneSwitcher;
+
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -24,12 +23,12 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static controller.utils.SceneSwitcher.switchScene;
-
 public class FridgeController extends BaseController implements Initializable {
 
     @FXML
     private Button expireCheck;
+    @FXML
+    private Button goBack;
     @FXML
     private TableView<Ingredient> tableView;
 
@@ -41,6 +40,8 @@ public class FridgeController extends BaseController implements Initializable {
 
     @FXML
     private TableColumn<Ingredient, Unit> unit;
+    @FXML
+    private javafx.scene.control.TextField searchField;
 
     private final FridgeService fridgeService = new FridgeService();
 
@@ -59,6 +60,23 @@ public class FridgeController extends BaseController implements Initializable {
         unit.setCellValueFactory(new PropertyValueFactory<>("unit"));
 
         loadIngredients();
+        searchField.setOnAction(e -> onSearch(null));
+    }
+    @FXML
+    private void onSearch(ActionEvent event) {
+        String keyword = searchField.getText().trim().toLowerCase();
+        if (keyword.isEmpty()) {
+            loadIngredients(); // Nếu ô tìm kiếm rỗng, load lại tất cả
+            return;
+        }
+
+        List<Ingredient> all = fridgeService.getAllIngredients(fridgeId);
+        List<Ingredient> filtered = all.stream()
+                .filter(i -> i.getName().toLowerCase().contains(keyword))
+                .toList();
+
+        ObservableList<Ingredient> observableList = FXCollections.observableArrayList(filtered);
+        tableView.setItems(observableList);
     }
 
     private void loadIngredients() {
@@ -69,10 +87,12 @@ public class FridgeController extends BaseController implements Initializable {
 
     @FXML
     private void getexpiredIngre(ActionEvent event) {
-        switchScene(expireCheck, "/fridge/expiring.fxml", "Nguyên liệu sắp hết hạn");
+        SceneSwitcher.switchScene(expireCheck, "/fridge/expiring.fxml", "Nguyên liệu còn hạn dưới 3 ngày");
     }
     @FXML
     public void goBack() {
+
+        SceneSwitcher.switchScene(goBack, "/itss/convenience/dashboard.fxml", "Trang chủ");
 
     }
 

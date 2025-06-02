@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.TextField?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.fridge.FridgeController">
    <children>
@@ -35,6 +36,10 @@
          <content>
             <VBox prefHeight="283.0" prefWidth="456.0">
                <children>
+                  <HBox spacing="10" alignment="CENTER_LEFT" AnchorPane.leftAnchor="10" AnchorPane.topAnchor="10">
+                     <TextField fx:id="searchField" promptText="Tìm nguyên liệu..." />
+                     <Button text="Tìm" onAction="#onSearch" />
+                  </HBox>
                   <TableView fx:id="tableView" prefHeight="282.0" prefWidth="456.0">
                     <columns>
                       <TableColumn fx:id="name" prefWidth="167.33332288265228" text="Tên" />

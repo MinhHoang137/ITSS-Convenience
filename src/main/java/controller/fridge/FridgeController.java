@@ -40,6 +40,8 @@ public class FridgeController extends BaseController implements Initializable {
 
     @FXML
     private TableColumn<Ingredient, Unit> unit;
+    @FXML
+    private javafx.scene.control.TextField searchField;
 
     private final FridgeService fridgeService = new FridgeService();
 
@@ -58,6 +60,23 @@ public class FridgeController extends BaseController implements Initializable {
         unit.setCellValueFactory(new PropertyValueFactory<>("unit"));
 
         loadIngredients();
+        searchField.setOnAction(e -> onSearch(null));
+    }
+    @FXML
+    private void onSearch(ActionEvent event) {
+        String keyword = searchField.getText().trim().toLowerCase();
+        if (keyword.isEmpty()) {
+            loadIngredients(); // Nếu ô tìm kiếm rỗng, load lại tất cả
+            return;
+        }
+
+        List<Ingredient> all = fridgeService.getAllIngredients(fridgeId);
+        List<Ingredient> filtered = all.stream()
+                .filter(i -> i.getName().toLowerCase().contains(keyword))
+                .toList();
+
+        ObservableList<Ingredient> observableList = FXCollections.observableArrayList(filtered);
+        tableView.setItems(observableList);
     }
 
     private void loadIngredients() {

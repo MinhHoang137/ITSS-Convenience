@@ -1,13 +1,19 @@
 package controller.meal;
 
 import controller.BaseController;
+import controller.NotificationView;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import model.dao.MealPlanDAO;
 import model.entity.Dish;
 import model.entity.Meal;
 import model.entity.MealType;
+import model.entity.Role;
+import model.service.fridge.FridgeService;
+import session.Session;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -93,5 +99,23 @@ public class MealCard extends BaseController {
     }
     public void setParent(Parent parent) {
         this.parent = parent;
+    }
+    @FXML
+    private void OnCook(ActionEvent actionEvent) {
+        Role role = Session.getCurrentUser().getRole();
+        if (role != Role.housewife) {
+            NotificationView.Create("Chỉ người nội trợ mới có thể đánh dấu đã nấu bữa ăn.");
+            return;
+        }
+        MealPlanDAO mealPlanDAO = MealPlanDAO.getInstance();
+        int groupId = Session.getCurrentUser().getGroupId();
+        int fridgeId = new FridgeService().getFridgeIdByGroupId(groupId);
+        if (!mealPlanDAO.canCookMeal(meal.getId(), fridgeId)){
+            NotificationView.Create("Không đủ nguyên liệu để nấu bữa ăn này: " + meal.getId());
+            return;
+        }
+        MealPlanController.getCurrent().removeMeal(this);
+        NotificationView.Create("Đã đánh dấu bữa ăn " + meal.getId() + " đã nấu xong.");
+        // Xóa nguyên liệu khỏi csdl
     }
 }

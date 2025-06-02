@@ -105,4 +105,7 @@ public class MealPlanDAO {
     public ArrayList<Ingredient> getMissingIngredients(int fridgeId, ArrayList<Ingredient> totalIngredients){
         return mealPlanService.getMissingIngredients(fridgeId, totalIngredients);
     }
+    public boolean canCookMeal(int mealId, int groupId){
+        return mealPlanService.canCookMeal(mealId, groupId);
+    }
 }

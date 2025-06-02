@@ -60,5 +60,10 @@
             <Font size="14.0" />
          </font>
       </Button>
+      <Button layoutX="504.0" layoutY="56.0" mnemonicParsing="false" onAction="#OnCook" text="Nấu">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

@@ -286,6 +286,21 @@ public class MealPlanGetService extends BaseService implements IMealPlanGetServi
         return meal;
     }
 
+    public boolean canCookMeal(int mealId, int fridgeId) {
+        Meal meal = getMeal(mealId, fridgeId);
+        if (meal == null) {
+            System.out.println("Bữa ăn không tồn tại.");
+            return false;
+        }
+        for (Dish dish : meal.getDishList()) {
+            if (!canCookDish(dish.getId(), fridgeId)) {
+                System.out.println("Không đủ nguyên liệu để nấu món: " + dish.getName());
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public ArrayList<Meal> getAllMeals(int groupId) {
         getConnection();

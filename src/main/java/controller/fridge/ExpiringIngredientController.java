@@ -1,6 +1,7 @@
 package controller.fridge;
 
 import controller.BaseController;
+import controller.utils.SceneSwitcher;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,7 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.entity.Ingredient;
 import model.entity.Unit;
 import model.service.fridge.FridgeService;
-
+import javafx.scene.control.Button;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
@@ -20,6 +21,8 @@ public class ExpiringIngredientController extends BaseController {
 
     @FXML
     private TableView<Ingredient> expiredTableView;
+    @FXML
+    private Button goBack;
 
     @FXML
     private TableColumn<Ingredient, Integer> id;
@@ -53,6 +56,12 @@ public class ExpiringIngredientController extends BaseController {
     private ObservableList<Ingredient> loadExpiringIngredients() {
         List<Ingredient> list = fridgeService.getExpiringIngredients(fridgeId, 3);
         return FXCollections.observableArrayList(list);
+    }
+    @FXML
+    public void goBack() {
+
+        SceneSwitcher.switchScene(goBack, "/fridge/fridge.fxml", "Nguyên liệu trong tủ lạnh");
+
     }
 
     @Override

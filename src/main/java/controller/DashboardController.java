@@ -2,12 +2,14 @@ package controller;
 
 import controller.fridge.FridgeController;
 import controller.meal.MealPlanController;
+import controller.utils.SceneSwitcher;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import model.entity.User;
 import model.service.UserGroupService;
 import session.Session;
@@ -16,6 +18,8 @@ public class DashboardController {
 
     @FXML
     private Label lblGroupName;
+    @FXML
+    private Button fridge;
     @FXML
     private Label lblRole;
 
@@ -41,7 +45,7 @@ public class DashboardController {
 
     @FXML
     public void goToFridge() {
-        switchScene("/fridge/fridge.fxml");
+        SceneSwitcher.switchScene(fridge, "/fridge/fridge.fxml", "Nguyên liệu trong tủ lạnh");
     }
 
     @FXML

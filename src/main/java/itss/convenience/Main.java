@@ -2,6 +2,7 @@ package itss.convenience;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -17,7 +18,7 @@ public class Main extends Application {
         }
 
         Parent root = FXMLLoader.load(url);
-        Scene scene = new Scene(root, 800, 600);
+        Scene scene = new Scene(root, 400, 300);
         stage.setTitle("Test Giao Diện Shopping List");
         stage.setScene(scene);
         stage.show();

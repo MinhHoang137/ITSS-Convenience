@@ -2,7 +2,7 @@ package controller.fridge;
 
 import controller.BaseController;
 import controller.utils.SceneSwitcher;
-import controller.DashboardController;
+
 import controller.ViewController;
 import controller.utils.SceneSwitcher;
 import javafx.collections.FXCollections;
@@ -28,6 +28,8 @@ public class FridgeController extends BaseController implements Initializable {
 
     @FXML
     private Button expireCheck;
+    @FXML
+    private Button goBack;
     @FXML
     private TableView<Ingredient> tableView;
 
@@ -71,7 +73,8 @@ public class FridgeController extends BaseController implements Initializable {
     }
     @FXML
     public void goBack() {
-        switchScene("/itss/convenience/dashboard.fxml");
+
+        SceneSwitcher.switchScene(goBack, "/itss/convenience/dashboard.fxml", "Trang chủ");
 
     }
 

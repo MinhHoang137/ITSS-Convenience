@@ -25,6 +25,7 @@
                   <Insets />
                </opaqueInsets>
             </Button>
+            <Button fx:id="goBack" mnemonicParsing="false" onAction="#goBack" text="Quay lại" />
          </children>
          <padding>
             <Insets right="10.0" top="10.0" />

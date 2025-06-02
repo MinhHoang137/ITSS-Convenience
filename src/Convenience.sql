@@ -88,9 +88,21 @@ CREATE TABLE buy_ingredient (
   PRIMARY KEY (shoppingListId, ingredientName),
   FOREIGN KEY (shoppingListId) REFERENCES shoppingList(shoppingListId)
 );
+DELIMITER //
+
+CREATE TRIGGER create_fridge_after_usergroup
+AFTER INSERT ON UserGroup
+FOR EACH ROW
+BEGIN
+    INSERT INTO fridge (fridgeId, groupId)
+    VALUES (NEW.id, NEW.id);
+END //
+
+DELIMITER ;
+
 
 INSERT INTO UserGroup (name) VALUES ('Gia đình A'), ('Nhóm bạn B');
-INSERT INTO fridge (fridgeId, groupId) VALUES (1,1), (2,2);
+-- INSERT INTO fridge (fridgeId, groupId) VALUES (1,1), (2,2);
 
 INSERT INTO dish (dishName, instruction, eatTime, eatDate) VALUES
 ('Cơm rang dưa bò', 'Xào cơm với dưa chua và thịt bò', 'lunch', 1),

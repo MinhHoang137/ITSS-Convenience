@@ -66,4 +66,10 @@ public class DishCard implements Initializable {
     public Parent getParent() {
         return parent;
     }
+
+    @FXML
+    private void OnDetailClick(ActionEvent actionEvent) {
+        addMealView = AddMealView.getCurrent();
+        addMealView.setDish(dish);
+    }
 }

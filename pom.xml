@@ -99,11 +99,8 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <version>8.0.33</version>
 
-        <!-- ✅ Thêm MySQL JDBC Driver -->
+        <!-- ✅ MySQL JDBC Driver đúng chuẩn -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>

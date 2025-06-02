@@ -2,6 +2,7 @@ module itss.convenience {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
+    requires javafx.graphics; 
 
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
@@ -18,30 +19,30 @@ module itss.convenience {
     opens controller.dish to javafx.fxml;
     exports controller.dish;
 
-
     exports itss.convenience;
     exports model.service.dish_suggest;
-
 
     opens controller to javafx.fxml;
     exports controller;
 
     opens controller.meal to javafx.fxml;
-
     exports controller.meal;
 
     opens controller.fridge to javafx.fxml;
-
     exports controller.fridge;
+
     opens model.entity to javafx.base, javafx.fxml;
     exports model.entity;
+
     exports controller.group;
     opens controller.group to javafx.fxml;
+
     exports controller.shopping;
     opens controller.shopping to javafx.fxml;
+
     exports controller.auth;
     opens controller.auth to javafx.fxml;
+
     exports controller.admin;
     opens controller.admin to javafx.fxml;
-
 }

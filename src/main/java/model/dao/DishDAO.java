@@ -17,7 +17,7 @@ import model.entity.Unit;
 public class DishDAO {
 
     public List<Dish> getAllDishesWithIngredients(Connection conn) {
-        Map<Integer, Dish> dishMap = new LinkedHashMap<>(); // đảm bảo thứ tự giữ nguyên
+        Map<Integer, Dish> dishMap = new LinkedHashMap<>();
 
         String query = """
             SELECT d.dishId, d.dishName, d.instruction, d.eatTime, d.eatDate,
@@ -33,31 +33,59 @@ public class DishDAO {
             while (rs.next()) {
                 int dishId = rs.getInt("dishId");
 
-                // Nếu món chưa có trong map, tạo mới
+                // Tạo Dish nếu chưa có
                 Dish dish = dishMap.get(dishId);
                 if (dish == null) {
+                    String eatTimeStr = rs.getString("eatTime").trim().toLowerCase();
+                    MealType mealType = null;
+                    for (MealType mt : MealType.values()) {
+                        if (mt.getDisplayName().equalsIgnoreCase(eatTimeStr)) {
+                            mealType = mt;
+                            break;
+                        }
+                    }
+
+                    if (mealType == null) {
+                        System.err.println("⚠️ Không tìm thấy MealType tương ứng: " + eatTimeStr);
+                        continue;
+                    }
+
                     dish = new Dish(
                             dishId,
                             rs.getString("dishName"),
-                            rs.getString("instruction"),
+                            rs.getString("instruction"), // 🟢 Gán vào description
                             new ArrayList<>(),
-                            MealType.valueOf(rs.getString("eatTime")),
+                            mealType,
                             rs.getInt("eatDate")
                     );
                     dishMap.put(dishId, dish);
                 }
 
-                // Thêm nguyên liệu cho món ăn
+                // Thêm nguyên liệu
+                String unitStr = rs.getString("unitType").trim().toLowerCase();
+                Unit matchedUnit = null;
+                for (Unit u : Unit.values()) {
+                    if (u.name().equalsIgnoreCase(unitStr) || u.toString().equalsIgnoreCase(unitStr)) {
+                        matchedUnit = u;
+                        break;
+                    }
+                }
+
+                if (matchedUnit == null) {
+                    System.err.println("⚠️ Không tìm thấy Unit tương ứng: " + unitStr);
+                    continue;
+                }
+
                 Ingredient ingredient = new Ingredient();
                 ingredient.setName(rs.getString("ingredientName"));
                 ingredient.setQuantity(rs.getDouble("quantity"));
-                ingredient.setUnit(Unit.valueOf(rs.getString("unitType")));
+                ingredient.setUnit(matchedUnit);
 
                 dish.getIngredients().add(ingredient);
             }
 
         } catch (SQLException e) {
-            System.err.println("Lỗi khi truy vấn dish và nguyên liệu:");
+            System.err.println("❌ Lỗi khi truy vấn dish và nguyên liệu:");
             e.printStackTrace();
         }
 

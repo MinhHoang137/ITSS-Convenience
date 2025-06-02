@@ -39,4 +39,8 @@ public class Fridge {
     public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
+    @Override
+    public String toString() {
+        return "Tủ lạnh " + id;
+    }
 }

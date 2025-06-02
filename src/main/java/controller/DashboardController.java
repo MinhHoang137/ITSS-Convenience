@@ -4,12 +4,12 @@ package controller;
 import controller.meal.MealPlanController;
 import controller.utils.SceneSwitcher;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.scene.Parent;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import model.entity.User;
 import model.service.UserGroupService;
 import session.Session;
@@ -50,7 +50,7 @@ public class DashboardController {
 
     @FXML
     public void goToSuggestion() {
-        switchScene("/itss/convenience/suggestion.fxml");
+        SceneSwitcher.switchScene(fridge, "/dish/dish_suggest.fxml", "Gợi ý món ăn");
     }
 
     @FXML

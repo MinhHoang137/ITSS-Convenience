@@ -74,4 +74,5 @@ public class Dish {
     public void setEatDate(int eatDate) {
         this.eatDate = eatDate;
     }
-}
+    
+}   

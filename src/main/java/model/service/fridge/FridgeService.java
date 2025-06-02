@@ -1,15 +1,16 @@
 package model.service.fridge;
 
-import model.entity.Ingredient;
-import model.entity.Unit;
-import model.service.BaseService;
-
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import model.entity.Fridge;
+import model.entity.Ingredient;
+import model.entity.Unit;
+import model.service.BaseService;
 
 public class FridgeService extends BaseService {
 
@@ -182,4 +183,27 @@ public class FridgeService extends BaseService {
         }
         return fridgeId;
     }
+    public List<Fridge> getAllFridges() {
+    getConnection();
+    List<Fridge> list = new ArrayList<>();
+    try {
+        String sql = "SELECT * FROM fridge";
+        PreparedStatement stmt = connection.prepareStatement(sql);
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            Fridge fridge = new Fridge();
+            fridge.setId(rs.getInt("fridgeId"));
+            fridge.setUserGroupId(rs.getInt("groupId"));
+            list.add(fridge);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        closeConnection();
+    }
+    return list;
+}
+    
+
+
 }

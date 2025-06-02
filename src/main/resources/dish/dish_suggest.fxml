@@ -27,4 +27,7 @@
 
     <Label text="🧂 Nguyên liệu trong tủ lạnh:" />
     <ListView fx:id="lvIngredients" prefHeight="180.0" />
+
+    <!-- ✅ Nút quay lại -->
+    <Button fx:id="btnBack" text="⬅ Quay lại" style="-fx-background-color: lightgray;" />
 </VBox>

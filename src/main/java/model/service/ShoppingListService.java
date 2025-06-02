@@ -4,6 +4,7 @@ import model.entity.Ingredient;
 import model.entity.ShoppingList;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -110,6 +111,25 @@ public class ShoppingListService extends BaseService implements IShoppingListSer
         }
 
         return success;
+    }
+
+    public boolean isDateDuplicated(LocalDate date, int groupId) {
+        String sql = "SELECT COUNT(*) FROM shoppinglist WHERE buyDate = ? AND groupId = ?";
+        try {
+            connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setDate(1, java.sql.Date.valueOf(date));
+            ps.setInt(2, groupId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return false;
     }
 
 

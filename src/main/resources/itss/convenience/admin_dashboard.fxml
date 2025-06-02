@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.admin.AdminDashboardController"
+            prefWidth="900" prefHeight="600">
+
+
+    <!-- Header -->
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT">
+            <padding>
+                <Insets top="10" bottom="10" left="20" right="20"/>
+            </padding>
+            <Label text="👤 Nhóm:"/>
+            <Label fx:id="lblGroupName" style="-fx-font-weight: bold;"/>
+            <Label text="| Vai trò:"/>
+            <Label fx:id="lblRole" style="-fx-font-style: italic;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Button text="Đăng xuất" onAction="#handleLogout"/>
+        </HBox>
+    </top>
+
+
+    <!-- Sidebar -->
+    <left>
+        <VBox spacing="15" alignment="TOP_CENTER">
+            <padding>
+                <Insets top="20" bottom="20" left="20" right="20"/>
+            </padding>
+            <Button text="📦 Quản lý thực phẩm" onAction="#goToFoodCategory" maxWidth="200"/>
+            <Button text="🍲 Quản lý món ăn" onAction="#goToDishCategory" maxWidth="200"/>
+            <Button text="👥 Quản lý người dùng" onAction="#goToUserManagement" maxWidth="200"/>
+        </VBox>
+    </left>
+
+    <!-- Nội dung trung tâm -->
+    <center>
+        <StackPane fx:id="mainContent">
+            <padding>
+                <Insets top="30" bottom="30" left="30" right="30"/>
+            </padding>
+            <Label text="Chọn một chức năng từ thanh bên trái"
+                   style="-fx-font-size: 16px; -fx-text-fill: gray;" />
+        </StackPane>
+    </center>
+</BorderPane>

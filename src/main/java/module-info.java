@@ -41,4 +41,7 @@ module itss.convenience {
     opens controller.shopping to javafx.fxml;
     exports controller.auth;
     opens controller.auth to javafx.fxml;
+    exports controller.admin;
+    opens controller.admin to javafx.fxml;
+
 }

@@ -2,6 +2,7 @@ package model.service.fridge;
 
 import model.entity.Ingredient;
 import model.entity.Unit;
+import model.entity.Dish;
 import model.service.BaseService;
 
 import java.sql.Date;
@@ -119,7 +120,7 @@ public class FridgeService extends BaseService {
     public boolean useIngredient(String name, double usedQuantity, Unit unit, int fridgeId) {
         getConnection();
         try {
-            String sql = "SELECT * FROM ingredient WHERE ingredientName = ? AND unitType = ? AND fridgeId = ?";
+            String sql = "SELECT * FROM ingredient WHERE ingredientName = ? AND unitType = ? AND fridgeId = ? ORDER BY expirationDate ASC";
             PreparedStatement stmt = connection.prepareStatement(
                     sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             stmt.setString(1, name);
@@ -127,14 +128,23 @@ public class FridgeService extends BaseService {
             stmt.setInt(3, fridgeId);
             ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
+            while (rs.next() && usedQuantity > 0) {
                 double available = rs.getDouble("quantity");
-                if (available >= usedQuantity) {
+                int ingredientId = rs.getInt("ingredientId");
+
+                if (available <= usedQuantity) {
+                    // Xóa bản ghi
+                    rs.deleteRow();
+                    usedQuantity -= available;
+                } else {
+                    // Cập nhật lại số lượng
                     rs.updateDouble("quantity", available - usedQuantity);
                     rs.updateRow();
-                    return true;
+                    usedQuantity = 0;
                 }
             }
+
+            return usedQuantity <= 0; // True nếu đủ nguyên liệu
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -142,6 +152,14 @@ public class FridgeService extends BaseService {
         }
         return false;
     }
+    public boolean cookDish(Dish dish, int fridgeId) {
+        for (Ingredient ing : dish.getIngredients()) {
+            boolean ok = useIngredient(ing.getName(), ing.getQuantity(), ing.getUnit(), fridgeId);
+            if (!ok) return false;
+        }
+        return true;
+    }
+
 
     public void addIngredientToFridge(Ingredient ingredient, int fridgeId) {
         getConnection();

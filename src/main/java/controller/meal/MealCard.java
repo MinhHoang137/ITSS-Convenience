@@ -100,22 +100,59 @@ public class MealCard extends BaseController {
     public void setParent(Parent parent) {
         this.parent = parent;
     }
-    @FXML
-    private void OnCook(ActionEvent actionEvent) {
-        Role role = Session.getCurrentUser().getRole();
-        if (role != Role.housewife) {
-            NotificationView.Create("Chỉ người nội trợ mới có thể đánh dấu đã nấu bữa ăn.");
-            return;
-        }
-        MealPlanDAO mealPlanDAO = MealPlanDAO.getInstance();
-        int groupId = Session.getCurrentUser().getGroupId();
-        int fridgeId = new FridgeService().getFridgeIdByGroupId(groupId);
-        if (!mealPlanDAO.canCookMeal(meal.getId(), fridgeId)){
-            NotificationView.Create("Không đủ nguyên liệu để nấu bữa ăn này: " + meal.getId());
-            return;
-        }
-        MealPlanController.getCurrent().removeMeal(this);
-        NotificationView.Create("Đã đánh dấu bữa ăn " + meal.getId() + " đã nấu xong.");
-        // Xóa nguyên liệu khỏi csdl
+//    @FXML
+//    private void OnCook(ActionEvent actionEvent) {
+//        Role role = Session.getCurrentUser().getRole();
+//        if (role != Role.housewife) {
+//            NotificationView.Create("Chỉ người nội trợ mới có thể đánh dấu đã nấu bữa ăn.");
+//            return;
+//        }
+//        MealPlanDAO mealPlanDAO = MealPlanDAO.getInstance();
+//        int groupId = Session.getCurrentUser().getGroupId();
+//        int fridgeId = new FridgeService().getFridgeIdByGroupId(groupId);
+//        if (!mealPlanDAO.canCookMeal(meal.getId(), fridgeId)){
+//            NotificationView.Create("Không đủ nguyên liệu để nấu bữa ăn này: " + meal.getId());
+//            return;
+//        }
+//        MealPlanController.getCurrent().removeMeal(this);
+//        NotificationView.Create("Đã đánh dấu bữa ăn " + meal.getId() + " đã nấu xong.");
+//        // Xóa nguyên liệu khỏi csdl
+//
+//    }
+@FXML
+private void OnCook(ActionEvent actionEvent) {
+    Role role = Session.getCurrentUser().getRole();
+    if (role != Role.housewife) {
+        NotificationView.Create("Chỉ người nội trợ mới có thể đánh dấu đã nấu bữa ăn.");
+        return;
     }
+
+    MealPlanDAO mealPlanDAO = MealPlanDAO.getInstance();
+    int groupId = Session.getCurrentUser().getGroupId();
+    FridgeService fridgeService = new FridgeService();
+    int fridgeId = fridgeService.getFridgeIdByGroupId(groupId);
+
+    if (!mealPlanDAO.canCookMeal(meal.getId(), fridgeId)) {
+        NotificationView.Create("Không đủ nguyên liệu để nấu bữa ăn này: " + meal.getId());
+        return;
+    }
+
+    // Trừ nguyên liệu khỏi tủ lạnh
+    boolean allSuccess = true;
+    for (Dish dish : meal.getDishList()) {
+        boolean success = fridgeService.cookDish(dish, fridgeId);
+        if (!success) {
+            allSuccess = false;
+            break;
+        }
+    }
+
+    if (allSuccess) {
+        MealPlanController.getCurrent().removeMeal(this);
+        NotificationView.Create("Đã đánh dấu bữa ăn " + meal.getId() + " đã nấu xong và trừ nguyên liệu.");
+    } else {
+        NotificationView.Create("Xảy ra lỗi khi trừ nguyên liệu. Có thể có món ăn không đủ nguyên liệu.");
+    }
+}
+
 }

@@ -7,13 +7,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import model.entity.Dish;
-import model.entity.Fridge;
 import model.entity.Ingredient;
+import model.entity.User;
 import model.service.dish_suggest.DishSuggestService;
 import model.service.fridge.FridgeService;
+import session.Session;
 
 public class DishSuggestController {
 
@@ -25,8 +25,6 @@ public class DishSuggestController {
     private Button btnBack;
 
     @FXML
-    private ComboBox<Fridge> fridgeSelector;
-    @FXML
     private ListView<String> lvDishes;
     @FXML
     private ListView<String> lvIngredients;
@@ -34,22 +32,27 @@ public class DishSuggestController {
     private final DishSuggestService suggestService = new DishSuggestService();
     private final FridgeService fridgeService = new FridgeService();
 
+    private int fridgeId = -1;
+
     @FXML
     public void initialize() {
-        fridgeSelector.getItems().addAll(fridgeService.getAllFridges());
+        User currentUser = Session.getCurrentUser();
+        if (currentUser != null) {
+            fridgeId = fridgeService.getFridgeIdByGroupId(currentUser.getGroupId());
+        }
+
         btnSuggest.setOnAction(event -> handleSuggest());
         btnShowIngredients.setOnAction(event -> handleShowIngredients());
         btnBack.setOnAction(event -> handleBack());
     }
 
     private void handleSuggest() {
-        Fridge selectedFridge = fridgeSelector.getValue();
-        if (selectedFridge == null) {
-            showError("Vui lòng chọn tủ lạnh.");
+        if (fridgeId == -1) {
+            showError("Không tìm thấy tủ lạnh.");
             return;
         }
 
-        List<Dish> dishes = suggestService.suggestDishesFromFridge(selectedFridge.getId());
+        List<Dish> dishes = suggestService.suggestDishesFromFridge(fridgeId);
         lvDishes.getItems().clear();
         for (Dish d : dishes) {
             lvDishes.getItems().add("🍽 " + d.getName() + " — " + d.getDescription());
@@ -57,13 +60,12 @@ public class DishSuggestController {
     }
 
     private void handleShowIngredients() {
-        Fridge selectedFridge = fridgeSelector.getValue();
-        if (selectedFridge == null) {
-            showError("Vui lòng chọn tủ lạnh.");
+        if (fridgeId == -1) {
+            showError("Không tìm thấy tủ lạnh.");
             return;
         }
 
-        List<Ingredient> ingredients = fridgeService.getAllIngredients(selectedFridge.getId());
+        List<Ingredient> ingredients = fridgeService.getAllIngredients(fridgeId);
         lvIngredients.getItems().clear();
         for (Ingredient i : ingredients) {
             lvIngredients.getItems().add(i.getName() + " - " + i.getQuantity() + " " + i.getUnit());

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
 import model.entity.Dish;
 import model.entity.Fridge;
 import model.entity.Ingredient;
@@ -210,6 +211,23 @@ public class FridgeService extends BaseService {
     }
     return list;
 }
+public boolean consumeIngredientsForDish(Dish dish, int fridgeId) {
+    getConnection();
+    try {
+        for (Ingredient i : dish.getIngredients()) {
+            if (!useIngredient(i.getName(), i.getQuantity(), i.getUnit(), fridgeId)) {
+                return false;
+            }
+        }
+        return true;
+    } catch (Exception e) {
+        e.printStackTrace();
+        return false;
+    } finally {
+        closeConnection();
+    }
+}
+
     
 
 

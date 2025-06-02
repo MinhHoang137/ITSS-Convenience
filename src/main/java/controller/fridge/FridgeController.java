@@ -24,6 +24,8 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static controller.utils.SceneSwitcher.switchScene;
+
 public class FridgeController extends BaseController implements Initializable {
 
     @FXML
@@ -67,11 +69,10 @@ public class FridgeController extends BaseController implements Initializable {
 
     @FXML
     private void getexpiredIngre(ActionEvent event) {
-        SceneSwitcher.switchScene(expireCheck, "/fridge/expiring.fxml", "Nguyên liệu sắp hết hạn");
+        switchScene(expireCheck, "/fridge/expiring.fxml", "Nguyên liệu sắp hết hạn");
     }
     @FXML
     public void goBack() {
-        switchScene("/itss/convenience/dashboard.fxml");
 
     }
 

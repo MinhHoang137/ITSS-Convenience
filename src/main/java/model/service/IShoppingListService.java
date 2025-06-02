@@ -12,5 +12,6 @@ public interface IShoppingListService {
     List<ShoppingList> getShoppingListsByGroupId(int groupId);
     boolean addIngredientsToShoppingList(List<Ingredient> ingredients, int shoppingListId);
     boolean isDateDuplicated(LocalDate date, int groupId);
+    boolean addIngredientsToShoppingList(int groupId, List<Ingredient> ingredients);
 }
 

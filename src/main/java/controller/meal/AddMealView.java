@@ -14,10 +14,9 @@ import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import model.dao.MealPlanDAO;
-import model.entity.Dish;
-import model.entity.Ingredient;
-import model.entity.Meal;
-import model.entity.MealType;
+import model.entity.*;
+import model.service.IShoppingListService;
+import model.service.ShoppingListService;
 import model.service.fridge.FridgeService;
 import session.Session;
 
@@ -103,7 +102,13 @@ public class AddMealView extends BaseController {
                 ArrayList<Ingredient> missingIngredients = mealPlanDAO.getMissingIngredients(fridgeId, totalIngredients);
                 if (!missingIngredients.isEmpty()) {
                     // Nếu thiếu nguyên liệu, tạo danh sách mua sắm
-                    NotificationView.Create("Đã tạo danh sách mua sắm cho nguyên liệu thiếu.");
+                    IShoppingListService service = new ShoppingListService();
+                    if (service.addIngredientsToShoppingList(groupId, missingIngredients)) {
+                        // Hiển thị danh sách mua sắm
+                        NotificationView.Create("Đã tạo danh sách mua sắm cho nguyên liệu thiếu.");
+                    } else {
+                        NotificationView.Create("Không thể tạo danh sách mua sắm. Vui lòng kiểm tra lại.");
+                    }
                 } else {
                     NotificationView.Create("Không có nguyên liệu nào cần mua thêm.");
                 }
@@ -206,6 +211,11 @@ public class AddMealView extends BaseController {
 
     @Override
     public BaseController loadAndShow(Stage stage, String title, int width, int height) {
+        Role role = Session.getCurrentUser().getRole();
+        if (role != Role.housewife){
+            NotificationView.Create("Chỉ người nội trợ mới có thể thêm bữa ăn.");
+            return null;
+        }
         current = (AddMealView) super.loadAndShow(stage, title, width, height);
         return current;
     }

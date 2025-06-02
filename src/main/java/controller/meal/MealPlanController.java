@@ -79,6 +79,11 @@ public class MealPlanController extends BaseController {
         }
     }
     public void removeMeal(MealCard mealCard) {
+        Role role = Session.getCurrentUser().getRole();
+        if (role != Role.housewife) {
+            NotificationView.Create("Chỉ người nội trợ mới có thể xóa bữa ăn.");
+            return;
+        }
         if (mealPlanDAO.deleteMeal(mealCard.getMeal().getId())){
             NotificationView.Create("Đã xóa bữa ăn thành công: " + mealCard.getMeal().getId());
             mealPlanContainer.getChildren().remove(mealCard.getParent());

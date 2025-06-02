@@ -131,6 +131,28 @@ public class ShoppingListService extends BaseService implements IShoppingListSer
         }
         return false;
     }
-
-
+    public boolean addIngredientsToShoppingList(int groupId, List<Ingredient> ingredients) {
+        ShoppingList list = new ShoppingList();
+        list.setGroupId(groupId);
+        list.setBuyDate(LocalDate.now());
+        if (!createShoppingList(list)) {
+            System.out.println("Không thể tạo shopping list mới.");
+            return false;
+        }
+        String idSql = "SELECT MAX(shoppingListId) AS maxId FROM shoppingList";
+        try {
+            connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(idSql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int shoppingListId = rs.getInt("maxId");
+                return addIngredientsToShoppingList(ingredients, shoppingListId);
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi lấy ID shopping list mới: " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return false;
+    }
 }

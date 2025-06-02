@@ -57,7 +57,7 @@ public class AddMealView extends BaseController {
     private void putDishesTo(Pane container, ArrayList<Dish> dishes) {
         container.getChildren().clear();
         for (Dish dish : dishes) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/meal/dish_card.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dish/dish_card.fxml"));
             try {
                 Parent parent = loader.load();
                 DishCard dishCard = loader.getController();
@@ -160,7 +160,7 @@ public class AddMealView extends BaseController {
         if (dish == null || dish.getId() <= 0) {
             return;
         }
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/meal/dish_card.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/dish/dish_card.fxml"));
         try {
             if (!addDishToMeal(dish)) {
                 NotificationView.Create("Món ăn đã được thêm vào bữa ăn.");

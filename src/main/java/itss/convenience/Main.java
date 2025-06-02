@@ -18,7 +18,7 @@ public class Main extends Application {
 
         Parent root = FXMLLoader.load(url);
         Scene scene = new Scene(root, 400, 300);
-        stage.setTitle("Test Giao Diện Shopping List");
+        stage.setTitle("Đi chợ tiện lợi");
         stage.setScene(scene);
         stage.show();
     }

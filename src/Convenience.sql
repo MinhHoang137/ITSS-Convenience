@@ -101,7 +101,7 @@ END //
 DELIMITER ;
 
 
-INSERT INTO UserGroup (name) VALUES ('Gia đình A'), ('Nhóm bạn B');
+--INSERT INTO UserGroup (name) VALUES ('Gia đình A'), ('Nhóm bạn B');
 -- INSERT INTO fridge (fridgeId, groupId) VALUES (1,1), (2,2);
 
 INSERT INTO dish (dishName, instruction, eatTime, eatDate) VALUES
@@ -306,3 +306,6 @@ INSERT INTO ingredient (ingredientName, quantity, unitType, expirationDate, frid
 ('Sả', 0.2, 'kg', DATE_ADD(CURDATE(), INTERVAL 10 DAY), 1),
 ('Nước cốt dừa', 0.5, 'l', DATE_ADD(CURDATE(), INTERVAL 10 DAY), 1),
 ('Bánh đa nem', 20, 'pcs', DATE_ADD(CURDATE(), INTERVAL 15 DAY), 1);
+
+INSERT INTO User (username, role) VALUES
+('Admin1', 'admin');

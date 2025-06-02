@@ -42,7 +42,7 @@ public class DashboardController {
     @FXML
     public void goToFridge() {
         ViewController.getInstance().openController(new FridgeController(),
-                "Tủ lạnh", 1000, 600);
+                "Tủ lạnh", 500, 400);
     }
 
     @FXML

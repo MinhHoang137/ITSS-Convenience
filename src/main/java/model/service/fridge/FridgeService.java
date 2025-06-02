@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
+import model.entity.Dish;
 import model.entity.Fridge;
 import model.entity.Ingredient;
 import model.entity.Unit;
@@ -85,6 +85,13 @@ public class FridgeService extends BaseService {
             closeConnection();
         }
         return list;
+    }
+    public boolean cookDish(Dish dish, int fridgeId) {
+        for (Ingredient ing : dish.getIngredients()) {
+            boolean ok = useIngredient(ing.getName(), ing.getQuantity(), ing.getUnit(), fridgeId);
+            if (!ok) return false;
+        }
+        return true;
     }
 
     public List<Ingredient> getExpiringIngredients(int fridgeId, int daysBeforeExpire) {

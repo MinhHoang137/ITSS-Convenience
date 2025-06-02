@@ -3,8 +3,7 @@ package controller.fridge;
 import controller.BaseController;
 import controller.utils.SceneSwitcher;
 
-import controller.ViewController;
-import controller.utils.SceneSwitcher;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -69,7 +68,7 @@ public class FridgeController extends BaseController implements Initializable {
 
     @FXML
     private void getexpiredIngre(ActionEvent event) {
-        SceneSwitcher.switchScene(expireCheck, "/fridge/expiring.fxml", "Nguyên liệu sắp hết hạn");
+        SceneSwitcher.switchScene(expireCheck, "/fridge/expiring.fxml", "Nguyên liệu còn hạn dưới 3 ngày");
     }
     @FXML
     public void goBack() {

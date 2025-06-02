@@ -1,6 +1,6 @@
 package controller;
 
-import controller.fridge.FridgeController;
+
 import controller.meal.MealPlanController;
 import controller.utils.SceneSwitcher;
 import javafx.fxml.FXML;

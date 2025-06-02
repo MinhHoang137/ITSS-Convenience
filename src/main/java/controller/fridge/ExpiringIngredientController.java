@@ -12,6 +12,8 @@ import model.entity.Ingredient;
 import model.entity.Unit;
 import model.service.fridge.FridgeService;
 import javafx.scene.control.Button;
+import session.Session;
+
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
@@ -40,10 +42,13 @@ public class ExpiringIngredientController extends BaseController {
     private TableColumn<Ingredient, LocalDate> expirationDate;
 
     private final FridgeService fridgeService = new FridgeService();
-    private final int fridgeId = 1; // ⚠️ Bạn có thể truyền thực tế từ user đăng nhập
+    private int fridgeId ; // ⚠️ Bạn có thể truyền thực tế từ user đăng nhập
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        int groupId = Session.getCurrentUser().getGroupId();
+        // Lấy fridgeId từ groupId
+        fridgeId = fridgeService.getFridgeIdByGroupId(groupId);
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));

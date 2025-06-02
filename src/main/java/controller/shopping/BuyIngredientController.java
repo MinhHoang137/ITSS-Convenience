@@ -27,7 +27,8 @@ public class BuyIngredientController {
     @FXML
     private TextField txtQuantity;
     @FXML
-    private TextField txtUnit;
+    private ComboBox<Unit> cbUnit;
+
 
     @FXML
     private TableView<BuyIngredient> tableIngredient;
@@ -69,6 +70,9 @@ public class BuyIngredientController {
         btnDeleteIngredient.setVisible(isHousewife);
         btnDeleteIngredient.setManaged(isHousewife);
 
+        cbUnit.getItems().addAll(Unit.values());
+        cbUnit.setValue(Unit.kg); // hoặc để trống nếu muốn không mặc định
+
         // Tải nguyên liệu cho shoppingList hiện tại
         loadIngredients();
     }
@@ -83,7 +87,7 @@ public class BuyIngredientController {
         try {
             String name = txtIngredientName.getText();
             double qty = Double.parseDouble(txtQuantity.getText());
-            String unit = txtUnit.getText();
+            String unit = cbUnit.getValue().toString();
 
             BuyIngredient bi = new BuyIngredient(shoppingListId, name, qty, unit);
             if (buyIngredientService.addIngredientToList(bi)) {
@@ -134,7 +138,6 @@ public class BuyIngredientController {
     private void clearInputFields() {
         txtIngredientName.clear();
         txtQuantity.clear();
-        txtUnit.clear();
     }
 
     private void switchScene(String path) {

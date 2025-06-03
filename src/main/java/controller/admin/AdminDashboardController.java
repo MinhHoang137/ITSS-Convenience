@@ -1,5 +1,6 @@
 package controller.admin;
 
+import controller.meal.DishDetailView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.Parent;
@@ -48,7 +49,7 @@ public class AdminDashboardController {
 
     @FXML
     public void goToDishCategory() {
-        setCenterContent("/view/dish.fxml");
+        DishDetailView.open(this.mainContent);
     }
 
     @FXML

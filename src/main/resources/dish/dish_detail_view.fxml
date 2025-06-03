@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.meal.DishDetailView">
+   <children>
+      <Label layoutX="243.0" layoutY="22.0" text="Danh sách món ăn">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <ScrollPane layoutX="11.0" layoutY="50.0" prefHeight="290.0" prefWidth="580.0">
+         <content>
+            <VBox fx:id="dishHolder" prefHeight="288.0" prefWidth="578.0" />
+         </content></ScrollPane>
+      <Button layoutX="275.0" layoutY="351.0" mnemonicParsing="false" onAction="#OnAddDish" text="Thêm" />
+   </children>
+</AnchorPane>

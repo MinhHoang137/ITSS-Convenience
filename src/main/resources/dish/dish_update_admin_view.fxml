@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.meal.DishUpdateAdminView">
+
+    <VBox spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <padding>
+            <Insets bottom="20" left="20" right="20" top="20" />
+        </padding>
+
+        <!-- Tên và mô tả món ăn -->
+        <TextField fx:id="nameField" promptText="Tên món ăn" />
+        <TextArea fx:id="descriptionArea" prefRowCount="3" promptText="Mô tả" />
+
+        <!-- Thời gian ăn và ngày ăn -->
+        <HBox spacing="10">
+            <ComboBox fx:id="eatTimeComboBox" promptText="Thời gian ăn" />
+            <ComboBox fx:id="eatDateComboBox" promptText="Thứ trong tuần" />
+        </HBox>
+
+        <!-- Danh sách nguyên liệu -->
+        <Label style="-fx-font-weight: bold;" text="Nguyên liệu:" />
+      <VBox fx:id="ingredientContainer" prefHeight="200.0" prefWidth="100.0" />
+
+        <!-- Nút thêm nguyên liệu và nút lưu -->
+        <HBox alignment="CENTER_RIGHT" spacing="10">
+            <Button fx:id="addIngredientButton" onAction="#onAddIngredient" text="Thêm nguyên liệu" />
+            <Button fx:id="saveButton" onAction="#onSave" text="Lưu" />
+        </HBox>
+    </VBox>
+</AnchorPane>

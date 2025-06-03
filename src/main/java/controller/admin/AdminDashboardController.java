@@ -1,6 +1,6 @@
 package controller.admin;
 
-import controller.meal.DishDetailView;
+import controller.dish.DishDetailView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.Parent;

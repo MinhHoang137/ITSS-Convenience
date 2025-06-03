@@ -1,5 +1,6 @@
-package controller.meal;
+package controller.dish;
 
+import controller.meal.AddMealView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

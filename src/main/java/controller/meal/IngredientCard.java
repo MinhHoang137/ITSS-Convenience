@@ -1,5 +1,6 @@
 package controller.meal;
 
+import controller.dish.DishUpdateAdminView;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

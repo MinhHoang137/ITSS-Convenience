@@ -1,6 +1,7 @@
-package controller.meal;
+package controller.dish;
 
 import controller.BaseController;
+import controller.meal.IngredientCard;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

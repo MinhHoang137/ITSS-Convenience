@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="60.0" prefWidth="280.0" style="-fx-background-color: #f5f5f5; -fx-border-color: #cccccc; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.meal.DishCard">
+<AnchorPane prefHeight="60.0" prefWidth="280.0" style="-fx-background-color: #f5f5f5; -fx-border-color: #cccccc; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.dish.DishCard">
    <children>
       <Label fx:id="dishNameText" layoutX="14.0" layoutY="20.0" prefHeight="20.0" prefWidth="180.0" style="-fx-text-fill: #333333;" text="Dish Name" AnchorPane.bottomAnchor="20.0" AnchorPane.topAnchor="20.0">
          <font>

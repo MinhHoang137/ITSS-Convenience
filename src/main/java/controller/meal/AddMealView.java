@@ -2,6 +2,7 @@ package controller.meal;
 
 import controller.BaseController;
 import controller.NotificationView;
+import controller.dish.DishCard;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -1,15 +1,11 @@
-package controller.meal;
+package controller.dish;
 
 import controller.ViewController;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import model.dao.MealPlanDAO;
 import model.entity.Dish;
-import model.entity.MealType;
 
 public class DishAdminCard {
     private MealPlanDAO mealPlanDAO = MealPlanDAO.getInstance();

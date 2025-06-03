@@ -27,7 +27,7 @@ public interface IMealPlanGetService {
      * @return An ArrayList of Dish objects containing all dishes.
      */
     public ArrayList<Dish> getAllDishes();
-
+    boolean isDishExists(String dishName);
     /**
      * Retrieves the total quantity of a specific ingredient in a fridge.
      * @param ingredientName The name of the ingredient to check.

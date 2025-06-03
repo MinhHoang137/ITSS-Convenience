@@ -12,7 +12,7 @@ public class Dish {
     private int id;
     private String name;
     private String description;
-    private ArrayList<Ingredient> ingredients;
+    private ArrayList<Ingredient> ingredients = new ArrayList<>();
     private MealType eatTime;
     private int eatDate; // 0 -> 6
     public Dish(){}

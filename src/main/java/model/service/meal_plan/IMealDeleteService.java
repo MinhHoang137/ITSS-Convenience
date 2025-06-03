@@ -7,4 +7,10 @@ public interface IMealDeleteService {
      * @return true nếu xóa thành công, ngược lại false
      */
     boolean deleteMeal(int id);
+    /**
+     * Xóa một món ăn khỏi cơ sở dữ liệu.
+     * @param dishId ID của món ăn cần xóa
+     * @return true nếu xóa thành công, ngược lại false
+     */
+    boolean deleteDish(int dishId);
 }

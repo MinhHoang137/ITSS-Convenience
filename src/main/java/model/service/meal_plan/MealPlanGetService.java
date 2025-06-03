@@ -141,6 +141,24 @@ public class MealPlanGetService extends BaseService implements IMealPlanGetServi
         }
         return dishes;
     }
+    public boolean isDishExists(String dishName) {
+        getConnection();
+        boolean exists = false;
+        String query = "SELECT COUNT(*) FROM dish WHERE dishName = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, dishName);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                exists = rs.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            System.out.println("Error checking if dish exists: " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return exists;
+    }
 
     /**
      * Retrieves the total quantity of a specific ingredient in a fridge.
@@ -349,7 +367,6 @@ public class MealPlanGetService extends BaseService implements IMealPlanGetServi
 
         return missingList;
     }
-
 
 
 

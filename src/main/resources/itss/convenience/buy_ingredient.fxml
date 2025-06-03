@@ -4,28 +4,39 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.shopping.BuyIngredientController">
-    <VBox spacing="15" alignment="CENTER" style="-fx-padding: 20;">
-        <Label text="🛒 Nguyên liệu trong danh sách" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.shopping.BuyIngredientController"
+            prefWidth="900" prefHeight="600"
+            stylesheets="@../../css/style.css">
+
+    <VBox fx:id="formContainer" spacing="20" alignment="CENTER"
+          layoutX="100" layoutY="50" prefWidth="700" prefHeight="500">
+        <padding>
+            <Insets top="30" bottom="30" left="40" right="40"/>
+        </padding>
+
+        <Label text="Nguyên liệu trong danh sách" styleClass="form-title"/>
 
         <!-- Form thêm nguyên liệu (chỉ HOUSEWIFE thấy) -->
         <VBox fx:id="sectionAdd" spacing="10" alignment="CENTER">
             <HBox spacing="10" alignment="CENTER">
-                <Label text="Tên:"/>
-                <TextField fx:id="txtIngredientName" promptText="VD: Cà rốt"/>
+                <Label text="Tên:" minWidth="40" maxWidth="Infinity" />
+                <TextField fx:id="txtIngredientName" promptText="VD: Cà rốt" minWidth="120" maxWidth="Infinity" />
 
-                <Label text="Số lượng:"/>
-                <TextField fx:id="txtQuantity" promptText="VD: 2.5"/>
+                <Label text="SL:" minWidth="30" maxWidth="Infinity" />
+                <TextField fx:id="txtQuantity" promptText="VD: 2.5" minWidth="80" maxWidth="Infinity" />
 
-                <Label text="Đơn vị:"/>
-                <TextField fx:id="txtUnit" promptText="VD: kg"/>
+                <Label text="ĐV:" minWidth="30" maxWidth="Infinity" />
+                <ComboBox fx:id="cbUnit" minWidth="100" maxWidth="Infinity" />
 
-                <Button text="➕ Thêm" onAction="#handleAddIngredient"/>
+                <Button text="Thêm" onAction="#handleAddIngredient" minWidth="70" />
             </HBox>
         </VBox>
 
+
+
         <!-- Bảng nguyên liệu -->
-        <TableView fx:id="tableIngredient" prefHeight="250">
+        <TableView fx:id="tableIngredient" prefHeight="250" prefWidth="500" maxWidth="500">
             <columns>
                 <TableColumn fx:id="colName" text="Nguyên liệu" prefWidth="200"/>
                 <TableColumn fx:id="colQty" text="Số lượng" prefWidth="150"/>
@@ -35,9 +46,9 @@
 
         <!-- Nút chuyển và quay lại -->
         <HBox spacing="10" alignment="CENTER">
-            <Button text="📦 Chuyển đã chọn sang tủ lạnh" onAction="#handleTransferToFridge"/>
-            <Button fx:id="btnDeleteIngredient" text="🗑️ Xóa nguyên liệu đã chọn" onAction="#handleDeleteIngredient"/>
-            <Button text="🔙 Quay lại" onAction="#handleBack"/>
+            <Button text="Chuyển sang tủ lạnh" onAction="#handleTransferToFridge"/>
+            <Button fx:id="btnDeleteIngredient" text="Xóa nguyên liệu" onAction="#handleDeleteIngredient" styleClass="danger-button"/>
+            <Button text="Quay lại" onAction="#handleBack" styleClass="secondary-button"/>
         </HBox>
     </VBox>
 </AnchorPane>

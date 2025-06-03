@@ -1,0 +1,248 @@
+/* Nền tổng thể */
+.root {
+    -fx-background-color: #f0f4f8;
+}
+
+/* Container trung tâm như form login */
+#loginContainer, #formContainer {
+    -fx-background-color: white;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0, 0, 5);
+    -fx-padding: 30;
+}
+
+/* Tiêu đề form */
+#titleLabel {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+/* Trường nhập */
+.text-field, .password-field {
+    -fx-font-size: 14px;
+    -fx-pref-width: 250;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 8 12;
+    -fx-background-color: #fff;
+    -fx-border-color: #ccc;
+}
+
+/* Nút bấm chính */
+.button {
+    -fx-background-color: #467DA7;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-pref-width: 250;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+/* Hover cho nút */
+.button:hover {
+    -fx-background-color: #365c80;
+}
+
+/* Hyperlink */
+.hyperlink {
+    -fx-text-fill: #467DA7;
+    -fx-font-size: 13px;
+}
+
+/* Hyperlink hover */
+.hyperlink:hover {
+    -fx-text-fill: #2f5e84;
+}
+/*phím đăng xuất*/
+.danger-button {
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-pref-width: 250;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.danger-button:hover {
+    -fx-background-color: #c0392b;
+}
+/*Phím quay lại*/
+.secondary-button {
+    -fx-background-color: #ccc;
+    -fx-text-fill: #333;
+    -fx-font-size: 14px;
+    -fx-pref-width: 250;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #b3b3b3;
+}
+#dashboardContainer {
+    -fx-background-color: white;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.15), 10, 0, 0, 5);
+}
+
+
+/* Header bar */
+.header-bar {
+    -fx-background-color: #e9f4fb;
+    -fx-padding: 12 24;
+    -fx-border-radius: 0 0 10 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 4, 0.3, 0, 2);
+}
+
+.logo {
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.15), 5, 0.2, 0, 1);
+}
+
+.dashboard-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.role-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #777;
+}
+/* Tiêu đề chính */
+.form-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-padding: 10 0 20 0;
+}
+
+/* Tiêu đề phụ (ví dụ tạo danh sách) */
+.form-subtitle {
+    -fx-font-size: 16px;
+    -fx-text-fill: #467DA7;
+    -fx-font-weight: bold;
+}
+
+/* DatePicker làm đẹp */
+.pretty-date {
+    -fx-font-size: 13px;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-border-color: #ccc;
+    -fx-background-color: white;
+    -fx-padding: 5;
+}
+
+.pretty-date:hover {
+    -fx-border-color: #467DA7;
+    -fx-effect: dropshadow(gaussian, rgba(70, 125, 167, 0.3), 3, 0.5, 0, 1);
+}
+/* --- Gốc DatePicker --- */
+.date-picker {
+    -fx-font-size: 12px;
+}
+
+/* Vùng nhập ngày */
+.date-picker .text-field {
+    -fx-background-color: white;
+    -fx-text-fill: #333;
+    -fx-border-color: #ccc;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-padding: 6 8;
+}
+
+/* Nút mũi tên */
+.date-picker .arrow-button {
+    -fx-background-color: #1783CC;
+    -fx-background-radius: 5;
+}
+
+.date-picker .arrow-button:hover {
+    -fx-background-color: #40a9ef;
+}
+
+.date-picker .arrow-button .arrow {
+    -fx-background-color: white;
+}
+
+/* Popup ngày */
+.date-picker-popup {
+    -fx-background-color: white;
+    -fx-border-color: #1783CC;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-padding: 6;
+}
+
+/* Phần header popup (June 2025 & mũi tên) */
+.date-picker-popup .month-year-pane {
+    -fx-padding: 2 4;
+    -fx-spacing: 4;
+    -fx-font-size: 11px;
+    -fx-background-color: #f0f4f8;
+    -fx-alignment: CENTER;
+}
+
+/* Các nút mũi tên chuyển tháng/năm */
+.date-picker-popup .spinner .button {
+    -fx-background-color: #1783CC;
+    -fx-text-fill: white;
+    -fx-pref-width: 22px;
+    -fx-pref-height: 22px;
+    -fx-background-radius: 4;
+}
+
+.date-picker-popup .spinner .button:hover {
+    -fx-background-color: #40a9ef;
+}
+
+/* Mũi tên (bên trong nút) */
+.date-picker-popup .spinner .button .arrow {
+    -fx-background-color: white;
+}
+
+
+/* Cell ngày */
+.date-cell {
+    -fx-font-size: 11px;
+    -fx-text-fill: #333;
+    -fx-alignment: CENTER;
+
+    /* Cố định kích thước */
+    -fx-pref-width: 26px;
+    -fx-pref-height: 26px;
+    -fx-min-width: 26px;
+    -fx-max-width: 26px;
+    -fx-min-height: 26px;
+    -fx-max-height: 26px;
+
+    -fx-background-radius: 4;
+    -fx-padding: 0;
+}
+
+
+.date-cell:hover {
+    -fx-background-color: #e3f2fd;
+    -fx-text-fill: #1783CC;
+}
+
+.date-cell:selected {
+    -fx-background-color: #1783CC;
+    -fx-text-fill: white;
+}
+.table-view {
+    -fx-padding: 0;
+}
+
+.table-view .virtual-flow .scroll-bar:horizontal {
+    -fx-pref-height: 0px;
+    -fx-opacity: 0;
+    -fx-max-height: 0;
+}
+

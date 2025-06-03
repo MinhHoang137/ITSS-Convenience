@@ -29,6 +29,7 @@ public abstract class BaseController implements Initializable {
             return loader.getController();
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }

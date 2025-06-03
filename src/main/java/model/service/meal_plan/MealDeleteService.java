@@ -44,5 +44,36 @@ public class MealDeleteService extends BaseService implements IMealDeleteService
 
         return success;
     }
+    public boolean deleteDish(int dishId){
+        getConnection();
+        boolean success = false;
 
+        String deleteMealDishQuery = "DELETE FROM meal_has_dish WHERE dishId = ?";
+        String deleteDishIngredientQuery = "DELETE FROM dish_use_ingredient WHERE dishId = ?";
+        String deleteDishQuery = "DELETE FROM dish WHERE dishId = ?";
+        try (
+                PreparedStatement deleteMealDishStmt = connection.prepareStatement(deleteMealDishQuery);
+                PreparedStatement deleteDishIngredientStmt = connection.prepareStatement(deleteDishIngredientQuery);
+                PreparedStatement deleteDishStmt = connection.prepareStatement(deleteDishQuery)
+        ) {
+            // Xóa liên kết món ăn trong meal_has_dish
+            deleteMealDishStmt.setInt(1, dishId);
+            deleteMealDishStmt.executeUpdate();
+
+            // Xóa liên kết nguyên liệu trong dish_has_ingredient
+            deleteDishIngredientStmt.setInt(1, dishId);
+            deleteDishIngredientStmt.executeUpdate();
+
+            // Xóa món ăn chính
+            deleteDishStmt.setInt(1, dishId);
+            int rowsAffected = deleteDishStmt.executeUpdate();
+
+            success = rowsAffected > 0;
+        } catch (SQLException e) {
+            System.out.println("Error in deleteDish: " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return success;
+    }
 }

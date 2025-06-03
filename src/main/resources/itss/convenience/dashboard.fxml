@@ -6,12 +6,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/23.0.1"
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="controller.DashboardController"
             prefWidth="900" prefHeight="600"
             stylesheets="@../../css/style.css">
 
+    <!-- Top Header -->
     <top>
         <HBox fx:id="headerBar" alignment="CENTER_LEFT" spacing="20" styleClass="header-bar">
             <padding>
@@ -25,26 +26,23 @@
             </ImageView>
 
             <Label fx:id="lblGroupName" styleClass="dashboard-title"/>
-
             <Region HBox.hgrow="ALWAYS"/>
             <Label fx:id="lblRole" styleClass="role-label"/>
         </HBox>
     </top>
 
-
-    <!-- Main content with white background -->
+    <!-- Center Main Content -->
     <center>
-        <VBox fx:id="dashboardContainer" alignment="CENTER" spacing="20"
-              prefWidth="400" prefHeight="400">
+        <VBox fx:id="dashboardContainer" alignment="CENTER" spacing="20" prefWidth="400" prefHeight="400">
             <padding>
                 <Insets top="30" bottom="30" left="40" right="40"/>
             </padding>
 
-            <Button minWidth="250" onAction="#goToShoppingList" text="Danh sách mua sắm"/>
-            <Button minWidth="250" onAction="#goToFridge" text="Quản lý tủ lạnh"/>
-            <Button minWidth="250" onAction="#goToSuggestion" text="Gợi ý món ăn"/>
-            <Button minWidth="250" onAction="#goToMealPlan" text="Lập kế hoạch bữa ăn"/>
-            <Button minWidth="250" onAction="#handleLogout" text="Đăng xuất" styleClass="danger-button"/>
+            <Button fx:id="btnShoppingList" minWidth="250" onAction="#goToShoppingList" text="Danh sách mua sắm"/>
+            <Button fx:id="fridge" minWidth="250" onAction="#goToFridge" text="Quản lý tủ lạnh"/>
+            <Button fx:id="btnSuggestion" minWidth="250" onAction="#goToSuggestion" text="Gợi ý món ăn"/>
+            <Button fx:id="btnMealPlan" minWidth="250" onAction="#goToMealPlan" text="Lập kế hoạch bữa ăn"/>
+            <Button fx:id="btnLogout" minWidth="250" onAction="#handleLogout" text="Đăng xuất" styleClass="danger-button"/>
         </VBox>
     </center>
 </BorderPane>

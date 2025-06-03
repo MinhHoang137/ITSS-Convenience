@@ -5,10 +5,7 @@ import controller.NotificationView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
@@ -26,6 +23,7 @@ import java.util.ResourceBundle;
 
 public class AddMealView extends BaseController {
     private static AddMealView current;
+
     private Dish dish;
 
 
@@ -35,7 +33,8 @@ public class AddMealView extends BaseController {
     private MealPlanDAO mealPlanDAO = MealPlanDAO.getInstance();
     private int groupId = Session.getCurrentUser().getGroupId();
     private int fridgeId = fridgeService.getFridgeIdByGroupId(groupId);
-
+    @FXML
+    private Button goBackButton;
     @FXML
     private VBox addedContainer;
     @FXML
@@ -301,5 +300,14 @@ public class AddMealView extends BaseController {
         foundContainer.getChildren().clear();
         ArrayList<Dish> dishes = mealPlanDAO.getAllDishes();
         putDishesTo(foundContainer, dishes);
+    }
+
+    @FXML
+    private void goBack(ActionEvent actionEvent) {
+        Stage stage = (Stage) goBackButton.getScene().getWindow();
+        stage.close();
+        if (mealPlanController != null) {
+            mealPlanController.refreshMealPlan();
+        }
     }
 }

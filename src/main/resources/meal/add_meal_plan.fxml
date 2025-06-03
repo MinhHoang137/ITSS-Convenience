@@ -101,5 +101,6 @@
             </VBox>
          </content>
       </ScrollPane>
+      <Button fx:id="goBackButton" layoutX="423.0" layoutY="384.0" mnemonicParsing="false" onAction="#goBack" text="quay lại" />
    </children>
 </AnchorPane>

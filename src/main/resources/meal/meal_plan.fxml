@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="476.0" prefWidth="798.0" style="-fx-background-color: #f9f9f9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.meal.MealPlanController">
+<AnchorPane prefHeight="538.0" prefWidth="798.0" style="-fx-background-color: #f9f9f9;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.meal.MealPlanController">
    <children>
       <HBox layoutX="12.0" prefHeight="48.0" prefWidth="774.0" spacing="10.0" style="-fx-padding: 10; -fx-background-color: #ffffff; -fx-border-color: #dcdcdc; -fx-border-radius: 6; -fx-background-radius: 6;" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="10.0">
          <children>
@@ -26,5 +26,6 @@
             -fx-background-color: transparent;
          </style>
       </ScrollPane>
+      <Button fx:id="goBackButton" layoutX="674.0" layoutY="468.0" mnemonicParsing="false" onAction="#goBack" prefHeight="26.0" prefWidth="110.0" style="-fx-background-radius: 6;" text="quay lại" />
    </children>
 </AnchorPane>

@@ -21,6 +21,7 @@ import java.util.ResourceBundle;
 public class MealPlanController extends BaseController {
 
     private static MealPlanController current;
+    @FXML private Button goBackButton;
 
     private MealPlanDAO mealPlanDAO = MealPlanDAO.getInstance();
 
@@ -99,5 +100,11 @@ public class MealPlanController extends BaseController {
     public void refreshMealPlan() {
         ArrayList<Meal> meals = mealPlanDAO.getAllMeals(groupId);
         displayMealCards(meals);
+    }
+
+    @FXML private void goBack(ActionEvent actionEvent) {
+        // close current window
+        Stage stage = (Stage) goBackButton.getScene().getWindow();
+        stage.close();
     }
 }

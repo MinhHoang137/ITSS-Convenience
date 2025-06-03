@@ -1,69 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="147.0" prefWidth="623.0" style="-fx-border-color: #0077CC; -fx-border-width: 2; -fx-border-radius: 5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.meal.MealCard">
+<AnchorPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.meal.MealCard"
+            prefHeight="150.0" prefWidth="630.0"
+            style="-fx-border-color: #0077CC; -fx-border-width: 2; -fx-border-radius: 5; -fx-background-radius: 5; -fx-padding: 10;">
+
    <children>
-      <VBox layoutX="8.0" prefHeight="142.0" prefWidth="517.0">
-         <children>
-            <HBox prefHeight="46.0" prefWidth="538.0">
-               <children>
-                  <Label prefHeight="46.0" prefWidth="101.0" text="Tên món:">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="dishNameText" prefHeight="46.0" prefWidth="403.0">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-               </children>
+      <HBox alignment="TOP_LEFT" spacing="20" AnchorPane.topAnchor="10" AnchorPane.leftAnchor="10" AnchorPane.rightAnchor="10">
+         <!-- Phần thông tin món ăn -->
+         <VBox spacing="5" prefWidth="450.0">
+            <HBox spacing="10">
+               <Label text="Tên món:" styleClass="form-label" />
+               <Label fx:id="dishNameText" styleClass="value-label" />
             </HBox>
-            <HBox layoutX="10.0" layoutY="10.0" prefHeight="46.0" prefWidth="362.0">
-               <children>
-                  <Label prefHeight="46.0" prefWidth="101.0" text="Thời điểm ăn:">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="timeToEatText" prefHeight="46.0" prefWidth="418.0">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-               </children>
+            <HBox spacing="10">
+               <Label text="Thời điểm ăn:" styleClass="form-label" />
+               <Label fx:id="timeToEatText" styleClass="value-label" />
             </HBox>
-            <HBox layoutX="10.0" layoutY="56.0" prefHeight="46.0" prefWidth="362.0">
-               <children>
-                  <Label prefHeight="46.0" prefWidth="100.0" text="Ngày ăn:">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="dateToEatText" prefHeight="46.0" prefWidth="418.0">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </Label>
-               </children>
+            <HBox spacing="10">
+               <Label text="Ngày ăn:" styleClass="form-label" />
+               <Label fx:id="dateToEatText" styleClass="value-label" />
             </HBox>
-         </children>
-      </VBox>
-      <Button fx:id="deleteButton" layoutX="565.0" layoutY="56.0" mnemonicParsing="false" onAction="#OnDelete" text="Xóa">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <Button layoutX="504.0" layoutY="56.0" mnemonicParsing="false" onAction="#OnCook" text="Nấu">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
+         </VBox>
+
+         <!-- Phần nút hành động -->
+         <VBox spacing="10" alignment="CENTER">
+            <Button fx:id="deleteButton" text="Xóa" onAction="#OnDelete" styleClass="danger-button" />
+            <Button text="Nấu" onAction="#OnCook" styleClass="button" />
+         </VBox>
+      </HBox>
    </children>
 </AnchorPane>

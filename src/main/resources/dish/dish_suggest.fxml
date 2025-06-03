@@ -6,15 +6,18 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.dish.DishSuggestController">
+            fx:controller="controller.dish.DishSuggestController"
+            id="formContainer"
+            prefWidth="900" prefHeight="600"
+            stylesheets="@../css/style.css">
 
     <!-- Header -->
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="10">
+        <HBox alignment="CENTER_LEFT" spacing="10" styleClass="header-bar">
             <padding>
                 <Insets top="10" left="10" bottom="0" right="10"/>
             </padding>
-            <Label style="-fx-font-size: 20px; -fx-font-weight: bold;" text="🍱 GỢI Ý MÓN ĂN" />
+            <Label text="🍱 GỢI Ý MÓN ĂN" styleClass="dashboard-title"/>
         </HBox>
     </top>
 
@@ -25,21 +28,21 @@
                 <Insets top="20" left="20" right="20" bottom="20"/>
             </padding>
 
-            <!-- Chỉ giữ nút Nấu ăn -->
+            <!-- Nút nấu ăn -->
             <HBox spacing="15" alignment="CENTER_LEFT">
-                <Button fx:id="btnCook" text="🔥 Nấu ăn" />
+                <Button fx:id="btnCook" text="🔥 Nấu ăn" styleClass="button"/>
             </HBox>
 
-            <!-- Dishes List -->
+            <!-- Danh sách món có thể nấu -->
             <VBox spacing="5" alignment="TOP_LEFT">
-                <Label text="🥘 Món có thể nấu:" style="-fx-font-weight: bold;" />
-                <ListView fx:id="lvDishes" prefHeight="150"/>
+                <Label text="📋 Món có thể nấu:" styleClass="form-subtitle"/>
+                <ListView fx:id="lvDishes" prefHeight="200"/>
             </VBox>
 
-            <!-- Ingredients List -->
+            <!-- Danh sách nguyên liệu -->
             <VBox spacing="5" alignment="TOP_LEFT">
-                <Label text="📦 Nguyên liệu hiện có:" style="-fx-font-weight: bold;" />
-                <ListView fx:id="lvIngredients" prefHeight="150"/>
+                <Label text="🧺 Nguyên liệu hiện có:" styleClass="form-subtitle"/>
+                <ListView fx:id="lvIngredients" prefHeight="200"/>
             </VBox>
         </VBox>
     </center>
@@ -50,7 +53,7 @@
             <padding>
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
-            <Button fx:id="btnBack" text="⬅ Quay lại"/>
+            <Button fx:id="btnBack" text="Quay lại" styleClass="secondary-button"/>
         </HBox>
     </bottom>
 </BorderPane>

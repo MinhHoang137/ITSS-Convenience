@@ -1,13 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.group.IntroduceGroupController">
-    <VBox alignment="CENTER" spacing="20" prefWidth="400" prefHeight="300" style="-fx-padding: 30;">
-        <Label text="Bạn chưa có nhóm!" style="-fx-font-size: 16px;"/>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.group.IntroduceGroupController"
+            prefWidth="900" prefHeight="600"
+            stylesheets="@../../css/style.css">
+
+    <VBox fx:id="formContainer" alignment="CENTER" spacing="20"
+          layoutX="250" layoutY="100" prefWidth="400" prefHeight="350">
+        <padding>
+            <Insets top="30" bottom="30" left="40" right="40"/>
+        </padding>
+
+        <ImageView fitWidth="80" fitHeight="80">
+            <image>
+                <Image url="@../../image/logo.png" preserveRatio="true"/>
+            </image>
+        </ImageView>
+
+        <Label fx:id="titleLabel" text="Bạn chưa có nhóm!"/>
+
         <Button text="Tạo nhóm mới" onAction="#handleCreateGroup"/>
         <Button text="Gia nhập nhóm bằng mã" onAction="#handleJoinGroup"/>
-        <Button text="Đăng xuất" onAction="#handleLogout" style="-fx-background-color: #f55; -fx-text-fill: white;"/>
+
+        <!-- Nút đăng xuất thêm style đặc biệt bằng class -->
+        <Button text="Đăng xuất" onAction="#handleLogout" styleClass="danger-button"/>
     </VBox>
 </AnchorPane>

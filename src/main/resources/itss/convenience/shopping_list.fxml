@@ -4,34 +4,42 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.shopping.ShoppingListController">
-    <VBox spacing="15" alignment="CENTER" prefWidth="600" prefHeight="450">
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.shopping.ShoppingListController"
+            prefWidth="900" prefHeight="600"
+            stylesheets="@../../css/style.css">
+
+    <VBox fx:id="formContainer" alignment="CENTER" spacing="20"
+          layoutX="150" layoutY="50" prefWidth="600" prefHeight="500">
         <padding>
-            <Insets top="20" right="20" bottom="20" left="20"/>
+            <Insets top="30" bottom="30" left="40" right="40"/>
         </padding>
 
-        <Label text="📋 Danh sách mua sắm của nhóm" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+        <Label text="Danh sách mua sắm của nhóm" styleClass="form-title"/>
 
-        <!-- CHỈ HIỆN CHO HOUSEWIFE -->
+        <!-- Phần tạo danh sách mới -->
         <VBox fx:id="sectionCreate" spacing="10" alignment="CENTER">
+            <Label text="Tạo danh sách mới" styleClass="form-subtitle"/>
             <HBox spacing="10" alignment="CENTER">
                 <Label text="Ngày mua:"/>
-                <DatePicker fx:id="dateBuyDate"/>
-                <Button text="➕ Tạo danh sách" onAction="#handleAddShoppingList"/>
+                <DatePicker fx:id="dateBuyDate" styleClass="pretty-date" prefWidth="180"/>
+                <Button text="Tạo danh sách" onAction="#handleAddShoppingList"/>
             </HBox>
         </VBox>
 
+        <!-- Bảng danh sách -->
         <TableView fx:id="tableShoppingList" prefHeight="250" maxWidth="500">
             <columns>
                 <TableColumn fx:id="colId" text="Mã DS" prefWidth="100"/>
-                <TableColumn fx:id="colDate" text="Ngày mua" prefWidth="300"/>
+                <TableColumn fx:id="colDate" text="Ngày mua" prefWidth="400"/>
             </columns>
         </TableView>
 
+        <!-- Nút điều hướng -->
         <HBox spacing="10" alignment="CENTER">
-            <Button text="🔍 Xem nguyên liệu" onAction="#handleViewSelectedList"/>
-            <Button fx:id="btnDeleteList" text="🗑️ Xóa danh sách đã chọn" onAction="#handleDeleteShoppingList"/>
-            <Button text="🔙 Quay lại" onAction="#handleBack"/>
+            <Button text="Xem nguyên liệu" onAction="#handleViewSelectedList"/>
+            <Button fx:id="btnDeleteList" text="Xóa danh sách" onAction="#handleDeleteShoppingList" styleClass="danger-button"/>
+            <Button text="Quay lại" onAction="#handleBack" styleClass="secondary-button"/>
         </HBox>
     </VBox>
 </AnchorPane>

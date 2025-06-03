@@ -1,12 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="controller.auth.LoginController">
-    <VBox alignment="CENTER" spacing="10" prefWidth="400" prefHeight="250" style="-fx-padding: 30;">
-        <Label text="Đăng nhập" style="-fx-font-size: 20px;"/>
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.auth.LoginController"
+            prefWidth="900" prefHeight="600"
+            stylesheets="@../../css/style.css">
+
+
+    <VBox fx:id="loginContainer" alignment="CENTER" spacing="20"
+          layoutX="250" layoutY="100" prefWidth="400" prefHeight="350">
+        <padding>
+            <Insets top="30" bottom="30" left="40" right="40"/>
+        </padding>
+
+        <ImageView fitWidth="80" fitHeight="80">
+            <image>
+                <Image url="@../../image/logo.png" preserveRatio="true"/>
+            </image>
+        </ImageView>
+
+        <Label text="Đăng nhập hệ thống" fx:id="titleLabel"/>
+
         <TextField fx:id="txtUsername" promptText="Tên đăng nhập" />
+
         <Button text="Đăng nhập" onAction="#handleLogin"/>
         <Hyperlink text="Chưa có tài khoản? Đăng ký" onAction="#goToRegister"/>
     </VBox>

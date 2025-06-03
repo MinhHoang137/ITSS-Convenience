@@ -1,39 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="controller.DashboardController">
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/23.0.1"
+            fx:controller="controller.DashboardController"
+            prefWidth="900" prefHeight="600"
+            stylesheets="@../../css/style.css">
 
-    <!-- Vai trò ở góc trên bên phải -->
     <top>
-        <HBox alignment="TOP_RIGHT">
+        <HBox fx:id="headerBar" alignment="CENTER_LEFT" spacing="20" styleClass="header-bar">
             <padding>
-                <Insets bottom="0" left="0" right="20" top="10" />
+                <Insets top="10" bottom="10" left="20" right="20"/>
             </padding>
-            <Label fx:id="lblRole" style="-fx-font-size: 14px; -fx-text-fill: gray;" />
+
+            <ImageView fitHeight="40" fitWidth="40" styleClass="logo">
+                <image>
+                    <Image url="@../../image/logo.png" preserveRatio="true"/>
+                </image>
+            </ImageView>
+
+            <Label fx:id="lblGroupName" styleClass="dashboard-title"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label fx:id="lblRole" styleClass="role-label"/>
         </HBox>
     </top>
 
-    <!-- Nội dung chính -->
+
+    <!-- Main content with white background -->
     <center>
-        <VBox alignment="CENTER" spacing="15">
+        <VBox fx:id="dashboardContainer" alignment="CENTER" spacing="20"
+              prefWidth="400" prefHeight="400">
             <padding>
-                <Insets bottom="30" left="30" right="30" top="30" />
+                <Insets top="30" bottom="30" left="40" right="40"/>
             </padding>
 
-            <Label fx:id="lblGroupName" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-
-            <Button minWidth="200" onAction="#goToShoppingList" text="📋 Danh sách mua sắm" />
-            <Button fx:id="fridge" minWidth="200" onAction="#goToFridge" text="🧊 Quản lý tủ lạnh" />
-            <Button minWidth="200" onAction="#goToSuggestion" text="🍱 Gợi ý món ăn" />
-            <Button minWidth="200" onAction="#goToMealPlan" text="📆 Lập kế hoạch bữa ăn" />
-            <Button minWidth="200" onAction="#handleLogout" style="-fx-background-color: #f55; -fx-text-fill: white;" text="🚪 Đăng xuất" />
+            <Button minWidth="250" onAction="#goToShoppingList" text="Danh sách mua sắm"/>
+            <Button minWidth="250" onAction="#goToFridge" text="Quản lý tủ lạnh"/>
+            <Button minWidth="250" onAction="#goToSuggestion" text="Gợi ý món ăn"/>
+            <Button minWidth="250" onAction="#goToMealPlan" text="Lập kế hoạch bữa ăn"/>
+            <Button minWidth="250" onAction="#handleLogout" text="Đăng xuất" styleClass="danger-button"/>
         </VBox>
     </center>
-
 </BorderPane>

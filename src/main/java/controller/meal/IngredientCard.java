@@ -3,6 +3,7 @@ package controller.meal;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import model.entity.Ingredient;
 import model.entity.Unit;
 
@@ -26,6 +27,8 @@ public class IngredientCard {
     @FXML
     private Button deleteButton;
 
+    private VBox ingredientHolder;
+
     @FXML
     public void initialize() {
         // Chỉ cho nhập số và dấu chấm
@@ -45,6 +48,7 @@ public class IngredientCard {
     }
     @FXML
     private void OnDeleteIngredient(ActionEvent actionEvent) {
+        DishUpdateAdminView.getCurrent().deleteIngredient(ingredient);
     }
     public void setIngredient(Ingredient ingredient) {
         this.ingredient = ingredient;
@@ -60,5 +64,8 @@ public class IngredientCard {
         ingredient.setQuantity(Double.parseDouble(quantityField.getText()));
         ingredient.setUnit(Unit.valueOf(unitComboBox.getValue()));
         return ingredient;
+    }
+    public void setIngredientHolder(VBox ingredientHolder) {
+        this.ingredientHolder = ingredientHolder;
     }
 }

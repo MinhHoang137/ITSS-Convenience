@@ -4,11 +4,14 @@ import controller.BaseController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import model.dao.MealPlanDAO;
 import model.entity.Dish;
 import model.entity.Ingredient;
 import model.entity.MealType;
@@ -33,6 +36,9 @@ public class DishUpdateAdminView extends BaseController {
     private final ObservableList<Ingredient> ingredientList = FXCollections.observableArrayList();
     private Dish currentDish;
 
+    private ArrayList<IngredientCard> ingredientCards = new ArrayList<>();
+
+    private MealPlanDAO mealPlanDAO = MealPlanDAO.getInstance();
 
 
     public void setDish(Dish dish) {
@@ -42,8 +48,28 @@ public class DishUpdateAdminView extends BaseController {
         eatTimeComboBox.setValue(dish.getEatTime());
         eatDateComboBox.setValue(Dish.weekdays[dish.getEatDateIndex()]);
         ingredientList.setAll(dish.getIngredients());
+        setIngredients();
     }
-
+    private void setIngredients() {
+        ingredientContainer.getChildren().clear();
+        ingredientCards.clear();
+        for (Ingredient ingredient : ingredientList) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/dish/ingredient_card.fxml"));
+            try{
+                Parent card = loader.load();
+                IngredientCard ingredientCard = loader.getController();
+                ingredientCard.setIngredient(ingredient);
+                ingredientCards.add(ingredientCard);
+                ingredientContainer.getChildren().add(card);
+            } catch (Exception e){
+                System.out.println("Error loading ingredient card: " + e.getMessage());
+            }
+        }
+    }
+    public void deleteIngredient(Ingredient ingredient) {
+        ingredientList.remove(ingredient);
+        setIngredients();
+    }
     @FXML
     private void onAddIngredient() {
         Dialog<Pair<String, Pair<Double, Unit>>> dialog = new Dialog<>();
@@ -88,6 +114,7 @@ public class DishUpdateAdminView extends BaseController {
             double quantity = pair.getValue().getKey();
             Unit unit = pair.getValue().getValue();
             ingredientList.add(new Ingredient(0, name, quantity, unit));
+            setIngredients();
         });
     }
 
@@ -101,9 +128,14 @@ public class DishUpdateAdminView extends BaseController {
         currentDish.setEatTime(eatTimeComboBox.getValue());
         currentDish.setEatDate(eatDateComboBox.getSelectionModel().getSelectedIndex());
         currentDish.setIngredients(new ArrayList<>(ingredientList));
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Lưu thành công!", ButtonType.OK);
-        alert.showAndWait();
+        if (mealPlanDAO.saveDish(currentDish)){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Lưu thành công!", ButtonType.OK);
+            DishDetailView.getCurrent().refresh();
+            alert.showAndWait();
+        } else{
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Lưu thất bại!", ButtonType.OK);
+            alert.showAndWait();
+        }
     }
 
     @Override

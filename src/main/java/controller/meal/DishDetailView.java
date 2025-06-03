@@ -1,5 +1,6 @@
 package controller.meal;
 
+import controller.ViewController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -53,6 +54,8 @@ public class DishDetailView {
         // Mở dialog hoặc FXML mới để thêm món ăn
         System.out.println("Thêm món ăn mới");
         // TODO: Hiển thị màn hình thêm món ăn mới (DishUpdateAdminView)
+        ViewController.getInstance().openController(new DishUpdateAdminView(),
+                "Thêm món ăn", 1000, 700);
     }
     public static DishDetailView getCurrent() {
         return current;

@@ -13,8 +13,18 @@ import model.entity.Ingredient;
 import model.entity.Unit;
 import model.service.BaseService;
 
+/**
+ * Dịch vụ quản lý tủ lạnh, bao gồm thêm, truy vấn, sử dụng nguyên liệu,
+ * cũng như nấu món ăn từ nguyên liệu có sẵn.
+ */
 public class FridgeService extends BaseService {
 
+    /**
+     * Thêm một nguyên liệu vào tủ lạnh (bao gồm cả ID nguyên liệu).
+     *
+     * @param ingredient nguyên liệu cần thêm
+     * @param fridgeId   ID của tủ lạnh
+     */
     public void addIngredient(Ingredient ingredient, int fridgeId) {
         getConnection();
         try {
@@ -34,59 +44,12 @@ public class FridgeService extends BaseService {
         }
     }
 
-    // public List<Ingredient> getAllIngredients(int fridgeId) {
-    // List<Ingredient> list = new ArrayList<>();
-    // try {
-    // String sql = "SELECT * FROM ingredient WHERE fridgeId = ?";
-    // PreparedStatement stmt = connection.prepareStatement(sql);
-    // stmt.setInt(1, fridgeId);
-    // ResultSet rs = stmt.executeQuery();
-    // while (rs.next()) {
-    // Ingredient ing = new Ingredient(
-    // rs.getInt("ingredientId"),
-    // rs.getString("ingredientName"),
-    // rs.getDouble("quantity"),
-    // Unit.valueOf(rs.getString("unitType")),
-    // rs.getDate("expirationDate").toLocalDate());
-    // list.add(ing);
-    // }
-    // } catch (Exception e) {
-    // e.printStackTrace();
-    // } finally {
-    // closeConnection();
-    // }
-    // return list;
-    // }
-//    public List<Ingredient> getAllIngredients(int fridgeId) {
-//        getConnection();
-//        List<Ingredient> list = new ArrayList<>();
-//        try {
-//            String sql = """
-//                        SELECT ingredientName, unitType, SUM(quantity) as totalQuantity
-//                        FROM ingredient
-//                        WHERE fridgeId = ?
-//                        GROUP BY ingredientName, unitType
-//                    """;
-//            PreparedStatement stmt = connection.prepareStatement(sql);
-//            stmt.setInt(1, fridgeId);
-//            ResultSet rs = stmt.executeQuery();
-//            while (rs.next()) {
-//                Ingredient ing = new Ingredient(
-//                        -1, // ID không cần thiết trong trường hợp này
-//                        rs.getString("ingredientName"),
-//                        rs.getDouble("totalQuantity"),
-//                        Unit.valueOf(rs.getString("unitType")),
-//                        null // bỏ expirationDate
-//                );
-//                list.add(ing);
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            closeConnection();
-//        }
-//        return list;
-//    }
+    /**
+     * Lấy danh sách tất cả nguyên liệu đang có trong tủ lạnh (sau khi gộp theo tên và đơn vị tính).
+     *
+     * @param fridgeId ID của tủ lạnh
+     * @return danh sách nguyên liệu
+     */
     public List<Ingredient> getAllIngredients(int fridgeId) {
         getConnection();
         List<Ingredient> list = new ArrayList<>();
@@ -103,11 +66,11 @@ public class FridgeService extends BaseService {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Ingredient ing = new Ingredient(
-                        -1, // ID không cần thiết trong trường hợp này
+                        -1,
                         rs.getString("ingredientName"),
                         rs.getDouble("totalQuantity"),
                         Unit.valueOf(rs.getString("unitType")),
-                        null // bỏ expirationDate
+                        null
                 );
                 list.add(ing);
             }
@@ -119,6 +82,13 @@ public class FridgeService extends BaseService {
         return list;
     }
 
+    /**
+     * Nấu một món ăn bằng cách trừ nguyên liệu tương ứng trong tủ lạnh.
+     *
+     * @param dish     món ăn cần nấu
+     * @param fridgeId ID của tủ lạnh
+     * @return true nếu đủ nguyên liệu và trừ thành công; false nếu thiếu nguyên liệu
+     */
     public boolean cookDish(Dish dish, int fridgeId) {
         for (Ingredient ing : dish.getIngredients()) {
             boolean ok = useIngredient(ing.getName(), ing.getQuantity(), ing.getUnit(), fridgeId);
@@ -127,6 +97,13 @@ public class FridgeService extends BaseService {
         return true;
     }
 
+    /**
+     * Lấy danh sách nguyên liệu sắp hết hạn (trong khoảng n ngày tới).
+     *
+     * @param fridgeId          ID của tủ lạnh
+     * @param daysBeforeExpire  số ngày trước khi hết hạn
+     * @return danh sách nguyên liệu sắp hết hạn
+     */
     public List<Ingredient> getExpiringIngredients(int fridgeId, int daysBeforeExpire) {
         getConnection();
         List<Ingredient> list = new ArrayList<>();
@@ -157,6 +134,15 @@ public class FridgeService extends BaseService {
         return list;
     }
 
+    /**
+     * Trừ một lượng nguyên liệu cụ thể trong tủ lạnh nếu đủ số lượng.
+     *
+     * @param name         tên nguyên liệu
+     * @param usedQuantity số lượng cần dùng
+     * @param unit         đơn vị
+     * @param fridgeId     ID của tủ lạnh
+     * @return true nếu đủ và trừ được, false nếu không đủ
+     */
     public boolean useIngredient(String name, double usedQuantity, Unit unit, int fridgeId) {
         getConnection();
         try {
@@ -184,6 +170,12 @@ public class FridgeService extends BaseService {
         return false;
     }
 
+    /**
+     * Thêm một nguyên liệu mới vào tủ lạnh (không cần ID).
+     *
+     * @param ingredient nguyên liệu
+     * @param fridgeId   ID của tủ lạnh
+     */
     public void addIngredientToFridge(Ingredient ingredient, int fridgeId) {
         getConnection();
         try {
@@ -205,6 +197,12 @@ public class FridgeService extends BaseService {
         }
     }
 
+    /**
+     * Truy xuất ID tủ lạnh theo groupId của người dùng.
+     *
+     * @param groupId ID nhóm người dùng
+     * @return ID tủ lạnh tương ứng; -1 nếu không tìm thấy
+     */
     public int getFridgeIdByGroupId(int groupId) {
         getConnection();
         int fridgeId = -1;
@@ -223,44 +221,54 @@ public class FridgeService extends BaseService {
         }
         return fridgeId;
     }
+
+    /**
+     * Lấy toàn bộ danh sách các tủ lạnh trong hệ thống.
+     *
+     * @return danh sách các tủ lạnh
+     */
     public List<Fridge> getAllFridges() {
-    getConnection();
-    List<Fridge> list = new ArrayList<>();
-    try {
-        String sql = "SELECT * FROM fridge";
-        PreparedStatement stmt = connection.prepareStatement(sql);
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            Fridge fridge = new Fridge();
-            fridge.setId(rs.getInt("fridgeId"));
-            fridge.setUserGroupId(rs.getInt("groupId"));
-            list.add(fridge);
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-    } finally {
-        closeConnection();
-    }
-    return list;
-}
-public boolean consumeIngredientsForDish(Dish dish, int fridgeId) {
-    getConnection();
-    try {
-        for (Ingredient i : dish.getIngredients()) {
-            if (!useIngredient(i.getName(), i.getQuantity(), i.getUnit(), fridgeId)) {
-                return false;
+        getConnection();
+        List<Fridge> list = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM fridge";
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Fridge fridge = new Fridge();
+                fridge.setId(rs.getInt("fridgeId"));
+                fridge.setUserGroupId(rs.getInt("groupId"));
+                list.add(fridge);
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
         }
-        return true;
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
-    } finally {
-        closeConnection();
+        return list;
     }
-}
 
-    
-
-
+    /**
+     * Tiêu thụ nguyên liệu cần thiết để nấu một món ăn (giống cookDish).
+     *
+     * @param dish     món ăn
+     * @param fridgeId ID tủ lạnh
+     * @return true nếu đủ nguyên liệu và trừ được; false nếu thiếu
+     */
+    public boolean consumeIngredientsForDish(Dish dish, int fridgeId) {
+        getConnection();
+        try {
+            for (Ingredient i : dish.getIngredients()) {
+                if (!useIngredient(i.getName(), i.getQuantity(), i.getUnit(), fridgeId)) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        } finally {
+            closeConnection();
+        }
+    }
 }

@@ -19,10 +19,15 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Controller cho màn hình hiển thị nguyên liệu sắp hết hạn trong tủ lạnh.
+ * Hiển thị danh sách các nguyên liệu có ngày hết hạn gần và cho phép quay lại màn hình trước đó.
+ */
 public class ExpiringIngredientController extends BaseController {
 
     @FXML
     private TableView<Ingredient> expiredTableView;
+
     @FXML
     private Button goBack;
 
@@ -41,13 +46,20 @@ public class ExpiringIngredientController extends BaseController {
     @FXML
     private TableColumn<Ingredient, LocalDate> expirationDate;
 
+    /** Service để truy xuất dữ liệu nguyên liệu từ database. */
     private final FridgeService fridgeService = new FridgeService();
-    private int fridgeId ; // ⚠️ Bạn có thể truyền thực tế từ user đăng nhập
 
+    /** ID của tủ lạnh, được xác định từ groupId của người dùng hiện tại. */
+    private int fridgeId;
+
+    /**
+     * Khởi tạo controller. Thiết lập dữ liệu ban đầu cho bảng nguyên liệu sắp hết hạn.
+     * @param url URL được truyền vào (không sử dụng).
+     * @param resourceBundle ResourceBundle được truyền vào (không sử dụng).
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         int groupId = Session.getCurrentUser().getGroupId();
-        // Lấy fridgeId từ groupId
         fridgeId = fridgeService.getFridgeIdByGroupId(groupId);
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -58,17 +70,28 @@ public class ExpiringIngredientController extends BaseController {
         expiredTableView.setItems(loadExpiringIngredients());
     }
 
+    /**
+     * Tải danh sách nguyên liệu sắp hết hạn từ cơ sở dữ liệu (trong vòng 3 ngày tới).
+     * @return Danh sách nguyên liệu sắp hết hạn dưới dạng ObservableList.
+     */
     private ObservableList<Ingredient> loadExpiringIngredients() {
         List<Ingredient> list = fridgeService.getExpiringIngredients(fridgeId, 3);
         return FXCollections.observableArrayList(list);
     }
+
+    /**
+     * Xử lý sự kiện khi người dùng nhấn nút quay lại.
+     * Chuyển về màn hình hiển thị tủ lạnh.
+     */
     @FXML
     public void goBack() {
-
         SceneSwitcher.switchScene(goBack, "/fridge/fridge.fxml", "Nguyên liệu trong tủ lạnh");
-
     }
 
+    /**
+     * Trả về đường dẫn FXML của màn hình hiện tại.
+     * @return Chuỗi đường dẫn tới file FXML.
+     */
     @Override
     public String getFxmlPath() {
         return "/fridge/expiring.fxml";

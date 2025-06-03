@@ -1,50 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            fx:controller="controller.DashboardController"
-            prefWidth="900" prefHeight="600"
-            stylesheets="@../../css/style.css">
+<BorderPane prefHeight="600" prefWidth="900" stylesheets="@../../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
 
     <top>
         <HBox fx:id="headerBar" alignment="CENTER_LEFT" spacing="20" styleClass="header-bar">
             <padding>
-                <Insets top="10" bottom="10" left="20" right="20"/>
+                <Insets bottom="10" left="20" right="20" top="10" />
             </padding>
 
             <ImageView fitHeight="40" fitWidth="40" styleClass="logo">
                 <image>
-                    <Image url="@../../image/logo.png" preserveRatio="true"/>
+                    <Image preserveRatio="true" url="@../../image/logo.png" />
                 </image>
             </ImageView>
 
-            <Label fx:id="lblGroupName" styleClass="dashboard-title"/>
+            <Label fx:id="lblGroupName" styleClass="dashboard-title" />
 
-            <Region HBox.hgrow="ALWAYS"/>
-            <Label fx:id="lblRole" styleClass="role-label"/>
+            <Region HBox.hgrow="ALWAYS" />
+            <Label fx:id="lblRole" styleClass="role-label" />
         </HBox>
     </top>
 
 
     <!-- Main content with white background -->
     <center>
-        <VBox fx:id="dashboardContainer" alignment="CENTER" spacing="20"
-              prefWidth="400" prefHeight="400">
+        <VBox fx:id="dashboardContainer" alignment="CENTER" prefHeight="400" prefWidth="400" spacing="20">
             <padding>
-                <Insets top="30" bottom="30" left="40" right="40"/>
+                <Insets bottom="30" left="40" right="40" top="30" />
             </padding>
 
-            <Button minWidth="250" onAction="#goToShoppingList" text="Danh sách mua sắm"/>
-            <Button minWidth="250" onAction="#goToFridge" text="Quản lý tủ lạnh"/>
-            <Button minWidth="250" onAction="#goToSuggestion" text="Gợi ý món ăn"/>
-            <Button minWidth="250" onAction="#goToMealPlan" text="Lập kế hoạch bữa ăn"/>
-            <Button minWidth="250" onAction="#handleLogout" text="Đăng xuất" styleClass="danger-button"/>
+            <Button minWidth="250" onAction="#goToShoppingList" text="Danh sách mua sắm" />
+            <Button fx:id="fridge" minWidth="250" onAction="#goToFridge" text="Quản lý tủ lạnh" />
+            <Button minWidth="250" onAction="#goToSuggestion" text="Gợi ý món ăn" />
+            <Button minWidth="250" onAction="#goToMealPlan" text="Lập kế hoạch bữa ăn" />
+            <Button minWidth="250" onAction="#handleLogout" styleClass="danger-button" text="Đăng xuất" />
         </VBox>
     </center>
 </BorderPane>

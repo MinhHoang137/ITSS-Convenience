@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import model.dao.FridgeDAO;
 import model.dao.MealPlanDAO;
 import model.entity.Dish;
 import model.entity.Meal;
@@ -112,8 +113,8 @@ private void OnCook(ActionEvent actionEvent) {
 
     MealPlanDAO mealPlanDAO = MealPlanDAO.getInstance();
     int groupId = Session.getCurrentUser().getGroupId();
-    FridgeService fridgeService = new FridgeService();
-    int fridgeId = fridgeService.getFridgeIdByGroupId(groupId);
+    FridgeDAO fridgeDAO = FridgeDAO.getInstance();
+    int fridgeId = fridgeDAO.getFridgeIdByGroupId(groupId);
     DishService dishService = new DishService();
 
     if (!mealPlanDAO.canCookMeal(meal.getId(), fridgeId)) {

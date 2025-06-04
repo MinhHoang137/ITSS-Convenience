@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import model.dao.FridgeDAO;
 import model.dao.MealPlanDAO;
 import model.entity.*;
 import model.service.IShoppingListService;
@@ -29,11 +30,11 @@ public class AddMealView extends BaseController {
 
 
     private MealPlanController mealPlanController = MealPlanController.getCurrent();
-    private FridgeService fridgeService = new FridgeService();
+    private final FridgeDAO fridgeDAO = FridgeDAO.getInstance();
     private Meal meal = new Meal();
     private MealPlanDAO mealPlanDAO = MealPlanDAO.getInstance();
     private int groupId = Session.getCurrentUser().getGroupId();
-    private int fridgeId = fridgeService.getFridgeIdByGroupId(groupId);
+    private final int fridgeId = fridgeDAO.getFridgeIdByGroupId(groupId);
     @FXML
     private Button goBackButton;
     @FXML

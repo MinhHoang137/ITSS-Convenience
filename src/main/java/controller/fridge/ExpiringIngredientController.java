@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.dao.FridgeDAO;
 import model.entity.Ingredient;
 import model.entity.Unit;
 import model.service.fridge.FridgeService;
@@ -48,11 +49,12 @@ public class ExpiringIngredientController extends BaseController {
     private TableColumn<Ingredient, LocalDate> expirationDate;
 
     /** Service để truy xuất dữ liệu nguyên liệu từ database. */
-    private final FridgeService fridgeService = new FridgeService();
+
 
     /** ID của tủ lạnh, được xác định từ groupId của người dùng hiện tại. */
     private int fridgeId;
-    private final IngredientService ingredientService = new IngredientService();
+
+    private final FridgeDAO fridgeDAO = FridgeDAO.getInstance();
 
     /**
      * Khởi tạo controller. Thiết lập dữ liệu ban đầu cho bảng nguyên liệu sắp hết hạn.
@@ -62,7 +64,7 @@ public class ExpiringIngredientController extends BaseController {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         int groupId = Session.getCurrentUser().getGroupId();
-        fridgeId = fridgeService.getFridgeIdByGroupId(groupId);
+        fridgeId = fridgeDAO.getFridgeIdByGroupId(groupId);
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
@@ -77,7 +79,7 @@ public class ExpiringIngredientController extends BaseController {
      * @return Danh sách nguyên liệu sắp hết hạn dưới dạng ObservableList.
      */
     private ObservableList<Ingredient> loadExpiringIngredients() {
-        List<Ingredient> list = ingredientService.getExpiringIngredients(fridgeId, 3);
+        List<Ingredient> list = fridgeDAO.getExpiringIngredients(fridgeId, 3);
         return FXCollections.observableArrayList(list);
     }
 

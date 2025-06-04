@@ -42,10 +42,6 @@ public class AdminDashboardController {
         }
     }
 
-    @FXML
-    public void goToFoodCategory() {
-        setCenterContent("/view/food.fxml");
-    }
 
     @FXML
     public void goToDishCategory() {

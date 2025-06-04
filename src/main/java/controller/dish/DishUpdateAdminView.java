@@ -128,7 +128,10 @@ public class DishUpdateAdminView extends BaseController {
         currentDish.setDescription(descriptionArea.getText());
         currentDish.setEatTime(eatTimeComboBox.getValue());
         currentDish.setEatDate(eatDateComboBox.getSelectionModel().getSelectedIndex());
-        currentDish.setIngredients(new ArrayList<>(ingredientList));
+        currentDish.setIngredients(new ArrayList<>());
+        for (IngredientCard card : ingredientCards) {
+            currentDish.getIngredients().add(card.getIngredient());
+        }
         if (mealPlanDAO.saveDish(currentDish)){
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Lưu thành công!", ButtonType.OK);
             DishDetailView.getCurrent().refresh();

@@ -10,7 +10,7 @@ import model.entity.Dish;
 import model.entity.Ingredient;
 import model.service.BaseService;
 
-public class DishSuggestService extends BaseService {
+public class DishSuggestService extends BaseService implements  IDishSuggestService {
 
     private final DishDAO dishDAO = new DishDAO();
     private final IngredientDAO ingredientDAO = new IngredientDAO();

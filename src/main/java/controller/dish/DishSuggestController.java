@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import model.dao.FridgeDAO;
-
 import model.entity.Dish;
 import model.entity.Ingredient;
 import model.service.dish_suggest.DishSuggestService;

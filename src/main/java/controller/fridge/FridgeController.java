@@ -15,7 +15,7 @@ import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 import model.entity.Ingredient;
 import model.entity.Unit;
-import model.service.fridge.FridgeService;
+import model.service.fridge.*;
 import session.Session;
 
 import java.net.URL;
@@ -52,6 +52,7 @@ public class FridgeController extends BaseController implements Initializable {
 
     /** Service để thao tác với dữ liệu nguyên liệu trong tủ lạnh. */
     private final FridgeService fridgeService = new FridgeService();
+    private final IngredientService ingredientService = new IngredientService();
 
     /** ID của tủ lạnh, được ánh xạ từ groupId của người dùng hiện tại. */
     private int fridgeId;
@@ -88,7 +89,7 @@ public class FridgeController extends BaseController implements Initializable {
             return;
         }
 
-        List<Ingredient> all = fridgeService.getAllIngredients(fridgeId);
+        List<Ingredient> all = ingredientService.getAllIngredients(fridgeId);
         List<Ingredient> filtered = all.stream()
                 .filter(i -> i.getName().toLowerCase().contains(keyword))
                 .toList();
@@ -101,7 +102,7 @@ public class FridgeController extends BaseController implements Initializable {
      * Tải và hiển thị danh sách toàn bộ nguyên liệu trong tủ lạnh.
      */
     private void loadIngredients() {
-        List<Ingredient> ingredients = fridgeService.getAllIngredients(fridgeId);
+        List<Ingredient> ingredients = ingredientService.getAllIngredients(fridgeId);
         ObservableList<Ingredient> observableList = FXCollections.observableArrayList(ingredients);
         tableView.setItems(observableList);
     }

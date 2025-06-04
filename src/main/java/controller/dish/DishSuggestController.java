@@ -11,7 +11,7 @@ import javafx.scene.control.ListView;
 import model.entity.Dish;
 import model.entity.Ingredient;
 import model.service.dish_suggest.DishSuggestService;
-import model.service.fridge.FridgeService;
+import model.service.fridge.*;
 import session.Session;
 
 public class DishSuggestController {
@@ -23,7 +23,8 @@ public class DishSuggestController {
 
     private final DishSuggestService suggestService = new DishSuggestService();
     private final FridgeService fridgeService = new FridgeService();
-
+    private final IngredientService ingredientService = new IngredientService();
+    private final DishService dishService = new DishService();
     private List<Dish> cookableDishes;
     private int currentFridgeId;
 
@@ -50,11 +51,14 @@ public class DishSuggestController {
 
     private void updateIngredients() {
         lvIngredients.getItems().clear();
-        List<Ingredient> ingredients = fridgeService.getAllIngredients(currentFridgeId);
+
+        List<Ingredient> ingredients = ingredientService.getAllIngredients(currentFridgeId);
+
         for (Ingredient i : ingredients) {
             lvIngredients.getItems().add(i.getName() + " - " + i.getQuantity() + " " + i.getUnit());
         }
     }
+
 
     private void handleCook() {
         int selectedIndex = lvDishes.getSelectionModel().getSelectedIndex();
@@ -70,7 +74,7 @@ public class DishSuggestController {
         confirm.setHeaderText(null);
         confirm.setContentText("Bạn có chắc chắn muốn nấu món '" + selectedDish.getName() + "'?");
         if (confirm.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-            boolean success = fridgeService.consumeIngredientsForDish(selectedDish, currentFridgeId);
+            boolean success = dishService.consumeIngredientsForDish(selectedDish, currentFridgeId);
             if (success) {
                 showInfo("Đã nấu món '" + selectedDish.getName() + "' và cập nhật nguyên liệu.");
                 updateDishes();

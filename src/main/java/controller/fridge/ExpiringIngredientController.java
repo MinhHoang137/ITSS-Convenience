@@ -12,6 +12,7 @@ import model.entity.Ingredient;
 import model.entity.Unit;
 import model.service.fridge.FridgeService;
 import javafx.scene.control.Button;
+import model.service.fridge.IngredientService;
 import session.Session;
 
 import java.net.URL;
@@ -51,6 +52,7 @@ public class ExpiringIngredientController extends BaseController {
 
     /** ID của tủ lạnh, được xác định từ groupId của người dùng hiện tại. */
     private int fridgeId;
+    private final IngredientService ingredientService = new IngredientService();
 
     /**
      * Khởi tạo controller. Thiết lập dữ liệu ban đầu cho bảng nguyên liệu sắp hết hạn.
@@ -75,7 +77,7 @@ public class ExpiringIngredientController extends BaseController {
      * @return Danh sách nguyên liệu sắp hết hạn dưới dạng ObservableList.
      */
     private ObservableList<Ingredient> loadExpiringIngredients() {
-        List<Ingredient> list = fridgeService.getExpiringIngredients(fridgeId, 3);
+        List<Ingredient> list = ingredientService.getExpiringIngredients(fridgeId, 3);
         return FXCollections.observableArrayList(list);
     }
 

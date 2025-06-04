@@ -4,8 +4,6 @@ import controller.ViewController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import model.dao.MealPlanDAO;
@@ -21,16 +19,7 @@ public class DishDetailView {
     @FXML
     private VBox dishHolder;
 
-    @FXML
-    private ScrollPane scrollPane;
-
-    @FXML
-    private Button addButton;
-
-    private List<Dish> dishList;
-
     public void setDishes(List<Dish> dishes) {
-        this.dishList = dishes;
         dishHolder.getChildren().clear();
         for (Dish dish : dishes) {
             try{
@@ -59,9 +48,7 @@ public class DishDetailView {
     public static DishDetailView getCurrent() {
         return current;
     }
-    public static void setCurrent(DishDetailView current) {
-        DishDetailView.current = current;
-    }
+
     @FXML
     public void initialize() {
         ArrayList<Dish> dishes = mealPlanDAO.getAllDishes();

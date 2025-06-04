@@ -16,7 +16,6 @@ import model.dao.MealPlanDAO;
 import model.entity.*;
 import model.service.IShoppingListService;
 import model.service.ShoppingListService;
-import model.service.fridge.FridgeService;
 import session.Session;
 
 import java.net.URL;
@@ -155,9 +154,6 @@ public class AddMealView extends BaseController {
         }
     }
 
-    public VBox getAddedContainer() {
-        return addedContainer;
-    }
     public void addFoundDish(Dish dish) {
         if (dish == null || dish.getId() <= 0) {
             return;
@@ -177,10 +173,6 @@ public class AddMealView extends BaseController {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-    }
-
-    public VBox getFoundContainer() {
-        return foundContainer;
     }
 
     @Override

@@ -77,14 +77,6 @@ public class MealPlanDAO {
         return mealPlanGetService.getCookableDishesByDayIndex(fridgeId, dayIndex);
     }
     // Create
-    /**
-     * Adds a new dish to the dish table of the database.
-     * @param dish the Dish object to be added
-     * @return true if the dish was added successfully, false otherwise
-     */
-    public boolean addDish(Dish dish) {
-        return mealPlanCreateService.addDish(dish);
-    }
 
     /**
      * Adds a new meal for the meal plan table of the database.
@@ -107,9 +99,6 @@ public class MealPlanDAO {
         return mealDeleteService.deleteDish(dishId);
     }
 
-    public Meal getMeal(int mealId, int groupId) {
-        return mealPlanGetService.getMeal(mealId, groupId);
-    }
     public ArrayList<Meal> getAllMeals(int groupId) {
         return mealPlanGetService.getAllMeals(groupId);
     }

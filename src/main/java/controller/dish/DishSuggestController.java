@@ -9,11 +9,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
 import model.dao.FridgeDAO;
-
 import model.entity.Dish;
 import model.entity.Ingredient;
 import model.service.dish_suggest.DishSuggestService;
-import model.service.fridge.*;
+import model.service.dish_suggest.IDishSuggestService;
 import session.Session;
 
 public class DishSuggestController {
@@ -25,19 +24,18 @@ public class DishSuggestController {
 
     private final FridgeDAO fridgeDAO = FridgeDAO.getInstance();
 
-    private final DishSuggestService suggestService = new DishSuggestService();
-    private final FridgeService fridgeService = new FridgeService();
-    private final IngredientService ingredientService = new IngredientService();
-    private final DishService dishService = new DishService();
+    // ✅ Dùng interface thay vì class trực tiếp
+    private final IDishSuggestService suggestService = new DishSuggestService();
+
     private List<Dish> cookableDishes;
     private int currentFridgeId;
 
     @FXML
     public void initialize() {
-        // ✅ Lấy fridgeId từ groupId của user hiện tại
+        // Lấy fridgeId từ groupId hiện tại của user
         currentFridgeId = fridgeDAO.getFridgeIdByGroupId(Session.getCurrentUser().getGroupId());
 
-        // ✅ Hiển thị danh sách món và nguyên liệu ngay khi mở giao diện
+        // Hiển thị danh sách khi khởi động
         updateDishes();
         updateIngredients();
 
@@ -55,14 +53,11 @@ public class DishSuggestController {
 
     private void updateIngredients() {
         lvIngredients.getItems().clear();
-
         List<Ingredient> ingredients = fridgeDAO.getAllIngredients(currentFridgeId);
-
         for (Ingredient i : ingredients) {
             lvIngredients.getItems().add(i.getName() + " - " + i.getQuantity() + " " + i.getUnit());
         }
     }
-
 
     private void handleCook() {
         int selectedIndex = lvDishes.getSelectionModel().getSelectedIndex();

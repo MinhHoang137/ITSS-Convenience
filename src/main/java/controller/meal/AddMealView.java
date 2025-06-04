@@ -120,7 +120,8 @@ public class AddMealView extends BaseController {
         }
         catch (Exception e) {
             // Hiển thị thông báo lỗi
-            NotificationView.Create("Lỗi khi thêm bữa ăn: " + e.getMessage());
+            NotificationView.Create("Lỗi khi thêm bữa ăn, hãy đảm bảo mọi giá trị đều là hợp lệ và không bị trống");
+            System.out.println("Lỗi khi thêm bữa ăn: " + e.getMessage());
         }
     }
 

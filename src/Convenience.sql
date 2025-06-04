@@ -309,3 +309,8 @@ INSERT INTO ingredient (ingredientName, quantity, unitType, expirationDate, frid
 
 INSERT INTO User (username, role) VALUES
 ('Admin1', 'admin');
+
+SELECT d.dishId, d.dishName, i.ingredientName, i.quantity, i.unitType
+FROM dish d
+JOIN dish_use_ingredient i ON d.dishId = i.dishId
+ORDER BY d.dishName;

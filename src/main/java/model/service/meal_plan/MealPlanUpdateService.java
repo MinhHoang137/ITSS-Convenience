@@ -24,14 +24,7 @@ public class MealPlanUpdateService extends BaseService implements IMealPlanUpdat
     public boolean updateDish(Dish dish) {
         getConnection();
         boolean success = false;
-        String updateDishTableQuery = """
-                UPDATE dish
-                SET dishName = ?,
-                    instruction = ?,
-                    eatTime = ?,
-                    eatDate = ?
-                WHERE dishId = ?
-                """;
+        String updateDishTableQuery = "UPDATE dish SET dishName = ?, instruction = ?, eatTime = ?, eatDate = ? WHERE dishId = ?";
         try (PreparedStatement updateDishStmt = connection.prepareStatement(updateDishTableQuery)) {
             updateDishStmt.setString(1, dish.getName());
             updateDishStmt.setString(2, dish.getDescription());

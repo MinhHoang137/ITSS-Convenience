@@ -54,13 +54,8 @@ public class IngredientService extends BaseService implements IIngredientService
         getConnection();
         List<Ingredient> list = new ArrayList<>();
         try {
-            String sql = """
-                    SELECT ingredientName, unitType, SUM(quantity) as totalQuantity
-                    FROM ingredient
-                    WHERE fridgeId = ?
-                    GROUP BY ingredientName, unitType
-                    HAVING SUM(quantity) > 0
-                    """;
+            String sql = "SELECT ingredientName, unitType, SUM(quantity) as totalQuantity FROM ingredient WHERE fridgeId = ? GROUP BY ingredientName, unitType HAVING SUM(quantity) > 0";
+
             PreparedStatement stmt = connection.prepareStatement(sql);
             stmt.setInt(1, fridgeId);
             ResultSet rs = stmt.executeQuery();

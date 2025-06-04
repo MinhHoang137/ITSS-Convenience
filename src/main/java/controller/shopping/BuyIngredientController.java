@@ -15,7 +15,7 @@ import model.entity.Ingredient;
 import model.entity.Unit;
 import model.service.BuyIngredientService;
 import model.service.IBuyIngredientService;
-import model.service.fridge.FridgeService;
+import model.service.fridge.*;
 import session.Session;
 
 import java.util.List;
@@ -110,6 +110,7 @@ public class BuyIngredientController {
         }
 
         FridgeService fridgeService = new FridgeService();
+        IngredientService ingredientService = new IngredientService();
         int groupId = Session.getCurrentUser().getGroupId();
         int fridgeId = fridgeService.getFridgeIdByGroupId(groupId);
 
@@ -121,7 +122,7 @@ public class BuyIngredientController {
             ing.setUnit(Unit.valueOf(bi.getUnitType()));
             ing.setExpirationDate(java.time.LocalDate.now().plusDays(30));
 
-            fridgeService.addIngredientToFridge(ing, fridgeId);
+            ingredientService.addIngredientToFridge(ing, fridgeId);
             buyIngredientService.removeIngredientFromList(shoppingListId, bi.getIngredientName()); // Xoá khỏi danh sách
                                                                                                    // mua
         }

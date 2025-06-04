@@ -7,11 +7,13 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import model.dao.FridgeDAO;
 import model.dao.MealPlanDAO;
 import model.entity.Dish;
 import model.entity.Meal;
 import model.entity.MealType;
 import model.entity.Role;
+import model.service.fridge.DishService;
 import model.service.fridge.FridgeService;
 import session.Session;
 
@@ -100,25 +102,7 @@ public class MealCard extends BaseController {
     public void setParent(Parent parent) {
         this.parent = parent;
     }
-//    @FXML
-//    private void OnCook(ActionEvent actionEvent) {
-//        Role role = Session.getCurrentUser().getRole();
-//        if (role != Role.housewife) {
-//            NotificationView.Create("Chỉ người nội trợ mới có thể đánh dấu đã nấu bữa ăn.");
-//            return;
-//        }
-//        MealPlanDAO mealPlanDAO = MealPlanDAO.getInstance();
-//        int groupId = Session.getCurrentUser().getGroupId();
-//        int fridgeId = new FridgeService().getFridgeIdByGroupId(groupId);
-//        if (!mealPlanDAO.canCookMeal(meal.getId(), fridgeId)){
-//            NotificationView.Create("Không đủ nguyên liệu để nấu bữa ăn này: " + meal.getId());
-//            return;
-//        }
-//        MealPlanController.getCurrent().removeMeal(this);
-//        NotificationView.Create("Đã đánh dấu bữa ăn " + meal.getId() + " đã nấu xong.");
-//        // Xóa nguyên liệu khỏi csdl
-//
-//    }
+
 @FXML
 private void OnCook(ActionEvent actionEvent) {
     Role role = Session.getCurrentUser().getRole();
@@ -129,8 +113,9 @@ private void OnCook(ActionEvent actionEvent) {
 
     MealPlanDAO mealPlanDAO = MealPlanDAO.getInstance();
     int groupId = Session.getCurrentUser().getGroupId();
-    FridgeService fridgeService = new FridgeService();
-    int fridgeId = fridgeService.getFridgeIdByGroupId(groupId);
+    FridgeDAO fridgeDAO = FridgeDAO.getInstance();
+    int fridgeId = fridgeDAO.getFridgeIdByGroupId(groupId);
+    DishService dishService = new DishService();
 
     if (!mealPlanDAO.canCookMeal(meal.getId(), fridgeId)) {
         NotificationView.Create("Không đủ nguyên liệu để nấu bữa ăn này: " + meal.getId());
@@ -140,7 +125,7 @@ private void OnCook(ActionEvent actionEvent) {
     // Trừ nguyên liệu khỏi tủ lạnh
     boolean allSuccess = true;
     for (Dish dish : meal.getDishList()) {
-        boolean success = fridgeService.cookDish(dish, fridgeId);
+        boolean success = dishService.cookDish(dish, fridgeId);
         if (!success) {
             allSuccess = false;
             break;

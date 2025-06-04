@@ -8,10 +8,12 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ListView;
+import model.dao.FridgeDAO;
+
 import model.entity.Dish;
 import model.entity.Ingredient;
 import model.service.dish_suggest.DishSuggestService;
-import model.service.fridge.FridgeService;
+import model.service.fridge.*;
 import session.Session;
 
 public class DishSuggestController {
@@ -21,16 +23,19 @@ public class DishSuggestController {
     @FXML private ListView<String> lvDishes;
     @FXML private ListView<String> lvIngredients;
 
+    private final FridgeDAO fridgeDAO = FridgeDAO.getInstance();
+
     private final DishSuggestService suggestService = new DishSuggestService();
     private final FridgeService fridgeService = new FridgeService();
-
+    private final IngredientService ingredientService = new IngredientService();
+    private final DishService dishService = new DishService();
     private List<Dish> cookableDishes;
     private int currentFridgeId;
 
     @FXML
     public void initialize() {
         // ✅ Lấy fridgeId từ groupId của user hiện tại
-        currentFridgeId = fridgeService.getFridgeIdByGroupId(Session.getCurrentUser().getGroupId());
+        currentFridgeId = fridgeDAO.getFridgeIdByGroupId(Session.getCurrentUser().getGroupId());
 
         // ✅ Hiển thị danh sách món và nguyên liệu ngay khi mở giao diện
         updateDishes();
@@ -50,11 +55,14 @@ public class DishSuggestController {
 
     private void updateIngredients() {
         lvIngredients.getItems().clear();
-        List<Ingredient> ingredients = fridgeService.getAllIngredients(currentFridgeId);
+
+        List<Ingredient> ingredients = fridgeDAO.getAllIngredients(currentFridgeId);
+
         for (Ingredient i : ingredients) {
             lvIngredients.getItems().add(i.getName() + " - " + i.getQuantity() + " " + i.getUnit());
         }
     }
+
 
     private void handleCook() {
         int selectedIndex = lvDishes.getSelectionModel().getSelectedIndex();
@@ -70,7 +78,7 @@ public class DishSuggestController {
         confirm.setHeaderText(null);
         confirm.setContentText("Bạn có chắc chắn muốn nấu món '" + selectedDish.getName() + "'?");
         if (confirm.showAndWait().orElse(ButtonType.CANCEL) == ButtonType.OK) {
-            boolean success = fridgeService.consumeIngredientsForDish(selectedDish, currentFridgeId);
+            boolean success = fridgeDAO.consumeIngredientsForDish(selectedDish, currentFridgeId);
             if (success) {
                 showInfo("Đã nấu món '" + selectedDish.getName() + "' và cập nhật nguyên liệu.");
                 updateDishes();

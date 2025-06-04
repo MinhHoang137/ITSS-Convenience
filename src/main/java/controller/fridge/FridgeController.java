@@ -13,9 +13,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.event.ActionEvent;
 import javafx.stage.Stage;
+import model.dao.FridgeDAO;
 import model.entity.Ingredient;
 import model.entity.Unit;
-import model.service.fridge.FridgeService;
+import model.service.fridge.*;
 import session.Session;
 
 import java.net.URL;
@@ -51,8 +52,8 @@ public class FridgeController extends BaseController implements Initializable {
     private javafx.scene.control.TextField searchField;
 
     /** Service để thao tác với dữ liệu nguyên liệu trong tủ lạnh. */
-    private final FridgeService fridgeService = new FridgeService();
 
+    private final FridgeDAO fridgeDAO = FridgeDAO.getInstance();
     /** ID của tủ lạnh, được ánh xạ từ groupId của người dùng hiện tại. */
     private int fridgeId;
 
@@ -65,7 +66,7 @@ public class FridgeController extends BaseController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         int groupId = Session.getCurrentUser().getGroupId();
-        fridgeId = fridgeService.getFridgeIdByGroupId(groupId);
+        fridgeId = fridgeDAO.getFridgeIdByGroupId(groupId);
 
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         quantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
@@ -88,7 +89,7 @@ public class FridgeController extends BaseController implements Initializable {
             return;
         }
 
-        List<Ingredient> all = fridgeService.getAllIngredients(fridgeId);
+        List<Ingredient> all = fridgeDAO.getAllIngredients(fridgeId);
         List<Ingredient> filtered = all.stream()
                 .filter(i -> i.getName().toLowerCase().contains(keyword))
                 .toList();
@@ -101,7 +102,7 @@ public class FridgeController extends BaseController implements Initializable {
      * Tải và hiển thị danh sách toàn bộ nguyên liệu trong tủ lạnh.
      */
     private void loadIngredients() {
-        List<Ingredient> ingredients = fridgeService.getAllIngredients(fridgeId);
+        List<Ingredient> ingredients = fridgeDAO.getAllIngredients(fridgeId);
         ObservableList<Ingredient> observableList = FXCollections.observableArrayList(ingredients);
         tableView.setItems(observableList);
     }

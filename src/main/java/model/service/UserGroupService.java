@@ -153,5 +153,20 @@ public class UserGroupService extends BaseService implements IUserGroupService {
         }
         return false;
     }
-
+    public int getMaxGroupId() {
+        String sql = "SELECT MAX(id) AS maxId FROM UserGroup";
+        try {
+            connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("maxId");
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi lấy ID nhóm lớn nhất: " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return -1; // Trả về -1 nếu không tìm thấy
+    }
 }

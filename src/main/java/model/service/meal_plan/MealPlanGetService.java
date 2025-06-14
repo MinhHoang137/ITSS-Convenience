@@ -368,6 +368,53 @@ public class MealPlanGetService extends BaseService implements IMealPlanGetServi
         return missingList;
     }
 
+    /**
+     * Retrieves the maximum dish ID from the dish table.
+     * Use for generating new dish IDs and testing purposes.
+     * @return The maximum dish ID, or -1 if no dishes exist.
+     */
+    public int getMaxDishId() {
+        getConnection();
+        int maxId = -1;
+        String query = "SELECT MAX(dishId) AS maxId FROM dish";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                maxId = rs.getInt("maxId");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Error in getMaxDishId: " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+
+        return maxId;
+    }
+    /**
+     * Retrieves the maximum meal ID from the meal_plan table.
+     * Use for generating new meal IDs and testing purposes.
+     * @return The maximum meal ID, or -1 if no meals exist.
+     */
+    public int getMaxMealId() {
+        getConnection();
+        int maxId = -1;
+        String query = "SELECT MAX(id) AS maxId FROM meal_plan";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                maxId = rs.getInt("maxId");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in getMaxMealId: " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return maxId;
+    }
+
 
 
     public static void main(String[] args) {

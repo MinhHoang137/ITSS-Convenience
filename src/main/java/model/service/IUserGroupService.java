@@ -14,4 +14,5 @@ public interface IUserGroupService {
     String getGroupNameById(int groupId);
     List<User> getMembersByGroup(int groupId);
     boolean updateUserRole(int userId, Role role);
+    int getMaxGroupId();
 }

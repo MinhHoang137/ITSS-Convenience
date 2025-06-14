@@ -86,10 +86,10 @@ public class MealPlanController extends BaseController {
             return;
         }
         if (mealPlanDAO.deleteMeal(mealCard.getMeal().getId())){
-            NotificationView.Create("Đã xóa bữa ăn thành công: " + mealCard.getMeal().getId());
+            NotificationView.Create("Đã xóa bữa ăn thành công");
             mealPlanContainer.getChildren().remove(mealCard.getParent());
         } else {
-            NotificationView.Create("Đã xóa bữa ăn thất bại: " + mealCard.getMeal().getId());
+            NotificationView.Create("Đã xóa bữa ăn thất bại");
         }
     }
     @Override

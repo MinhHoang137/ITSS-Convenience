@@ -1,8 +1,6 @@
 package model.dao;
 
-import model.entity.Dish;
-import model.entity.Ingredient;
-import model.entity.Meal;
+import model.entity.*;
 import model.service.meal_plan.*;
 
 
@@ -108,4 +106,5 @@ public class MealPlanDAO {
     public boolean canCookMeal(int mealId, int groupId){
         return mealPlanGetService.canCookMeal(mealId, groupId);
     }
+
 }

@@ -12,4 +12,5 @@ public interface IUserService {
     boolean updateUser(User user);
     boolean deleteUserById(int id);
     int countHousewivesInGroup(int groupId);
+    int getMaxUserId();
 }

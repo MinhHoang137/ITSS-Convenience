@@ -134,7 +134,7 @@ private void OnCook(ActionEvent actionEvent) {
 
     if (allSuccess) {
         MealPlanController.getCurrent().removeMeal(this);
-        NotificationView.Create("Đã đánh dấu bữa ăn " + meal.getId() + " đã nấu xong và trừ nguyên liệu.");
+        NotificationView.Create("Đã đánh dấu bữa ăn đã nấu xong và trừ nguyên liệu.");
     } else {
         NotificationView.Create("Xảy ra lỗi khi trừ nguyên liệu. Có thể có món ăn không đủ nguyên liệu.");
     }

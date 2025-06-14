@@ -64,4 +64,6 @@ public interface IMealPlanGetService {
     public ArrayList<Meal> getAllMeals(int groupId);
     public ArrayList<Ingredient> getMissingIngredients(int fridgeId, ArrayList<Ingredient> totalIngredients);
     boolean canCookMeal(int mealId, int fridgeId);
+    int getMaxDishId();
+    int getMaxMealId();
 }

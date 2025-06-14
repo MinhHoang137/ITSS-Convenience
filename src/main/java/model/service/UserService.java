@@ -165,4 +165,22 @@ public class UserService extends BaseService implements IUserService {
         return 0;
     }
 
+    @Override
+    public int getMaxUserId() {
+        String sql = "SELECT MAX(id) FROM User";
+        try {
+            connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi lấy ID người dùng lớn nhất: " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return -1; // Trả về -1 nếu không tìm thấy
+    }
+
 }

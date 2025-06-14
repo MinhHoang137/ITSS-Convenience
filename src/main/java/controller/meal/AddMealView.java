@@ -91,6 +91,15 @@ public class AddMealView extends BaseController {
 
     @FXML
     private void OnAddMeal(ActionEvent event) {
+        if (meal.getDishList().isEmpty()) {
+            NotificationView.Create("Vui lòng thêm ít nhất một món ăn vào bữa ăn.");
+            return;
+        }
+        MealType mealType = getEatTime();
+        if (mealType == null) {
+            NotificationView.Create("Vui lòng chọn thời gian ăn hợp lệ.");
+            return;
+        }
         try {
             if (mealPlanDAO.addMeal(meal, groupId)){
                 NotificationView.Create("Bữa ăn đã được thêm thành công!");

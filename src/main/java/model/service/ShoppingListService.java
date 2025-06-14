@@ -155,4 +155,25 @@ public class ShoppingListService extends BaseService implements IShoppingListSer
         }
         return false;
     }
+    /**
+     * Lấy ID lớn nhất của shopping list hiện có, vì mục đích là để tạo ID mới cho shopping list
+     * và kiểm thử
+     * @return ID lớn nhất hoặc -1 nếu không tìm thấy.
+     */
+    public int getMaxShoppingListId() {
+        String sql = "SELECT MAX(shoppingListId) AS maxId FROM shoppingList";
+        try {
+            connection = getConnection();
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("maxId");
+            }
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi lấy ID shopping list lớn nhất: " + e.getMessage());
+        } finally {
+            closeConnection();
+        }
+        return -1; // Trả về -1 nếu không tìm thấy
+    }
 }

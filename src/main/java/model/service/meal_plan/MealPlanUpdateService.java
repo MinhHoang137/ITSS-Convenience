@@ -2,6 +2,8 @@ package model.service.meal_plan;
 
 import model.entity.Dish;
 import model.entity.Ingredient;
+import model.entity.MealType;
+import model.entity.Unit;
 import model.service.BaseService;
 
 import java.sql.Array;
@@ -44,11 +46,15 @@ public class MealPlanUpdateService extends BaseService implements IMealPlanUpdat
             deleteIngredientsStmt.executeUpdate();
         } catch (Exception e) {
             System.out.println("Error in deleting ingredients: " + e.getMessage());
+            success = false;
         }
         ArrayList<Ingredient> ingredients = dish.getIngredients();
         if (ingredients != null && !ingredients.isEmpty()) {
             for (Ingredient ingredient : ingredients) {
-                mealPlanCreateService.addIngredientToDish(dish.getId(), ingredient);
+                if (!mealPlanCreateService.addIngredientToDish(dish.getId(), ingredient)){
+                    System.out.println("Error in adding ingredient: " + ingredient.getName());
+                    return false;
+                }
             }
         }
         closeConnection();

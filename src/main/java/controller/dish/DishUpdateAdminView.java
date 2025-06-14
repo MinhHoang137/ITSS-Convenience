@@ -124,6 +124,26 @@ public class DishUpdateAdminView extends BaseController {
         if (currentDish == null) {
             currentDish = new Dish();
         }
+        if (nameField.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Tên món ăn không được để trống!", ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
+        if (descriptionArea.getText().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Mô tả món ăn không được để trống!", ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
+        if (eatTimeComboBox.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Thời gian ăn không được để trống!", ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
+        if (eatDateComboBox.getSelectionModel().getSelectedIndex() < 0) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Ngày ăn không được để trống!", ButtonType.OK);
+            alert.showAndWait();
+            return;
+        }
         currentDish.setName(nameField.getText());
         currentDish.setDescription(descriptionArea.getText());
         currentDish.setEatTime(eatTimeComboBox.getValue());
@@ -131,6 +151,11 @@ public class DishUpdateAdminView extends BaseController {
         currentDish.setIngredients(new ArrayList<>());
         for (IngredientCard card : ingredientCards) {
             currentDish.getIngredients().add(card.getIngredient());
+        }
+        if (currentDish.getIngredients().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Danh sách nguyên liệu không được để trống!", ButtonType.OK);
+            alert.showAndWait();
+            return;
         }
         if (mealPlanDAO.saveDish(currentDish)){
             Alert alert = new Alert(Alert.AlertType.INFORMATION, "Lưu thành công!", ButtonType.OK);

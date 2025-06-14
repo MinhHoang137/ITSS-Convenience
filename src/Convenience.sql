@@ -101,8 +101,23 @@ END //
 DELIMITER ;
 
 
+--DELIMITER //
+--
+--CREATE TRIGGER delete_ingredient_on_zero_quantity
+--AFTER UPDATE ON ingredient
+--FOR EACH ROW
+--BEGIN
+--    -- Kiểm tra nếu số lượng mới của nguyên liệu là 0
+--    IF NEW.quantity <= 0 THEN
+--        -- Xóa dòng nguyên liệu đó khỏi bảng
+--        DELETE FROM ingredient WHERE ingredientId = NEW.ingredientId;
+--    END IF;
+--END //
+
+--DELIMITER ;
+
 --INSERT INTO UserGroup (name) VALUES ('Gia đình A'), ('Nhóm bạn B');
--- INSERT INTO fridge (fridgeId, groupId) VALUES (1,1), (2,2);
+--INSERT INTO fridge (fridgeId, groupId) VALUES (1,1), (2,2);
 
 INSERT INTO dish (dishName, instruction, eatTime, eatDate) VALUES
 ('Cơm rang dưa bò', 'Xào cơm với dưa chua và thịt bò', 'lunch', 1),

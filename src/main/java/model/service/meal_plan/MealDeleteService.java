@@ -76,4 +76,12 @@ public class MealDeleteService extends BaseService implements IMealDeleteService
         }
         return success;
     }
+
+    public static void main(String[] args) {
+        MealDeleteService service = MealDeleteService.getInstance();
+
+        // Test deleteDish
+        boolean dishDeleted = service.deleteDish(33);
+        System.out.println("Dish deleted: " + dishDeleted);
+    }
 }

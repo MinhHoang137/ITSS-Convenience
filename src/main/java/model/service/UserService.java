@@ -2,12 +2,22 @@ package model.service;
 
 import model.entity.Role;
 import model.entity.User;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service xử lý các thao tác liên quan đến người dùng.
+ */
 public class UserService extends BaseService implements IUserService {
 
+    /**
+     * Đăng nhập người dùng theo tên đăng nhập.
+     *
+     * @param username tên đăng nhập
+     * @return đối tượng {@link User} nếu tìm thấy, ngược lại trả về null
+     */
     @Override
     public User login(String username) {
         String sql = "SELECT * FROM User WHERE username = ?";
@@ -34,6 +44,12 @@ public class UserService extends BaseService implements IUserService {
         return null;
     }
 
+    /**
+     * Đăng ký tài khoản người dùng mới.
+     *
+     * @param username tên đăng nhập
+     * @return true nếu đăng ký thành công, ngược lại false
+     */
     @Override
     public boolean register(String username) {
         if (checkUserExists(username)) return false;
@@ -52,6 +68,12 @@ public class UserService extends BaseService implements IUserService {
         return false;
     }
 
+    /**
+     * Kiểm tra người dùng đã tồn tại chưa.
+     *
+     * @param username tên đăng nhập
+     * @return true nếu đã tồn tại, ngược lại false
+     */
     private boolean checkUserExists(String username) {
         String sql = "SELECT id FROM User WHERE username = ?";
         try {
@@ -67,6 +89,13 @@ public class UserService extends BaseService implements IUserService {
         }
         return true;
     }
+
+    /**
+     * Lấy người dùng theo ID.
+     *
+     * @param userId ID người dùng
+     * @return đối tượng {@link User} nếu tồn tại, ngược lại null
+     */
     @Override
     public User getUserById(int userId) {
         String sql = "SELECT * FROM User WHERE id = ?";
@@ -91,6 +120,11 @@ public class UserService extends BaseService implements IUserService {
         return null;
     }
 
+    /**
+     * Lấy danh sách tất cả người dùng, loại trừ role ADMIN.
+     *
+     * @return danh sách {@link User}
+     */
     @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
@@ -115,6 +149,12 @@ public class UserService extends BaseService implements IUserService {
         return users;
     }
 
+    /**
+     * Cập nhật thông tin người dùng.
+     *
+     * @param user đối tượng {@link User} cần cập nhật
+     * @return true nếu cập nhật thành công, ngược lại false
+     */
     public boolean updateUser(User user) {
         String sql = "UPDATE user SET role = ?, groupId = ? WHERE id = ?";
         try {
@@ -132,6 +172,12 @@ public class UserService extends BaseService implements IUserService {
         }
     }
 
+    /**
+     * Xóa người dùng theo ID.
+     *
+     * @param id ID người dùng
+     * @return true nếu xóa thành công, ngược lại false
+     */
     public boolean deleteUserById(int id) {
         String sql = "DELETE FROM user WHERE id = ?";
         try {
@@ -147,6 +193,12 @@ public class UserService extends BaseService implements IUserService {
         }
     }
 
+    /**
+     * Đếm số lượng người có vai trò HOUSEWIFE trong một nhóm.
+     *
+     * @param groupId ID nhóm
+     * @return số lượng housewife trong nhóm
+     */
     public int countHousewivesInGroup(int groupId) {
         String sql = "SELECT COUNT(*) FROM user WHERE groupId = ? AND role = 'HOUSEWIFE'";
         try {
@@ -165,6 +217,11 @@ public class UserService extends BaseService implements IUserService {
         return 0;
     }
 
+    /**
+     * Lấy ID người dùng lớn nhất hiện có trong bảng.
+     *
+     * @return ID lớn nhất, hoặc -1 nếu lỗi
+     */
     @Override
     public int getMaxUserId() {
         String sql = "SELECT MAX(id) FROM User";
@@ -180,7 +237,6 @@ public class UserService extends BaseService implements IUserService {
         } finally {
             closeConnection();
         }
-        return -1; // Trả về -1 nếu không tìm thấy
+        return -1;
     }
-
 }

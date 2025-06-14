@@ -10,11 +10,23 @@ import model.service.UserGroupService;
 import model.service.IUserGroupService;
 import session.Session;
 
+/**
+ * Controller cho màn hình tham gia nhóm.
+ * Cho phép người dùng nhập mã nhóm để gia nhập một nhóm đã tồn tại.
+ */
 public class JoinGroupController {
 
+    /** Trường nhập mã nhóm. */
     @FXML private TextField txtGroupId;
+
+    /** Service để xử lý logic liên quan đến nhóm người dùng. */
     private final IUserGroupService groupService = new UserGroupService();
 
+    /**
+     * Xử lý sự kiện khi người dùng nhấn nút "Tham gia".
+     * Kiểm tra mã nhóm, xác nhận nhóm tồn tại, thêm người dùng vào nhóm,
+     * rồi chuyển sang dashboard nếu thành công.
+     */
     @FXML
     public void handleJoin() {
         try {
@@ -37,10 +49,20 @@ public class JoinGroupController {
         }
     }
 
+    /**
+     * Hiển thị hộp thoại cảnh báo với thông báo cụ thể.
+     *
+     * @param msg Nội dung thông báo.
+     */
     private void showAlert(String msg) {
         new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK).showAndWait();
     }
 
+    /**
+     * Chuyển màn hình hiện tại sang một scene khác thông qua đường dẫn FXML.
+     *
+     * @param path Đường dẫn đến file FXML cần chuyển đến.
+     */
     private void switchScene(String path) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(path));
@@ -50,6 +72,13 @@ public class JoinGroupController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Xử lý sự kiện khi người dùng nhấn nút "Quay lại".
+     * Quay về màn hình giới thiệu nhóm.
+     *
+     * @param event Sự kiện nhấn nút.
+     */
     @FXML
     public void handleBack(javafx.event.ActionEvent event) {
         try {
@@ -62,5 +91,4 @@ public class JoinGroupController {
             e.printStackTrace();
         }
     }
-
 }

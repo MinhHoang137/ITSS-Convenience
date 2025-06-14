@@ -17,6 +17,10 @@ import session.Session;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Controller quản lý giao diện và xử lý logic cho màn hình danh sách mua sắm.
+ * Cho phép người dùng tạo, xem, xóa các danh sách mua sắm theo nhóm.
+ */
 public class ShoppingListController {
 
     @FXML private DatePicker dateBuyDate;
@@ -25,37 +29,43 @@ public class ShoppingListController {
     @FXML private TableColumn<ShoppingList, LocalDate> colDate;
     @FXML private VBox sectionCreate;
     @FXML private Button btnDeleteList;
+
     private final IShoppingListService shoppingListService = new ShoppingListService();
     private final ObservableList<ShoppingList> listData = FXCollections.observableArrayList();
 
+    /**
+     * Khởi tạo controller khi FXML được load.
+     * Gán dữ liệu cho bảng, xác định quyền chỉnh sửa, và tải danh sách mua sắm của nhóm hiện tại.
+     */
     @FXML
     public void initialize() {
-        // Ánh xạ dữ liệu cho các cột
         colId.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getShoppingListId()));
         colDate.setCellValueFactory(data -> new javafx.beans.property.SimpleObjectProperty<>(data.getValue().getBuyDate()));
         tableShoppingList.setItems(listData);
 
-        // Kiểm tra quyền HOUSEWIFE
         boolean isHousewife = Session.getCurrentUser().getRole().name().equalsIgnoreCase("HOUSEWIFE");
 
-        // HOUSEWIFE mới được tạo + xóa
         sectionCreate.setVisible(isHousewife);
         sectionCreate.setManaged(isHousewife);
-
         btnDeleteList.setVisible(isHousewife);
         btnDeleteList.setManaged(isHousewife);
 
-        // Load danh sách theo group người dùng
         loadShoppingListsByGroup();
     }
 
-
+    /**
+     * Tải tất cả danh sách mua sắm theo group của người dùng hiện tại.
+     */
     private void loadShoppingListsByGroup() {
         int groupId = Session.getCurrentUser().getGroupId();
         List<ShoppingList> result = shoppingListService.getShoppingListsByGroupId(groupId);
         listData.setAll(result);
     }
 
+    /**
+     * Xử lý khi nhấn nút "Tạo danh sách mua sắm".
+     * Kiểm tra hợp lệ, kiểm tra trùng ngày và thêm vào cơ sở dữ liệu.
+     */
     @FXML
     public void handleAddShoppingList() {
         try {
@@ -67,9 +77,8 @@ public class ShoppingListController {
                 return;
             }
 
-            // Check duplicate date
             if (shoppingListService.isDateDuplicated(date, groupId)) {
-                showAlert("⚠️ Nhóm đã có danh sách mua sắm cho ngày này.");
+                showAlert("Nhóm đã có danh sách mua sắm cho ngày này.");
                 return;
             }
 
@@ -89,7 +98,10 @@ public class ShoppingListController {
         }
     }
 
-
+    /**
+     * Xử lý khi nhấn nút "Xem danh sách".
+     * Lưu lại ID danh sách được chọn vào session và chuyển sang màn hình nguyên liệu.
+     */
     @FXML
     public void handleViewSelectedList() {
         ShoppingList selected = tableShoppingList.getSelectionModel().getSelectedItem();
@@ -98,18 +110,26 @@ public class ShoppingListController {
             return;
         }
 
-        // Lưu lại ID danh sách được chọn
         Session.setSelectedShoppingListId(selected.getShoppingListId());
 
-        String role = Session.getCurrentUser().getRole().name();
+        String role = Session.getCurrentUser().getRole().name();  // hiện tại chưa dùng đến
         switchScene("/itss/convenience/buy_ingredient.fxml");
     }
 
+    /**
+     * Xử lý khi nhấn nút "Quay lại".
+     * Chuyển về màn hình dashboard chính.
+     */
     @FXML
     public void handleBack() {
         switchScene("/itss/convenience/dashboard.fxml");
     }
 
+    /**
+     * Chuyển sang một màn hình khác theo đường dẫn FXML.
+     *
+     * @param fxmlPath Đường dẫn đến file FXML đích.
+     */
     private void switchScene(String fxmlPath) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(fxmlPath));
@@ -119,11 +139,16 @@ public class ShoppingListController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Xử lý khi nhấn nút "Xóa danh sách".
+     * Hiển thị xác nhận, và nếu đồng ý thì xóa danh sách được chọn.
+     */
     @FXML
     public void handleDeleteShoppingList() {
         ShoppingList selected = tableShoppingList.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            showAlert("⚠️ Vui lòng chọn một danh sách.");
+            showAlert("Vui lòng chọn một danh sách.");
             return;
         }
 
@@ -134,18 +159,26 @@ public class ShoppingListController {
             boolean deleted = shoppingListService.deleteShoppingList(selected.getShoppingListId());
             if (deleted) {
                 listData.remove(selected);
-                showAlert("✅ Đã xóa thành công.");
+                showAlert("Đã xóa thành công.");
             } else {
-                showAlert("❌ Không thể xóa.");
+                showAlert("Không thể xóa.");
             }
         }
     }
 
+    /**
+     * Hiển thị hộp thoại cảnh báo/thông báo.
+     *
+     * @param msg Nội dung hiển thị trong hộp thoại.
+     */
     private void showAlert(String msg) {
         new Alert(Alert.AlertType.INFORMATION, msg, ButtonType.OK).showAndWait();
     }
+
+    /**
+     * Xóa giá trị nhập trong DatePicker.
+     */
     private void clearInputs() {
         dateBuyDate.setValue(null);
     }
-
 }

@@ -11,11 +11,22 @@ import model.service.IUserService;
 import model.service.UserService;
 import session.Session;
 
+/**
+ * Controller xử lý logic đăng nhập trong ứng dụng.
+ * Xác thực tên người dùng và điều hướng đến màn hình phù hợp theo vai trò và nhóm.
+ */
 public class LoginController {
 
+    /** Trường nhập tên người dùng */
     @FXML private TextField txtUsername;
+
+    /** Service xử lý người dùng */
     private final IUserService userService = new UserService();
 
+    /**
+     * Xử lý đăng nhập khi người dùng nhấn nút.
+     * Kiểm tra tên đăng nhập, đặt phiên làm việc, và chuyển đến màn hình phù hợp.
+     */
     @FXML
     public void handleLogin() {
         String username = txtUsername.getText();
@@ -37,11 +48,19 @@ public class LoginController {
         }
     }
 
+    /**
+     * Chuyển người dùng đến giao diện đăng ký.
+     */
     @FXML
     public void goToRegister() {
         switchScene("/itss/convenience/register.fxml");
     }
 
+    /**
+     * Chuyển sang giao diện mới theo đường dẫn FXML.
+     *
+     * @param path Đường dẫn tới file FXML cần chuyển đến.
+     */
     private void switchScene(String path) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource(path));
@@ -52,6 +71,11 @@ public class LoginController {
         }
     }
 
+    /**
+     * Hiển thị hộp thoại cảnh báo với nội dung được cung cấp.
+     *
+     * @param msg Nội dung cảnh báo hiển thị cho người dùng.
+     */
     private void showAlert(String msg) {
         new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK).showAndWait();
     }

@@ -8,8 +8,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Dịch vụ xử lý các thao tác liên quan đến ShoppingList.
+ * Bao gồm tạo, xoá, kiểm tra trùng ngày và thêm nguyên liệu.
+ */
 public class ShoppingListService extends BaseService implements IShoppingListService {
 
+    /**
+     * Tạo một shopping list mới trong cơ sở dữ liệu.
+     *
+     * @param list Đối tượng ShoppingList chứa ngày mua và groupId.
+     * @return true nếu tạo thành công, ngược lại false.
+     */
     @Override
     public boolean createShoppingList(ShoppingList list) {
         String sql = "INSERT INTO shoppingList (buyDate, groupId) VALUES (?, ?)";
@@ -23,7 +33,7 @@ public class ShoppingListService extends BaseService implements IShoppingListSer
             if (rows > 0) {
                 ResultSet rs = ps.getGeneratedKeys();
                 if (rs.next()) {
-                    list.setShoppingListId(rs.getInt(1)); // Cập nhật ID được tạo ra
+                    list.setShoppingListId(rs.getInt(1)); // Gán ID được tạo ra
                 }
                 return true;
             }
@@ -35,7 +45,12 @@ public class ShoppingListService extends BaseService implements IShoppingListSer
         return false;
     }
 
-
+    /**
+     * Xoá một shopping list theo ID.
+     *
+     * @param shoppingListId ID của shopping list cần xoá.
+     * @return true nếu xoá thành công, ngược lại false.
+     */
     @Override
     public boolean deleteShoppingList(int shoppingListId) {
         String sql = "DELETE FROM shoppingList WHERE shoppingListId = ?";
@@ -53,6 +68,12 @@ public class ShoppingListService extends BaseService implements IShoppingListSer
         return false;
     }
 
+    /**
+     * Truy vấn danh sách shopping list theo groupId.
+     *
+     * @param groupId ID của nhóm.
+     * @return Danh sách các ShoppingList tương ứng với groupId.
+     */
     @Override
     public List<ShoppingList> getShoppingListsByGroupId(int groupId) {
         List<ShoppingList> list = new ArrayList<>();
@@ -78,6 +99,13 @@ public class ShoppingListService extends BaseService implements IShoppingListSer
         return list;
     }
 
+    /**
+     * Thêm danh sách nguyên liệu vào shopping list cụ thể.
+     *
+     * @param ingredients    Danh sách nguyên liệu.
+     * @param shoppingListId ID của shopping list.
+     * @return true nếu thêm thành công, ngược lại false.
+     */
     @Override
     public boolean addIngredientsToShoppingList(List<Ingredient> ingredients, int shoppingListId) {
         String sql = "INSERT INTO buy_ingredient (shoppingListId, ingredientName, quantity, unitType) VALUES (?, ?, ?, ?)";
@@ -113,6 +141,13 @@ public class ShoppingListService extends BaseService implements IShoppingListSer
         return success;
     }
 
+    /**
+     * Kiểm tra xem có bị trùng ngày mua trong cùng một nhóm hay không.
+     *
+     * @param date    Ngày cần kiểm tra.
+     * @param groupId ID nhóm.
+     * @return true nếu đã tồn tại ngày mua trong nhóm, ngược lại false.
+     */
     public boolean isDateDuplicated(LocalDate date, int groupId) {
         String sql = "SELECT COUNT(*) FROM shoppinglist WHERE buyDate = ? AND groupId = ?";
         try {
@@ -131,6 +166,15 @@ public class ShoppingListService extends BaseService implements IShoppingListSer
         }
         return false;
     }
+
+    /**
+     * Tạo mới một shopping list theo groupId và thêm danh sách nguyên liệu vào đó.
+     * Dùng ngày hiện tại làm ngày mua.
+     *
+     * @param groupId     ID của nhóm.
+     * @param ingredients Danh sách nguyên liệu cần thêm.
+     * @return true nếu thành công, ngược lại false.
+     */
     public boolean addIngredientsToShoppingList(int groupId, List<Ingredient> ingredients) {
         ShoppingList list = new ShoppingList();
         list.setGroupId(groupId);
@@ -155,10 +199,12 @@ public class ShoppingListService extends BaseService implements IShoppingListSer
         }
         return false;
     }
+
     /**
-     * Lấy ID lớn nhất của shopping list hiện có, vì mục đích là để tạo ID mới cho shopping list
-     * và kiểm thử
-     * @return ID lớn nhất hoặc -1 nếu không tìm thấy.
+     * Lấy ID lớn nhất hiện có của shopping list.
+     * Phục vụ mục đích tạo ID mới hoặc kiểm thử.
+     *
+     * @return ID lớn nhất, hoặc -1 nếu không tìm thấy.
      */
     public int getMaxShoppingListId() {
         String sql = "SELECT MAX(shoppingListId) AS maxId FROM shoppingList";

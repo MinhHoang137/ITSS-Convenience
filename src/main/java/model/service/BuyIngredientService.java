@@ -6,8 +6,18 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Dịch vụ thao tác với bảng buy_ingredient trong cơ sở dữ liệu.
+ * Cung cấp các phương thức để thêm, xoá và lấy danh sách nguyên liệu cần mua theo shoppingListId.
+ */
 public class BuyIngredientService extends BaseService implements IBuyIngredientService {
 
+    /**
+     * Thêm một nguyên liệu vào danh sách mua hàng trong cơ sở dữ liệu.
+     *
+     * @param ingredient Đối tượng BuyIngredient chứa thông tin nguyên liệu cần thêm.
+     * @return true nếu thêm thành công, ngược lại false.
+     */
     @Override
     public boolean addIngredientToList(BuyIngredient ingredient) {
         String sql = "INSERT INTO buy_ingredient (shoppingListId, ingredientName, quantity, unitType) VALUES (?, ?, ?, ?)";
@@ -27,7 +37,13 @@ public class BuyIngredientService extends BaseService implements IBuyIngredientS
         return false;
     }
 
-
+    /**
+     * Xóa một nguyên liệu khỏi danh sách mua hàng dựa vào ID danh sách và tên nguyên liệu.
+     *
+     * @param shoppingListId ID của danh sách mua hàng.
+     * @param ingredientName Tên nguyên liệu cần xoá.
+     * @return true nếu xóa thành công, ngược lại false.
+     */
     @Override
     public boolean removeIngredientFromList(int shoppingListId, String ingredientName) {
         String sql = "DELETE FROM buy_ingredient WHERE shoppingListId = ? AND ingredientName = ?";
@@ -46,6 +62,12 @@ public class BuyIngredientService extends BaseService implements IBuyIngredientS
         return false;
     }
 
+    /**
+     * Lấy danh sách các nguyên liệu cần mua theo ID danh sách mua hàng.
+     *
+     * @param shoppingListId ID của danh sách mua hàng.
+     * @return Danh sách các đối tượng BuyIngredient tương ứng.
+     */
     @Override
     public List<BuyIngredient> getIngredientsByShoppingListId(int shoppingListId) {
         List<BuyIngredient> list = new ArrayList<>();
@@ -71,5 +93,4 @@ public class BuyIngredientService extends BaseService implements IBuyIngredientS
         }
         return list;
     }
-
 }

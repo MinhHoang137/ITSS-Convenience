@@ -10,12 +10,21 @@ import model.entity.Dish;
 import model.entity.Ingredient;
 import model.service.BaseService;
 
-public class DishSuggestService extends BaseService implements  IDishSuggestService {
+/**
+ * DishSuggestService là lớp cung cấp logic để gợi ý các món ăn
+ * mà người dùng có thể nấu từ nguyên liệu hiện có trong tủ lạnh.
+ */
+public class DishSuggestService extends BaseService implements IDishSuggestService {
 
     private final DishDAO dishDAO = new DishDAO();
     private final IngredientDAO ingredientDAO = new IngredientDAO();
 
-    // ✅ Hàm chuẩn hóa để gọi từ Controller
+    /**
+     * Gợi ý danh sách các món ăn có thể nấu từ nguyên liệu trong tủ lạnh.
+     *
+     * @param fridgeId ID của tủ lạnh cần lấy nguyên liệu.
+     * @return Danh sách các món ăn có thể nấu được từ các nguyên liệu có sẵn.
+     */
     public List<Dish> suggestDishesFromFridge(int fridgeId) {
         List<Dish> possibleDishes = new ArrayList<>();
 
@@ -37,6 +46,13 @@ public class DishSuggestService extends BaseService implements  IDishSuggestServ
         return possibleDishes;
     }
 
+    /**
+     * Kiểm tra xem một món ăn có thể nấu được từ danh sách nguyên liệu hiện có hay không.
+     *
+     * @param dish              Món ăn cần kiểm tra.
+     * @param fridgeIngredients Danh sách nguyên liệu hiện có trong tủ lạnh.
+     * @return true nếu có đủ nguyên liệu để nấu món ăn, false nếu thiếu.
+     */
     private boolean canCookDish(Dish dish, List<Ingredient> fridgeIngredients) {
         for (Ingredient required : dish.getIngredients()) {
             boolean found = false;

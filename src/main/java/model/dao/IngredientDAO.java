@@ -10,8 +10,19 @@ import java.util.List;
 import model.entity.Ingredient;
 import model.entity.Unit;
 
+/**
+ * IngredientDAO là lớp chịu trách nhiệm thao tác với cơ sở dữ liệu
+ * để truy xuất thông tin các nguyên liệu trong tủ lạnh.
+ */
 public class IngredientDAO {
 
+    /**
+     * Lấy danh sách các nguyên liệu trong tủ lạnh dựa trên fridgeId.
+     *
+     * @param fridgeId   ID của tủ lạnh cần lấy nguyên liệu.
+     * @param connection Kết nối đến cơ sở dữ liệu đang sử dụng.
+     * @return Danh sách các nguyên liệu thuộc tủ lạnh có ID tương ứng.
+     */
     public List<Ingredient> getIngredientsByFridgeId(int fridgeId, Connection connection) {
         List<Ingredient> ingredients = new ArrayList<>();
 

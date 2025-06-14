@@ -1,3 +1,8 @@
+/**
+ * ViewController.java
+ * lớp điều khiển giao diện người dùng của ứng dụng JavaFX.
+ * @Author Minh Hoàng
+ */
 package controller;
 
 import controller.meal.AddMealView;
@@ -12,6 +17,15 @@ public class ViewController extends Application {
         ViewController.getInstance().openController(new MealPlanController(),
                 "Kế hoạch bữa ăn", 1000, 600);
     }
+
+    /**
+     * Mở một cửa sổ mới với controller đã cho
+     * @param controller Controller cần mở
+     * @param title Tên của cửa sổ
+     * @param width Chiều rộng của cửa sổ
+     * @param height Chiều cao của cửa sổ
+     * @return Controller đã được mở, hoặc null nếu có lỗi xảy ra
+     */
     public BaseController openController(BaseController controller, String title, int width, int height) {
         try {
             System.out.println(controller.getFxmlPath());

@@ -17,6 +17,11 @@ public abstract class BaseService {
     protected String username = "root"; // Tên người dùng MySQL
     protected String password = "Hoang!3070$"; // Mật khẩu MySQL
     protected Connection connection = null;
+
+    /**
+     * Phương thức để lấy kết nối đến cơ sở dữ liệu.
+     * @return Connection đối tượng kết nối, hoặc null nếu không thành công.
+     */
     protected Connection getConnection() {
         try {
             // Bắt buộc nạp driver nếu không dùng build tool như Maven hoặc chạy từ IDE
@@ -33,6 +38,10 @@ public abstract class BaseService {
         }
         return null;
     }
+    /**
+     * Phương thức để đóng kết nối đến cơ sở dữ liệu.
+     * Đảm bảo giải phóng tài nguyên sau khi sử dụng.
+     */
     protected void closeConnection() {
         if (connection != null) {
             try {

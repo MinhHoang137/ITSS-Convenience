@@ -1,3 +1,9 @@
+/**
+ * MealPlanController.java
+ * lớp điều khiển kế hoạch bữa ăn, bao gồm các chức năng như thêm, xóa, hiển thị bữa ăn.
+ * Chỉ người nội trợ mới có thể xóa bữa ăn.
+ * @author Minh Hoàng
+ */
 package controller.meal;
 
 import controller.BaseController;
@@ -79,6 +85,13 @@ public class MealPlanController extends BaseController {
             }
         }
     }
+
+    /**
+     * Xóa bữa ăn khỏi kế hoạch bữa ăn, hiển thị trên giao diện
+     * Chỉ người nội trợ mới có thể xóa bữa ăn.
+     *
+     * @param mealCard Thẻ bữa ăn cần xóa
+     */
     public void removeMeal(MealCard mealCard) {
         Role role = Session.getCurrentUser().getRole();
         if (role != Role.housewife) {
@@ -97,6 +110,10 @@ public class MealPlanController extends BaseController {
         current = (MealPlanController) super.loadAndShow(stage, title, width, height);
         return current;
     }
+    /**
+     * Cập nhật lại kế hoạch bữa ăn, hiển thị trên giao diện
+     * Gọi khi có thay đổi trong kế hoạch bữa ăn (thêm, sửa, xóa)
+     */
     public void refreshMealPlan() {
         ArrayList<Meal> meals = mealPlanDAO.getAllMeals(groupId);
         displayMealCards(meals);

@@ -1,3 +1,12 @@
+/**
+ * AddMealView.java
+ * Lớp này quản lý giao diện và logic để thêm bữa ăn vào kế hoạch bữa ăn.
+ * Nó cho phép người dùng tìm kiếm món ăn, thêm món ăn vào bữa ăn,
+ * xóa món ăn khỏi bữa ăn,
+ * và lưu bữa ăn vào cơ sở dữ liệu.
+ * * Nó cũng kiểm tra nguyên liệu cần thiết và tạo danh sách mua sắm nếu thiếu nguyên liệu.
+ * * @author Minh Hoàng
+ */
 package controller.meal;
 
 import controller.BaseController;
@@ -132,7 +141,10 @@ public class AddMealView extends BaseController {
             System.out.println("Lỗi khi thêm bữa ăn: " + e.getMessage());
         }
     }
-
+    /**
+     * Lấy phiên bản hiện tại của AddMealView.
+     * @return phiên bản hiện tại của AddMealView
+     */
     public static AddMealView getCurrent() {
         return current;
     }
@@ -151,6 +163,10 @@ public class AddMealView extends BaseController {
         return true;
     }
 
+    /**
+     * Xóa món ăn khỏi bữa ăn hiện tại.
+     * @param dishCard DishCard chứa thông tin món ăn cần xóa
+     */
     public void removeDishFromMeal(DishCard dishCard) {
         Dish dish = dishCard.getDish();
         if (dish == null || dish.getId() <= 0) {
@@ -162,7 +178,10 @@ public class AddMealView extends BaseController {
             addedContainer.getChildren().remove(dishCard.getParent());
         }
     }
-
+    /**
+     * Thêm món ăn vào bữa ăn hiện tại và hiển thị nó trong giao diện.
+     * @param dish Món ăn cần thêm
+     */
     public void addFoundDish(Dish dish) {
         if (dish == null || dish.getId() <= 0) {
             return;
@@ -196,6 +215,10 @@ public class AddMealView extends BaseController {
         ArrayList<Dish> dishes = mealPlanDAO.getCookableDishes(fridgeId);
         putDishesTo(foundContainer, dishes);
     }
+    /**
+     * Thiết lập món ăn cho AddMealView.
+     * @param dish Món ăn cần thiết lập
+     */
     public void setDish(Dish dish) {
         this.dish = dish;
         if (dish != null) {

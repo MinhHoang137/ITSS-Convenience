@@ -1,3 +1,13 @@
+/**
+ * MealCard.java
+ * lớp này đại diện cho một thẻ bữa ăn trong màn hình MealPlanController
+ * nó hiển thị thông tin về bữa ăn, bao gồm tên món ăn, thời gian và ngày ăn
+ * nó cũng cung cấp chức năng để xóa bữa ăn và đánh dấu bữa ăn đã nấu
+ * nó sử dụng các dịch vụ để tương tác với cơ sở dữ liệu và tủ lạnh
+ * nó cũng có thể thông báo cho View cha khi bữa ăn bị xóa
+ * nó kế thừa từ BaseController để sử dụng các phương thức chung
+ * @author Minh Hoàng
+ */
 package controller.meal;
 
 import controller.BaseController;
@@ -35,6 +45,10 @@ public class MealCard extends BaseController {
 
     private Runnable onDeletedCallback; // Để thông báo cho View cha cập nhật lại sau khi xóa
 
+    /**
+     * Thiết lập bữa ăn cho thẻ này.
+     * @param meal Bữa ăn cần thiết lập
+     */
     public void setMeal(Meal meal) {
         this.meal = meal;
         // Hiển thị thông tin
@@ -44,7 +58,10 @@ public class MealCard extends BaseController {
             dateToEatText.setText(getDateText(meal.getDateIndex()));
         }
     }
-
+    /**
+     * Thiết lập callback để thực hiện hành động sau khi bữa ăn bị xóa.
+     * @param callback Hàm sẽ được gọi khi bữa ăn bị xóa
+     */
     public void setOnDeletedCallback(Runnable callback) {
         this.onDeletedCallback = callback;
     }

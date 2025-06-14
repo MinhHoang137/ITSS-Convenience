@@ -1,3 +1,11 @@
+/**
+ * IngredientCard.java
+ * Lớp này đại diện cho một thẻ nguyên liệu trong giao diện người dùng,
+ * cho phép người dùng nhập và chỉnh sửa thông tin về nguyên liệu,
+ * bao gồm tên, số lượng và đơn vị.
+ * * Nó cũng cung cấp chức năng xóa nguyên liệu khỏi danh sách.
+ * * @author Minh Hoàng
+ */
 package controller.meal;
 
 import controller.dish.DishUpdateAdminView;
@@ -51,12 +59,22 @@ public class IngredientCard {
     private void OnDeleteIngredient(ActionEvent actionEvent) {
         DishUpdateAdminView.getCurrent().deleteIngredient(ingredient);
     }
+
+    /**
+     * Thiết lập thông tin cho IngredientCard từ một đối tượng Ingredient.
+     * @param ingredient Đối tượng Ingredient chứa thông tin cần hiển thị.
+     */
     public void setIngredient(Ingredient ingredient) {
         this.ingredient = ingredient;
         nameField.setText(ingredient.getName());
         quantityField.setText(String.valueOf(ingredient.getQuantity()));
         unitComboBox.setValue(ingredient.getUnit().toString());
     }
+
+    /**
+     * Lấy thông tin từ IngredientCard và tạo một đối tượng Ingredient mới.
+     * @return Đối tượng Ingredient chứa thông tin từ các trường nhập liệu.
+     */
     public Ingredient getIngredient() {
         if (ingredient == null) {
             ingredient = new Ingredient();
